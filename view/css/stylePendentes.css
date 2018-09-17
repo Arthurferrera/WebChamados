@@ -1,0 +1,226 @@
+.fecharModal{
+    width: 30px;
+    height: 30px;
+    float: right;
+    background-color: #ff0000;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 0.5vh;
+    cursor: pointer;
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 30px;
+    vertical-align: middle;
+    color: #ffffff;
+}
+
+.tituloTela{
+    width: 100%;
+    height: 10vh;
+    font-size: 2em;
+    text-align: center;
+    line-height: 10vh;
+    vertical-align: middle;
+    text-decoration: underline;
+    font-weight: 900;
+}
+
+.table{
+    width: 78%;
+    height: 69vh;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.contentTitulos{
+    width: 100%;
+    height: 12%;
+    border-bottom: 4px solid #000000;
+}
+
+.tituloStatus{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 55px;
+    vertical-align: middle;
+}
+
+.titulosTabela{
+    width: 15.15%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 55px;
+    vertical-align: middle;
+}
+
+.tituloMaior{
+    width: 25.30%
+}
+
+.contentRegistros{
+    width: 100%;
+    height: 88%;
+    overflow-y: auto;
+}
+
+.linhaRegistro{
+    width: 100%;
+    height: 10%;
+    border-bottom: 2px solid #000000;
+}
+
+.registros{
+    width: 15%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 40px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.atualizar{
+    width: 50%;
+    height: 100%;
+    margin-left: 25%;
+}
+
+.registroMaior{
+    width: 25%;
+}
+
+.registroStatus{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 45px;
+    vertical-align: middle;
+}
+
+.registroStatus img{
+    width: 50%;
+    height: 60%;
+}
+
+.container{
+    width: 85%;
+    height: 80vh;
+    position: fixed;
+    z-index: 999;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal{
+    width: 35%;
+    height: 50vh;
+    background-color: #ffffff;
+    margin-left: 25%;
+    margin-top: 15vh;
+}
+
+.modalVisualizar{
+    width: 70%;
+    height: 80vh;
+    background-color: #ffffff;
+    margin-left: 15%;
+}
+
+a:active{
+    color: black;
+}
+
+a{
+    cursor: pointer;
+}
+
+.contentFiltro{
+    width: 80%;
+    height: 7vh;
+    margin-right: auto;
+    margin-left: auto;
+    /* background-color: red; */
+}
+
+.labelFiltro{
+    width: 25%;
+    height: 100%;
+    text-align: center;
+    font-weight: 900;
+    line-height: 7vh;
+    vertical-align: middle;
+    /* background-color: orange; */
+    float: left;
+}
+
+.dtInicio{
+    width: 30%;
+    height: 100%;
+    text-align: left;
+    font-weight: 900;
+    line-height: 7vh;
+    vertical-align: middle;
+    float: left;
+    /* background-color: green; */
+}
+
+.labelInput{
+    font-size: 0.8em;
+    text-align: left;
+    margin-left: 5%;
+    /* background-color: pink; */
+}
+
+.inputData{
+    /* width: 20%;
+    height: 80%; */
+}
+
+.dtFim{
+    width: 30%;
+    height: 100%;
+    text-align: center;
+    font-weight: 900;
+    line-height: 7vh;
+    vertical-align: middle;
+    /* background-color: yellow; */
+    float: left;
+}
+
+.tableResolvida{
+    height: 60vh;
+    margin-top: 2vh;
+}
+
+.contentBotaoFiltro{
+    width: 15%;
+    height: 100%;
+    /* background-color: gray; */
+    float: right;
+
+}
+
+.botaoStyleFiltro{
+    width: 70%;
+    height: 50%;
+    background-color: white;
+    border: 1px solid #000000;
+    margin-top: 10%;
+    margin-left: 15%;
+}
+
+.botaoStyleFiltro:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #000000;
+}

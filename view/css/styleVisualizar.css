@@ -1,0 +1,160 @@
+.tituloVisualizar{
+    width: 100%;
+    height: 7vh;
+    /* background-color: red; */
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 7vh;
+    vertical-align: middle;
+    border-bottom: 2px solid #000000;
+}
+
+.contentVisualizarInformacoes{
+    width: 92%;
+    height: 72vh;
+    /* background-color: green; */
+    overflow: auto;
+    padding-left: 3%;
+    padding-right: 5%;:
+}
+
+.linhaInformacoes{
+    width: 100%;
+    min-height: 10vh;
+    /* background-color: yellow; */
+    margin-top: 2%;
+}
+
+.labelVisualizar{
+    width: 15%;
+    height: 100%;
+    /* background-color: gray; */
+    float: left;
+    line-height: 10vh;
+    vertical-align: middle;
+    text-align: justify;
+    font-weight: 900;
+    padding-left: 3%;
+}
+
+.visualizarInformacoes{
+    min-width: 23%;
+    height: 100%;
+    /* background-color: red; */
+    float: left;
+    line-height: 10vh;
+    vertical-align: middle;
+    text-align: justify;
+    padding-left: 3%;
+}
+
+.dataSolcitacao{
+    /* margin-top: -2vh; */
+    /* background-color: blue; */
+}
+
+.nomeEmpresa{
+    /* width: 45%; */
+}
+
+.visualizarTitulo{
+    width: 20%;
+}
+.visualizarInfoTitulo{
+    /* width: 70%; */
+}
+
+.linhaDescricao{
+    width: 100%;
+    min-height: 10vh;
+    height: auto;
+    /* background-color: orange; */
+    margin-top: 2%;
+}
+
+.labelDescricao{
+    width: 15%;
+    height: 10vh;
+    /* background-color: gray; */
+    line-height: 10vh;
+    vertical-align: middle;
+    text-align: justify;
+    font-weight: 900;
+    float: left;
+    padding-left: 3%;
+}
+
+.visualizarDescricao{
+    width: 70%;
+    min-height: 4vh;
+    height: auto;
+    /* background-color: pink; */
+    text-align: left;
+    padding: 2%;
+    padding-top: 3%;
+    float: left;
+    /* margin-left: 17%; */
+}
+
+.linhaStatus{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.visualizarStatus{
+    width: 20%;
+}
+.visualizarInfoStatus{
+    text-align: justify;
+    width: 45%;
+}
+
+.linhaContentObservacao{
+    display: none;
+    /* background-color: orange; */
+}
+
+.labelObservacao{
+    width: 20%;
+    height: 10vh;
+    /* background-color: gray; */
+    line-height: 10vh;
+    vertical-align: middle;
+    text-align: justify;
+    font-weight: 900;
+    float: left;
+    padding-left: 3%;
+}
+
+.contentObservacoes{
+    width: 71%;
+    min-height: 10vh;
+    height: auto;
+    /* background-color: red; */
+    padding: 2%;
+    text-align: justify;
+    float: right;
+}
+
+.linhaObservacao{
+    width: 100%;
+    min-height: 10vh;
+    height: auto;
+    /* background-color: #dcdcdc; */
+    margin-bottom: 2vh;
+    margin-top: 2%;
+    border-bottom: solid 2px #000000;
+}
+
+.mensagemObservacao{
+    width: 100%;
+    min-height: 5vh;
+    /* background-color: #00ff00; */
+    margin-bottom: 1vh;
+}
+
+.labelMensagem{
+    /* background-color: white; */
+    font-weight: 900;
+}

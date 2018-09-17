@@ -1,0 +1,145 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+/* area do header/cabeçalho */
+header{
+    width: 100%;
+    height: 12vh;
+    background-color: gray;
+    color: #ffffff;
+}
+
+.alinha{
+    width: 20%;
+    height: 100%;
+    /* background-color: yellow; */
+    float: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo{
+    width: 20%;
+    height: 100%;
+    /* background-color: blue; */
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url('../imagens/logosincaesp.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.logo img{
+    margin-left: 40px;
+}
+
+.logoff{
+    width: 20%;
+    height: 100%;
+    /* background-color: green; */
+    float: right;
+    margin-top: -12vh;
+    text-align: center;
+}
+
+.informacoesUsuarios{
+    width: 100%;
+    height: 50%;
+    /* background-color: pink; */
+    font-size: 1em;
+    line-height: 6vh;
+    vertical-align: middle;
+}
+
+.sair{
+    width: 100%;
+    height: 50%;
+    /* background-color: blue; */
+    font-size: 1em;
+    line-height: 6vh;
+    vertical-align: middle;
+}
+
+#textoSair:hover{
+    text-decoration: underline;
+    /* font-weight: bold; */
+}
+
+/* area do conteudo */
+#main{
+    width: 100%;
+    height: 80vh;
+    background-color: white;
+}
+
+#menu_lateral{
+    width: 15%;
+    height: 80vh;
+    background-color: #000000;
+    float: left;
+    color: #ffffff;
+}
+
+.itens{
+    width: 100%;
+    height: 10vh;
+    background-color: #000000;
+    font-size: 1.2em;
+    line-height: 10vh;
+    vertical-align: middle;
+    border-bottom: solid 1px #ffffff;
+    padding-left: 5px;
+}
+
+.itens:hover{
+    border-left: 4px solid #ffffff;
+    cursor: pointer;
+}
+
+#content_principal{
+    width: 85%;
+    height: 80vh;
+    background-color: #ffffff;
+    float: left;
+}
+
+/* area do rodapé */
+footer{
+    width: 100%;
+    height: 8vh;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 8vh;
+    vertical-align: middle;
+    background-color: gray;
+    color: #ffffff;
+    font-weight: 900;
+}
+
+/* estilização dos links */
+a:link{
+    color: #ffffff;
+    text-decoration: none;
+}
+a:active{
+    color: #ffffff;
+    text-decoration: none;
+}
+a:visited{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #FFF;
+    height: 3px;
+}
+
+::-webkit-scrollbar{
+    height: 8px;
+    width:  7px;
+    background-color: #454545;
+}
