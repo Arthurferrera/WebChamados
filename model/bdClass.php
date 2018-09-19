@@ -20,7 +20,7 @@ class Sql_db {
             $conexao = sqlsrv_connect($this->server, $conexaoInfo);
             return $conexao;
         } catch (Exception $e) {
-            echo ("Erro tentar conectar com o banco de dados <br>".$e);
+            echo ("Erro tentar Conectar com o banco de dados <br>".$e);
             die(print_r(sqlsrv_errors(), true));
         }
     }

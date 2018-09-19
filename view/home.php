@@ -22,9 +22,33 @@
         <link rel="stylesheet" href="css/styleCadastroUsuario.css">
         <link rel="stylesheet" href="css/styleModal.css">
         <link rel="stylesheet" href="css/styleVisualizar.css">
+        <link rel="stylesheet" href="css/styleEstatistica.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.0, user-scalable=no" />
+        <script src="../view/js/jquery.js"></script>
+        <script>
+            function Excluir(idItem){
+                $.ajax({
+                    type: "GET",
+                    url: "../router.php?controller=funcionario&modo=excluir",
+                    data: {id:idItem},
+                    success: function(dados){
+                        Listar();
+                    }
+                });
+            }
+
+            function Listar(){
+                $.ajax({
+                    type: "GET",
+                    url: "?pag=cadastroUsuario",
+                    success: function(dados){
+                        $('#body').html(dados);
+                    }
+                });
+            }
+        </script>
     </head>
-    <body>
+    <body id="body">
         <header>
             <div class="alinha">
 
@@ -53,7 +77,12 @@
                         Chamados Resolvidos
                     </div>
                 </a>
-                <a href="?pag=cadastroUsuario">
+                <a href="?pag=estatistica">
+                    <div class="itens">
+                        Estatísticas
+                    </div>
+                </a>
+                <a onclick="Listar();">
                     <div class="itens">
                         Cadastro de Usuário
                     </div>
@@ -74,6 +103,9 @@
                             break;
                         case 'cadastroUsuario':
                             require_once("cadastroUsuario/cadastroUsuario.php");
+                            break;
+                        case 'estatistica':
+                            require_once("estatisticas/estatistica.php");
                             break;
                         default:
                             require_once("divHome.php");

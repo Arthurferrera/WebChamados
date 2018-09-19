@@ -3,23 +3,28 @@
     $conexao  = conexao();
     // autentica();
     $class = "";
+
+    date_default_timezone_set('America/Sao_Paulo');
+    $dateAtualInicio = date('Y-m-d');
+    $dateAtualFim = date('Y-m-d');
+    // echo $dateAtual;
 ?>
 
-<link rel="stylesheet" href="../css/stylePendentes.css">
-<script src="../view/js/jquery.js"></script>
 <script>
+// abrir modal
     $(document).ready(function(){
         $('.atualizar').click(function(){
             $('.container').fadeIn(600);
         });
     });
-
+// fechar modal
     $(document).ready(function(){
         $('.fecharModal').click(function(){
             $('.container').fadeOut(600);
         });
     });
 
+// função que passa para modal a informação de um chamado
     function modal(idChamado, tipo){
         if (tipo == 'visualizar') {
             document.getElementById('modal').setAttribute("class", "modalVisualizar");
@@ -56,7 +61,6 @@
 <div class="tituloTela">
     Lista de chamados - Resolvidos
 </div>
-
 <div class="contentFiltro">
     <div class="labelFiltro">
         Filtrar por periodo:
@@ -64,11 +68,11 @@
     <form action="?pag=chamadosResolvidos" method="post">
         <div class="dtInicio">
             <span class="labelInput">Inicio periodo:</span>
-            <input class="inputData" type="date" name="txtDtInicio" value="<?php echo $chamado->$dataInicio; ?>">
+            <input class="inputData" type="date" name="txtDtInicio" value="<?php echo $dateAtualInicio; ?>" required>
         </div>
         <div class="dtFim">
             <span class="labelInput">Fim periodo:</span>
-            <input class="inputData" type="date" name="txtDtFim" value="<?php echo $chamado->$dataFim; ?>">
+            <input class="inputData" type="date" name="txtDtFim" value="<?php echo $dateAtualFim; ?>" required>
         </div>
         <div class="contentBotaoFiltro">
             <input class="botaoStyleFiltro" type="submit" name="btnFiltrar" value="filtrar">
@@ -106,9 +110,11 @@
             require_once("../controller/controllerChamado.php");
             $listChamados = new controllerChamado();
             if (isset($_POST['btnFiltrar'])) {
+                $dateAtualInicio = $_POST['txtDtInicio'];
+                $dateAtualFim = $_POST['txtDtFim'];
                 $chamado = $listChamados::filtroPorData();
             } else {
-                $chamado = $listChamados::listarChamado(1);
+                $chamado = $listChamados::listarChamado(1, 'SelectDiaResolvido');
             }
             $cont = 0;
             while($cont < count($chamado)){
@@ -136,7 +142,7 @@
                 </div>
                 <div class="registros">
                     <div class="atualizar" onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');" style="color:black;">
-                        <a> <img src="imagens/lupa.png" alt="visualizar Chamado" width="25" height="25"> </a>
+                        <a> <img src="imagens/lupa.png" alt="visualizar Chamado" title="visualizar Chamado" width="25" height="25"> </a>
                     </div>
                 </div>
             </div>

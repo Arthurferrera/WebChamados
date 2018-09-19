@@ -3,8 +3,6 @@
     $conexao  = conexao();
     // autentica();
 ?>
-<link rel="stylesheet" href="../view/css/stylePendentes.css">
-<script src="../view/js/jquery.js"></script>
 <script>
     $(document).ready(function(){
         $('.atualizar').click(function(){
@@ -75,7 +73,7 @@
         <?php
             require_once("../controller/controllerChamado.php");
             $listChamados = new controllerChamado();
-            $chamado = $listChamados::listarChamado(0);
+            $chamado = $listChamados::listarChamado(0, '');
             $cont = 0;
             while($cont < count($chamado)){
                 if ($chamado[$cont]->status) {
@@ -102,9 +100,9 @@
                 </div>
                 <div class="registros">
                     <div class="atualizar">
-                        <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'atualizar');"> <img src="imagens/atualizar.png" alt="Atualizar Chamado" width="25" height="25"> </a>
+                        <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'atualizar');"> <img src="imagens/atualizar.png" alt="Atualizar Chamado" title="Atualizar Chamado" width="25" height="25"> </a>
                         |
-                        <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');"> <img src="imagens/lupa.png" alt="Visualizar Chamado" width="25" height="25"> </a>
+                        <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');"> <img src="imagens/lupa.png" alt="Visualizar Chamado" title="Visualizar Chamado" width="25" height="25"> </a>
                     </div>
                 </div>
             </div>

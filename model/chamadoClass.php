@@ -15,6 +15,7 @@ class Chamado {
     public $dataObs;
     public $dtInicio;
     public $dtFim;
+    public $dataFechamento;
 
     function __construct() {
         require_once("bdClass.php");
@@ -23,22 +24,27 @@ class Chamado {
     public function Atualizar($chamado){
         session_start();
 
+        $status = $chamado->status;
         $sqlInserirObservacao = "INSERT INTO observacao (observacao, idChamado, dataHora) VALUES ('".$chamado->observacao."', $chamado->idChamado, GETDATE())";
-        $sqlAtualizarStatus = "UPDATE chamados SET status = '".$chamado->status."' WHERE id = ".$chamado->idChamado;
+        if ($status == 'true') {
+            $sqlAtualizarStatus = "UPDATE chamados SET status = '".$status."', dataFechamento = GETDATE() WHERE id = ".$chamado->idChamado;
+        } else if($status == 'false') {
+            $sqlAtualizarStatus = "UPDATE chamados SET status = '".$status."' WHERE id = ".$chamado->idChamado;
+        }
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
         $atualizarStatus = sqlsrv_query($pdoCon, $sqlAtualizarStatus);
-        $inserieObservacao = sqlsrv_query($pdoCon, $sqlInserirObservacao);
+        $inserirObservacao = sqlsrv_query($pdoCon, $sqlInserirObservacao);
 
-        if($atualizarStatus && $inserieObservacao){
+        if ($atualizarStatus && $inserirObservacao) {
             echo "<script>
-                       alert('Atualização efetuada com sucesso');
-                       window.history.go(-1);
-                  </script>";
+                    alert('Atualização efetuada com sucesso');
+                    window.history.go(-1);
+                </script>";
         }
-        $con->desonectar();
+        $con->Desconectar();
     }
 
     public function SelectAllPendentes($status){
@@ -76,7 +82,45 @@ class Chamado {
         } else {
             return null;
         }
-        $con->desonectar();
+        $con->Desconectar();
+    }
+
+    public function SelectDiaResolvido(){
+        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
+                FROM chamados AS c
+                INNER JOIN usuario AS u
+                ON c.idUsuario = u.id
+                WHERE status = 1 AND CONVERT(CHAR(10), dataFechamento, 103) = CONVERT(CHAR(10), GETDATE(),103) ORDER BY idChamado DESC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+        // echo $sql;
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if($rows_affected == -1) {
+            while ($rs = sqlsrv_fetch_array($select)){
+                $chamado[] = new Chamado();
+                $chamado[$cont]->idChamado = $rs['idChamado'];
+                $chamado[$cont]->titulo = $rs['titulo'];
+                $chamado[$cont]->mensagem = $rs['mensagem'];
+                $chamado[$cont]->status = $rs['status'];
+                $chamado[$cont]->dataAbertura = $rs['data'];
+                $chamado[$cont]->idUsuario = $rs['usuarioId'];
+                $chamado[$cont]->cnpj = $rs['cnpj'];
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $chamado[$cont]->nomeUsuario = $rs['nome'];
+                $cont++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
     }
 
     public function SelectById($idChamado){
@@ -106,7 +150,7 @@ class Chamado {
             $chamado->nomeUsuario = $rs['nome'];
             return $chamado;
         }
-        $con->desonectar();
+        $con->Desconectar();
     }
 
     public function SelectObsById($idChamado){
@@ -128,7 +172,7 @@ class Chamado {
             $cont++;
         }
         return $listObservacoesChamado;
-        $con->desonectar();
+        $con->Desconectar();
     }
 
     public function FiltroPorData($chamado){
@@ -149,7 +193,7 @@ class Chamado {
                         FROM chamados AS c
                         INNER JOIN usuario AS u
                         ON c.idUsuario = u.id
-                        WHERE status = 1 AND data BETWEEN '$dataInicio' AND '$dataFim' ORDER BY idChamado DESC";
+                        WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim' ORDER BY idChamado DESC";
                 // echo $sql;
 
 
@@ -182,7 +226,50 @@ class Chamado {
         } else {
             return null;
         }
-        $con->desconectar();
+        $con->Desconectar();
+    }
+
+    public function Estatisticas(){
+        // RETORNA O TOTAL DE CHAMADOS
+        $sqlTotal = "select count(*) AS totalChamados from chamados";
+        // RETORNA TOTAL DE CHAMADOS RESOLVIDOS
+        $sqlResolvidos = "select count(*) AS resolvidos from chamados where status = 1";
+        // RETORNA TOTAL DE CHAMADOS pendentes
+        $sqlPendentes = "select count(*) AS pendentes from chamados where status = 0";
+        // RETORNA O TOTAL DE OBSERVAÇÕES
+        $sqlObservacoes = "SELECT @@ROWCOUNT AS respostas FROM observacao GROUP BY idChamado";
+
+        // conexao com o banco
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $selectTotal = sqlsrv_query($pdoCon, $sqlTotal);
+        $selectResolvidos = sqlsrv_query($pdoCon, $sqlResolvidos);
+        $selectPendentes = sqlsrv_query($pdoCon, $sqlPendentes);
+        $selectObservacoes = sqlsrv_query($pdoCon, $sqlObservacoes);
+
+        if($rsTotal = sqlsrv_fetch_array($selectTotal)){
+            $totalChamados = $rsTotal['totalChamados'];
+        }
+        if($rsResolvidos = sqlsrv_fetch_array($selectResolvidos)){
+            $resolvidos = $rsResolvidos['resolvidos'];
+        }
+        if($rsPendentes = sqlsrv_fetch_array($selectPendentes)){
+            $pendentes = $rsPendentes['pendentes'];
+        }
+        while($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
+            $observacoes = $rsObservacoes['respostas'];
+        }
+
+        if ($totalChamados != 0) {
+            $resolvidos = $resolvidos * 100 / $totalChamados;
+            $pendentes = $pendentes * 100 / $totalChamados;
+            $observacoes = $observacoes * 100 / $totalChamados;
+            // TODO: Continuar vendo o lance das respostas
+        }
+        $con->Desconectar();
+
+        return array($totalChamados, $resolvidos, $pendentes, $observacoes);
     }
 }
  ?>

@@ -11,6 +11,15 @@
                     $controllerFuncionario = new controllerFuncionario();
                     $controllerFuncionario::Login();
                     break;
+                case 'inserir':
+                    $controllerFuncionario = new controllerFuncionario();
+                    $controllerFuncionario::Inserir();
+                    break;
+                case 'excluir':
+                    $controllerFuncionario = new controllerFuncionario();
+                    $sucesso = $controllerFuncionario::Excluir();
+                    return $sucesso;
+                    break;
                 default:
                     // code...
                     break;

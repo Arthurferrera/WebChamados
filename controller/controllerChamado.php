@@ -7,7 +7,6 @@ class controllerChamado {
         $chamado->observacao = $_POST['txtObservacao'];
         $chamado->status = $_POST['rdoFinalizar'];
         $chamado->idChamado = $_POST['txtIdChamado'];
-
         $chamado::Atualizar($chamado);
     }
 
@@ -25,10 +24,14 @@ class controllerChamado {
         return $retornoObservacoes;
     }
 
-    public function listarChamado($status){
+    public function listarChamado($status, $tipoSelect){
         require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
-        $retornoChamado = $chamado::SelectAllPendentes($status);
+        if ($tipoSelect == 'SelectDiaResolvido') {
+            $retornoChamado = $chamado::SelectDiaResolvido();
+        } else {
+            $retornoChamado = $chamado::SelectAllPendentes($status);
+        }
         return $retornoChamado;
     }
 
@@ -39,6 +42,13 @@ class controllerChamado {
         $chamado->dtFim = $_POST['txtDtFim'];
         $retornoChamado = $chamado::FiltroPorData($chamado);
         return $retornoChamado;
+    }
+
+    public function Estatisticas(){
+        require_once("../model/chamadoClass.php");
+        $chamado = new Chamado();
+        $retornoEstatisticas = $chamado::Estatisticas();
+        return $retornoEstatisticas;
     }
 }
  ?>

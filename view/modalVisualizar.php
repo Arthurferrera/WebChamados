@@ -74,15 +74,6 @@
      </div>
 
      <div class="linhaInformacoes">
-         <div class="labelVisualizar visualizarTitulo">
-             Titulo do Chamado:
-         </div>
-         <div class="visualizarInformacoes visualizarInfoTitulo">
-             <?php echo $titulo; ?>
-         </div>
-     </div>
-
-     <div class="linhaInformacoes">
          <div class="labelVisualizar visualizarStatus">
              Status do chamado:
          </div>
@@ -91,6 +82,15 @@
          </div>
      </div>
 
+     <div class="linhaInformacoes">
+         <div class="labelVisualizar visualizarTitulo">
+             Titulo do Chamado:
+         </div>
+         <div class="visualizarInformacoes visualizarInfoTitulo">
+             <?php echo $titulo; ?>
+         </div>
+     </div>
+     
      <div class="linhaDescricao">
          <div class="labelDescricao">
              Solicitação:

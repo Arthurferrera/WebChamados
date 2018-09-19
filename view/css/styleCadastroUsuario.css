@@ -4,7 +4,6 @@
     /* background-color: red; */
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #000000;
 }
 
 .tituloForm{
@@ -17,4 +16,128 @@
     vertical-align: middle;
     font-weight: 900;
     border-bottom: 2px solid #000000;
+}
+
+.contentCampos{
+    width: 100%;
+    height: 20%;
+    /* background-color: orange; */
+}
+
+.campos{
+    width: 26%;
+    height: 100%;
+    /* background-color: pink; */
+    float: left;
+    line-height: 15vh;
+    vertical-align: middle;
+    padding-left: 2%;
+}
+
+.campoInput{
+    height: 20px;
+}
+
+.campoBotao{
+    width: 10%;
+    height: 100%;
+    /* background-color: pink; */
+    margin-left: 3%;
+    float: left;
+    line-height: 15vh;
+    vertical-align: middle;
+}
+
+.botaoSalvar{
+    width: 80%;
+    height: 30%;
+    background-color: white;
+    border: 1px solid #000000;
+}
+
+.botaoSalvar:hover{
+    cursor: pointer;
+}
+
+.botaoSalvar:active{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.tableUsuario{
+    width: 78%;
+    height: 52vh;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.contentTitulosUsuarios{
+    width: 95%;
+    height: 12%;
+    border-bottom: 4px solid #000000;
+    /* background-color: red; */
+    padding-left: 5%;
+}
+
+.titulosTabelaUsuario{
+    width: 23%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+
+.contentRegistrosUsuarios{
+    width: 100%;
+    height: 88%;
+    overflow-y: auto;
+}
+
+.linhaRegistroUsuario{
+    width: 95%;
+    height: 10%;
+    border-bottom: 2px solid #000000;
+    padding-left: 5%;
+}
+
+.registrosUsuarios{
+    width: 23%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 30px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.atualizar{
+    width: 50%;
+    height: 100%;
+    margin-left: 25%;
+}
+
+.registroMaior{
+    width: 25%;
+}
+
+.registroStatus{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 45px;
+    vertical-align: middle;
+}
+
+.registroStatus img{
+    width: 50%;
+    height: 60%;
 }
