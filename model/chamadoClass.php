@@ -194,8 +194,6 @@ class Chamado {
                         INNER JOIN usuario AS u
                         ON c.idUsuario = u.id
                         WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim' ORDER BY idChamado DESC";
-                // echo $sql;
-
 
                 $select = sqlsrv_query($pdoCon, $sql);
                 $rows_affected = sqlsrv_rows_affected($select);
@@ -246,7 +244,6 @@ class Chamado {
         $selectTotal = sqlsrv_query($pdoCon, $sqlTotal);
         $selectResolvidos = sqlsrv_query($pdoCon, $sqlResolvidos);
         $selectPendentes = sqlsrv_query($pdoCon, $sqlPendentes);
-        $selectObservacoes = sqlsrv_query($pdoCon, $sqlObservacoes);
 
         if($rsTotal = sqlsrv_fetch_array($selectTotal)){
             $totalChamados = $rsTotal['totalChamados'];
@@ -257,15 +254,17 @@ class Chamado {
         if($rsPendentes = sqlsrv_fetch_array($selectPendentes)){
             $pendentes = $rsPendentes['pendentes'];
         }
-        while($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
+        for ($i=0; $i < 2; $i++) {
+            $selectObservacoes = sqlsrv_query($pdoCon, $sqlObservacoes);
+        }
+        if($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
             $observacoes = $rsObservacoes['respostas'];
         }
 
         if ($totalChamados != 0) {
             $resolvidos = $resolvidos * 100 / $totalChamados;
             $pendentes = $pendentes * 100 / $totalChamados;
-            $observacoes = $observacoes * 100 / $totalChamados;
-            // TODO: Continuar vendo o lance das respostas
+            $observacoes = ($observacoes * 100 / $totalChamados);
         }
         $con->Desconectar();
 

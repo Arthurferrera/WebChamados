@@ -66,6 +66,10 @@ class Funcionario {
         }
     }
 
+    public function Editar($idFuncionario){
+            $sql "UPDATE usuarioAdm SET nome = , login = ,"
+    }
+
     public function SelectAllFuncionario(){
 
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario

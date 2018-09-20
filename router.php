@@ -20,6 +20,11 @@
                     $sucesso = $controllerFuncionario::Excluir();
                     return $sucesso;
                     break;
+                case 'consultar':
+                    $controllerFuncionario = new controllerFuncionario();
+                    $sucesso = $controllerFuncionario::Editar();
+                    return $sucesso;
+                    break;
                 default:
                     // code...
                     break;

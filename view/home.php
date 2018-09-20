@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="css/styleModal.css">
         <link rel="stylesheet" href="css/styleVisualizar.css">
         <link rel="stylesheet" href="css/styleEstatistica.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.0, user-scalable=no" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=device-dpi, user-scalable=no" />
         <script src="../view/js/jquery.js"></script>
         <script>
             function Excluir(idItem){
@@ -43,6 +43,18 @@
                     url: "?pag=cadastroUsuario",
                     success: function(dados){
                         $('#body').html(dados);
+                    }
+                });
+            }
+
+            function Editar(idItem){
+                $.ajax({
+                    type: "GET",
+                    url: "../router.php?controller=funcionario&modo=consultar",
+                    data: {id:idItem},
+                    success: function(dados){
+                        alert(dados);
+                        // Listar();
                     }
                 });
             }
@@ -82,7 +94,7 @@
                         Estatísticas
                     </div>
                 </a>
-                <a onclick="Listar();">
+                <a onclick="Listar()">
                     <div class="itens">
                         Cadastro de Usuário
                     </div>
@@ -115,7 +127,7 @@
             </section>
         </section>
         <footer>
-            Desenvolvido por: Arthur Ferreira
+            Desenvolvido por:
         </footer>
     </body>
 </html>

@@ -37,6 +37,13 @@
             $excluiu = $funcionario::Excluir($funcionario->idFuncionario);
             return $excluiu;
         }
+
+        function Editar(){
+            $funcionario = new Funcionario();
+            $funcionario->idFuncionario = $_GET['id'];
+            $editou = $funcionario::Editar($funcionario->idFuncionario);
+            return $editou;
+        }
     }
 
  ?>
