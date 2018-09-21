@@ -15,59 +15,107 @@ class Funcionario {
     public function Login($funcionario) {
         session_start();
 
-            $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
-                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha')";
+        $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
+                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
+        echo $sql;
+        echo "<br>";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
         $select = sqlsrv_query($pdoCon, $sql);
-
+        echo $select;
         $idFuncionario = 0;
-
+        echo "<br>";
         if($rs = sqlsrv_fetch_array($select)){
             $idFuncionario = $rs['id'];
-            $idNivelUsuario = $rs['idNivelUsuario'];
         }
-
+        echo $idFuncionario;
+        echo "<br>";
         $con->Desconectar();
 
-        if ($idNivelUsuario != 1) {
-            session_destroy();
-            header('location:index.php');
-        }
         if ($idFuncionario > 0) {
             $_SESSION['idAdmin'] =  $idFuncionario;
             header('location:index.php');
         } else {
             session_destroy();
             echo "<script>
-                alert('Usuário e ou senha incorreta(o)');
-                window.location.href = 'index.php';
+                alert('Usuário e/ou senha incorreta');
+                window.history.back(-1);
             </script>";
+            header('location:index.php');
+            // TODO: CONTINUAR FAZENDO O LOGIN CORRETAMENTE
         }
     }
 
     public function Inserir($funcionario){
         session_start();
 
-        $sql = "INSERT INTO usuarioAdm (nome, login, senha, idNivelUsuario) VALUES (?,?,?,1)";
-        $params = array("$funcionario->nome", "$funcionario->usuario", "$funcionario->senha");
+        if (validarSenha($funcionario->senha)) {
+            $sql = "INSERT INTO usuarioAdm (nome, login, senha, idNivelUsuario) VALUES (?,?,?,1)";
+            $params = array("$funcionario->nome", "$funcionario->usuario", "$funcionario->senha");
+
+            $con = new Sql_db();
+            $pdoCon = $con->Conectar();
+
+            $stm = sqlsrv_query($pdoCon, $sql, $params);
+
+            if ($stm) {
+                echo "<script>
+                    alert('Cadastro efetuado.');
+                    window.location.href = 'home.php?pag=cadastroUsuario';
+                </script>";
+            }
+        } else {
+            echo "<script>
+                $(document).html(function(){
+                    alert('Senha deve conter letras e números');
+                })
+            </script>";
+        }
+
+
+    }
+
+    public function Editar($funcionario){
+            $sql = "UPDATE usuarioAdm SET nome = '".$funcionario->nome."', login = '".$funcionario->usuario."', senha = '".$funcionario->senha."' WHERE id =".$funcionario->idFuncionario;
+
+            $con = new Sql_db();
+            $pdoCon = $con->Conectar();
+
+            $stm = sqlsrv_query($pdoCon, $sql);
+
+            if ($stm) {
+                return true;
+            }
+    }
+
+    public function SelectByIdFuncionario($idFuncionario){
+        $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
+                FROM usuarioAdm AS u
+                INNER JOIN nivelUsuario AS n
+                ON n.idNivelUsuario = u.idNivelUsuario WHERE id =".$idFuncionario;
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
-        $stm = sqlsrv_query($pdoCon, $sql, $params);
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
 
-        if ($stm) {
-            echo "<script>
-                alert('Cadastro efetuado.');
-                window.location.href = 'http://localhost/WebChamados/view/home.php?pag=cadastroUsuario';
-            </script>";
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } elseif ($rows_affected == -1) {
+            if ($rs = sqlsrv_fetch_array($select)) {
+                $funcionario = new Funcionario();
+                $funcionario->nome = $rs['nome'];
+                $funcionario->usuario = $rs['login'];
+                $funcionario->senha = $rs['senha'];
+                $funcionario->idFuncionario = $rs['id'];
+            }
+            return $funcionario;
+        } else {
+            return null;
         }
-    }
-
-    public function Editar($idFuncionario){
-            $sql "UPDATE usuarioAdm SET nome = , login = ,"
+        $con->Desconectar();
     }
 
     public function SelectAllFuncionario(){
@@ -96,7 +144,7 @@ class Funcionario {
                 $cont++;
             }
             return $funcionario;
-        }else {
+        } else {
             return null;
         }
         $con->Desconectar();
@@ -120,6 +168,23 @@ class Funcionario {
         }
         $con->Desconectar();
 
+    }
+
+    // função que exige um certo padrão para a senha
+    function validarSenha($senha){
+
+        // filtra só os valores inteiros
+        $temNumeros = filter_var($senha, FILTER_SANITIZE_NUMBER_INT) !== '';
+        // 1 (true, tem maiusculas) ou 0 (false, não tem)
+        $temLetras = preg_match('/[a-z-A-Z]/', $senha);
+        // 1 (true, tem maiusculas) ou 0 (false, não tem)
+        // $temMaiusculas = preg_match('/[A-Z]/', $senha);
+
+        if ($temNumeros && $temLetras) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
  ?>

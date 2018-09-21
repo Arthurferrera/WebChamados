@@ -85,6 +85,10 @@
         <div class="tituloStatus">
         </div>
 
+        <div class="tituloStatus opcoes">
+            N°
+        </div>
+
         <div class="titulosTabela">
             EMPRESA
         </div>
@@ -101,7 +105,7 @@
             TITULO
         </div>
 
-        <div class="titulosTabela">
+        <div class="titulosTabela opcoes">
             OPÇÕES
         </div>
     </div>
@@ -128,6 +132,9 @@
                 <div class="registroStatus">
                     <img src="<?php echo $img; ?>">
                 </div>
+                <div class="registroStatus">
+                    <?php echo $cont+1 ?>
+                </div>
                 <div class="registros">
                     <?php echo $chamado[$cont]->razaoSocial; ?>
                 </div>
@@ -140,7 +147,7 @@
                 <div class="registros registroMaior">
                     <?php echo $chamado[$cont]->titulo; ?>
                 </div>
-                <div class="registros">
+                <div class="registros opcoes">
                     <div class="atualizar" onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');" style="color:black;">
                         <a> <img src="imagens/lupa.png" alt="visualizar Chamado" title="visualizar Chamado" width="25" height="25"> </a>
                     </div>

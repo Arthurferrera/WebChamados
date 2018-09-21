@@ -100,7 +100,7 @@
 }
 
 .registroStatus{
-    width: 5%;
+    width: 3%;
     height: 100%;
     float: left;
     margin-right: 1%;
@@ -112,6 +112,10 @@
 .registroStatus img{
     width: 50%;
     height: 60%;
+}
+
+.opcoes{
+    width: 6%;
 }
 
 .container{

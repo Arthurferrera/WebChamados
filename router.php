@@ -22,9 +22,21 @@
                     break;
                 case 'consultar':
                     $controllerFuncionario = new controllerFuncionario();
-                    $sucesso = $controllerFuncionario::Editar();
-                    return $sucesso;
+                    $funcionarioInfo = $controllerFuncionario::listarFuncionarioById();
+
+                    // removendo os espaços do inicio e do fim da string
+                    $funcionarioInfo->nome = trim($funcionarioInfo->nome);
+                    $funcionarioInfo->usuario = trim($funcionarioInfo->usuario);
+                    $funcionarioInfo->senha = trim($funcionarioInfo->senha);
+
+                    $array = [$funcionarioInfo->nome, $funcionarioInfo->usuario, $funcionarioInfo->senha, $funcionarioInfo->idFuncionario];
+                    echo json_encode($array);
                     break;
+                // case 'editar':
+                //     $controllerFuncionario = new controllerFuncionario();
+                //     return $controllerFuncionario::Editar();
+                //
+                //     break;
                 default:
                     // code...
                     break;

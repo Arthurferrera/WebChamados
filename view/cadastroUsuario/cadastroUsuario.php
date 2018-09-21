@@ -1,7 +1,14 @@
 <?php
     require_once("./modulo.php");
+    require_once("../model/funcionarioClass.php");
+
     $conexao  = conexao();
     // autentica();
+
+    $funcionario = new Funcionario();
+    // $nome = $funcionario->nome;
+    // $usuario = $funcionario->usuario;
+    // $senha = $funcionario->senha;
 ?>
 <script>
     $(document).ready(function(){
@@ -30,20 +37,21 @@
 
         <div class="contentCampos">
             <form id="form" action="home.php?pag=cadastroUsuario" method="post">
+                <input id="id" type="hidden" name="txtId">
                 <div class="campos">
                     <span>Nome:</span>
-                    <input class="campoInput" maxlength="50" type="text" name="txtNome" value="" required>
+                    <input id="inpNome" class="campoInput" maxlength="50" type="text" name="txtNome" required>
                 </div>
                 <div class="campos">
                     <span>Login:</span>
-                    <input class="campoInput" maxlength="25" type="text" name="txtLogin" value="" required>
+                    <input id="inpUsuario" class="campoInput" maxlength="25" type="text" name="txtLogin" required>
                 </div>
                 <div class="campos">
                     <span>Senha:</span>
-                    <input class="campoInput" maxlength="20" type="password" name="txtSenha" value="" required>
+                    <input id="inpSenha" class="campoInput" maxlength="20" type="password" name="txtSenha" required>
                 </div>
                 <div class="campoBotao">
-                    <input class="botaoSalvar" type="submit" name="btnSalvar" value="Salvar">
+                    <input id="btnSalvar" class="botaoSalvar" type="submit" name="btnSalvar" value="Salvar">
                 </div>
             </form>
         </div>
@@ -87,7 +95,7 @@
                     <div class="registrosUsuarios">
                         <div class="atualizar">
                             <a id="excluir" onclick="Excluir(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/deletar.png" alt="Deletar Funcionário" title="Deletar Funcionário" width="25" height="25"> </a>
-                            <a id="excluir" onclick="Editar(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/editarUsuario.png" alt="Editar Funcionário" title="Editar Funcionário" width="25" height="25"> </a>
+                            <a id="editar" onclick="Buscar(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/editarUsuario.png" alt="Editar Funcionário" title="Editar Funcionário" width="25" height="25"> </a>
                         </div>
                     </div>
                 </div>

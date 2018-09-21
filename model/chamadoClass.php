@@ -193,7 +193,7 @@ class Chamado {
                         FROM chamados AS c
                         INNER JOIN usuario AS u
                         ON c.idUsuario = u.id
-                        WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim' ORDER BY idChamado DESC";
+                        WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
 
                 $select = sqlsrv_query($pdoCon, $sql);
                 $rows_affected = sqlsrv_rows_affected($select);

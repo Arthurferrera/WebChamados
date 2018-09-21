@@ -10,6 +10,10 @@
     if ($rs = sqlsrv_fetch_array($result)) {
         $_SESSION['nomeUsuario'] = $rs['nome'];
     }
+
+    $nome ="";
+    $usuario ="";
+    $senha ="";
  ?>
 
 <!DOCTYPE html>
@@ -27,14 +31,16 @@
         <script src="../view/js/jquery.js"></script>
         <script>
             function Excluir(idItem){
-                $.ajax({
-                    type: "GET",
-                    url: "../router.php?controller=funcionario&modo=excluir",
-                    data: {id:idItem},
-                    success: function(dados){
-                        Listar();
-                    }
-                });
+                if (confirm('Deseja realmente excluir este usuário?') ==  true) {
+                    $.ajax({
+                        type: "GET",
+                        url: "../router.php?controller=funcionario&modo=excluir",
+                        data: {id:idItem},
+                        success: function(dados){
+                            Listar();
+                        }
+                    });
+                }
             }
 
             function Listar(){
@@ -47,14 +53,24 @@
                 });
             }
 
-            function Editar(idItem){
+            function Buscar(idItem){
                 $.ajax({
                     type: "GET",
                     url: "../router.php?controller=funcionario&modo=consultar",
                     data: {id:idItem},
+                    dataType: 'json',
                     success: function(dados){
-                        alert(dados);
-                        // Listar();
+                        // alert(dados);
+                        const nome = dados[0];
+                        const usuario = dados[1];
+                        const senha = dados[2];
+                        const idFuncionario = dados[3];
+
+                        $('#inpNome').val(nome);
+                        $('#inpUsuario').val(usuario);
+                        $('#inpSenha').val(senha);
+                        $('#id').val(idFuncionario);
+                        $('#btnSalvar').val("Editar");
                     }
                 });
             }
@@ -62,12 +78,8 @@
     </head>
     <body id="body">
         <header>
-            <div class="alinha">
-
-            </div>
-            <div class="logo">
-                <!-- <img src="view/imagens/logosincaesp.jpg" width="200" height="80"> -->
-            </div>
+            <div class="alinha"></div>
+            <div class="logo"></div>
             <div class="logoff">
                 <div class="informacoesUsuarios">
                     <p>Bem vindo, <?php echo $_SESSION['nomeUsuario']; ?></p>
@@ -94,7 +106,7 @@
                         Estatísticas
                     </div>
                 </a>
-                <a onclick="Listar()">
+                <a onclick="Listar()" href="?pag=cadastroUsuario">
                     <div class="itens">
                         Cadastro de Usuário
                     </div>
@@ -102,6 +114,7 @@
             </section>
             <section id="content_principal">
                 <?php
+                if (isset($_GET['pag'])) {
                     $pag = $_GET['pag'];
                     switch ($pag) {
                         case 'home':
@@ -123,6 +136,8 @@
                             require_once("divHome.php");
                             break;
                     }
+                }
+
                 ?>
             </section>
         </section>
