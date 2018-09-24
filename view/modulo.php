@@ -19,20 +19,20 @@
     }
 
     function autentica(){
-        $id = $_SESSION['idAdmin'];
-        $idNivel;
-        $sql = "SELECT idNivelUsuario FROM usuario WHERE idNivelUsuario = ".$id." LIMIT 1";
-        $result = sqlsrv_query($conexao, $sql);
-        if($rs = sqlsrv_fetch_array($result)){
-            $idNivel = $rs['idNivelUsuario'];
-        }
 
-        switch ($idNivel) {
-            case 1:
-                break;
-            default:
-                header('location:home.php?pag=home');
-                break;
+        if ((isset($_SESSION['idAdmin']) ==  false) or (isset($_SESSION['nomeUsuario']) == false)) {
+            header('location:http://localhost/WebChamados/index.php?out=1');
+        } else {
+            $id = $_SESSION['idAdmin'];
+            $idNivel;
+            $sql = "SELECT idNivelUsuario FROM usuario WHERE idNivelUsuario = ".$id;
+            $result = sqlsrv_query($conexao, $sql);
+            if($rs = sqlsrv_fetch_array($result)){
+                $idNivel = $rs['idNivelUsuario'];
+            }
+            if ($idNivel != 1) {
+                header('location:http://localhost/WebChamados/index.php?out=1');
+            }
         }
     }
  ?>

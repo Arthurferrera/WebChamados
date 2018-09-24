@@ -7,7 +7,7 @@ class controllerChamado {
         $chamado->observacao = $_POST['txtObservacao'];
         $chamado->status = $_POST['rdoFinalizar'];
         $chamado->idChamado = $_POST['txtIdChamado'];
-        $chamado::Atualizar($chamado);
+        return $chamado->Atualizar($chamado);
     }
 
     public function buscarChamado($idChamado){

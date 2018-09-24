@@ -1,8 +1,8 @@
 <?php
-    require_once("./modulo.php");
+    require_once("../modulo.php");
+    autentica();
     require_once("../controller/controllerChamado.php");
     $conexao  = conexao();
-    // autentica();
 
     $chamado = new controllerChamado();
     $retornoEstatisticas = $chamado::Estatisticas();

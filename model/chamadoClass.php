@@ -39,10 +39,9 @@ class Chamado {
         $inserirObservacao = sqlsrv_query($pdoCon, $sqlInserirObservacao);
 
         if ($atualizarStatus && $inserirObservacao) {
-            echo "<script>
-                    alert('Atualização efetuada com sucesso');
-                    window.history.go(-1);
-                </script>";
+            echo 1;
+        } else {
+            echo 0;
         }
         $con->Desconectar();
     }

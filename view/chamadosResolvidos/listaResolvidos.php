@@ -1,7 +1,7 @@
 <?php
-    require_once("./modulo.php");
+    require_once("../modulo.php");
+    autentica();
     $conexao  = conexao();
-    // autentica();
     $class = "";
 
     date_default_timezone_set('America/Sao_Paulo');

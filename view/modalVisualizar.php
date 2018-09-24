@@ -1,7 +1,7 @@
 <?php
     require_once("modulo.php");
+    autentica();
     $conexao  = conexao();
-    // autentica();
     $idChamado = $chamado->idChamado;
     $titulo = $chamado->titulo;
     $mensagem  = $chamado->mensagem;
@@ -90,7 +90,7 @@
              <?php echo $titulo; ?>
          </div>
      </div>
-     
+
      <div class="linhaDescricao">
          <div class="labelDescricao">
              Solicitação:

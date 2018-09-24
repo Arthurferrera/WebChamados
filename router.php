@@ -9,7 +9,8 @@
             switch ($modo) {
                 case 'login':
                     $controllerFuncionario = new controllerFuncionario();
-                    $controllerFuncionario::Login();
+                    $retorno = $controllerFuncionario->Login();
+                    return $retorno;
                     break;
                 case 'inserir':
                     $controllerFuncionario = new controllerFuncionario();
@@ -49,7 +50,7 @@
             switch ($modo) {
                 case 'inserir':
                     $controllerChamado = new controllerChamado();
-                    $controllerChamado::atualizarChamado();
+                    return $controllerChamado->atualizarChamado();
                     break;
                 case 'buscar':
                     $idChamado = $_GET['id'];

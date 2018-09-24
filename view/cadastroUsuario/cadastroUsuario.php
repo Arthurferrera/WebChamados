@@ -1,9 +1,8 @@
 <?php
-    require_once("./modulo.php");
+    require_once("../modulo.php");
+    autentica();
     require_once("../model/funcionarioClass.php");
-
     $conexao  = conexao();
-    // autentica();
 
     $funcionario = new Funcionario();
     // $nome = $funcionario->nome;

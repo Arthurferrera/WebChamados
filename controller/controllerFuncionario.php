@@ -12,7 +12,7 @@
             $funcionario->senha = $_POST['txtSenha'];
 
             // chama a função de login
-            $funcionario::Login($funcionario);
+            return $funcionario->Login($funcionario);
         }
 
         function Inserir(){

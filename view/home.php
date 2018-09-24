@@ -1,9 +1,9 @@
 
 <?php
     require_once("modulo.php");
+    // autentica();
     $conexao = conexao();
     session_start();
-    // autentica();
 
     $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
     $result = sqlsrv_query($conexao, $sql);
@@ -27,7 +27,6 @@
         <link rel="stylesheet" href="css/styleModal.css">
         <link rel="stylesheet" href="css/styleVisualizar.css">
         <link rel="stylesheet" href="css/styleEstatistica.css">
-        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=device-dpi, user-scalable=no" />
         <script src="../view/js/jquery.js"></script>
         <script>
             function Excluir(idItem){

@@ -1,24 +1,55 @@
 <?php
     require_once("modulo.php");
     $conexao  = conexao();
-    // autentica();
+    autentica();
     $idChamado = $_POST['id'];
  ?>
+<script src="./view/js/jquery.js"></script>
  <script>
      $(document).ready(function(){
          $('.fecharModal').click(function(){
              $('.container').fadeOut(600);
          });
      });
+
+     $(document).ready(function(){
+         $('#formObs').submit(function(event){
+             event.preventDefault();
+
+             //armazenando o formulário em uma variável
+             var formulario = new FormData($('#formObs')[0]);
+
+             $.ajax({
+                 type: 'POST',
+                 url: '../router.php?controller=chamado&modo=inserir',
+                 data: formulario,
+                 cache: false,
+                 contentType: false,
+                 processData: false,
+                 async: true,
+                 success: function(resposta){
+                     //se o conteúdo da variável resposta for 1, significa que a observação foi inserida no banco
+                     //então, é redirecionado para a lista
+                     alert(resposta);
+
+                     if(resposta == 1){
+                         window.location.href = "home.php?pag=chamadosPendentes";
+                     }else{
+                         alert("Ocorreu um erro ao tentar inserir a observação. Contate o administrador do sistema.");
+                     }
+                 }
+             });
+         });
+     });
  </script>
- <link rel="stylesheet" href="../css/styleModal.css">
+
      <div class="fecharModal">
          X
      </div>
     <div class="tituloModal">
         Atualizar Chamado
     </div>
-    <form name="frmAtualizarChamado" action="../router.php?controller=chamado&modo=inserir" method="post">
+    <form id="formObs" method="post">
         <div class="conteudoModal">
             <div class="linhaCampo">
                 <div class="labelModal">
@@ -34,7 +65,7 @@
                 <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="true">Sim
                 <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="false" checked>Não
                 <div class="contentBotao">
-                    <input class="botaoStyle" type="submit" name="btnSalvar" value="Salvar">
+                    <button class="botaoStyle">Salvar</button>
                 </div>
             </div>
         </div>

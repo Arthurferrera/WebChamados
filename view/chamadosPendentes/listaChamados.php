@@ -1,7 +1,7 @@
 <?php
-    require_once("./modulo.php");
+    require_once("../modulo.php");
+    autentica();
     $conexao  = conexao();
-    // autentica();
 ?>
 <script>
     $(document).ready(function(){

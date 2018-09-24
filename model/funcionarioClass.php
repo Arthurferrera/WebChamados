@@ -17,33 +17,25 @@ class Funcionario {
 
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                 AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
-        echo $sql;
-        echo "<br>";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
+
         $select = sqlsrv_query($pdoCon, $sql);
-        echo $select;
         $idFuncionario = 0;
-        echo "<br>";
+
         if($rs = sqlsrv_fetch_array($select)){
             $idFuncionario = $rs['id'];
         }
-        echo $idFuncionario;
-        echo "<br>";
+
         $con->Desconectar();
 
         if ($idFuncionario > 0) {
             $_SESSION['idAdmin'] =  $idFuncionario;
-            header('location:index.php');
+            echo 1;
         } else {
+            echo 0;
             session_destroy();
-            echo "<script>
-                alert('Usuário e/ou senha incorreta');
-                window.history.back(-1);
-            </script>";
-            header('location:index.php');
-            // TODO: CONTINUAR FAZENDO O LOGIN CORRETAMENTE
         }
     }
 
