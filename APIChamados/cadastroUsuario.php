@@ -78,6 +78,6 @@
 		// echo json_encode(array("Validado" => false));
 	}
     // retorna um array em formato json, com os resultados obtidos nas operações
-    $retorno = json_encode(array("Validado" => $valorCnpjValidado, "cnpjExiste" => $valorCnpj,"usuarioExiste" => $valorUsuario, "senhaValidada" => $valorSenhaValidada,"Sucesso" => $valorSucesso));
+    $retorno = json_encode(array("Validado" => $valorCnpjValidado, "cnpjExiste" => $valorCnpj,"usuarioExiste" => $valorUsuario, "senhaValidada" => $valorSenhaValidada,"Sucesso" => $valorSucesso, "usuario" => $usuario, "senha" => $senha));
     echo $retorno;
 ?>
