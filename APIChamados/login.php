@@ -12,7 +12,7 @@
             INNER JOIN nivelUsuario AS n
             ON u.idNivelUsuario = n.idNivelUsuario
             WHERE BINARY_CHECKSUM(usuario) = BINARY_CHECKSUM('$usuario')
-            AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$senha')";
+            AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$senha') AND u.logado != 1";
     // executando o comando no banco
     $stm = sqlsrv_query($conexao, $tsql);
 
@@ -21,6 +21,8 @@
     // caso contrario, não permite o login
     if (sqlsrv_has_rows($stm) > 0 && $usuario = sqlsrv_fetch_object($stm)) {
         echo json_encode(array("login" => true, "usuario" => $usuario));
+        $update = "UPDATE usuario set logado = 1 where id =".$usuario->id;
+        sqlsrv_query($conexao, $update);
     } else {
         // echo json_encode(array("login" => false));
         $tsqlAdm = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario, n.nivel, n.idNivelUsuario
@@ -28,9 +30,11 @@
                 INNER JOIN nivelUsuario AS n
                 ON u.idNivelUsuario = n.idNivelUsuario
                 WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$usuario')
-                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$senha')";
+                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$senha') AND u.logado != 1";
         $stmAdm = sqlsrv_query($conexao, $tsqlAdm);
         if (sqlsrv_has_rows($stmAdm) > 0 && $usuario = sqlsrv_fetch_object($stmAdm)) {
+            $update = "UPDATE usuarioAdm set logado = 1 where id =".$usuario->id;
+            sqlsrv_query($conexao, $update);
             echo json_encode(array("login" => true, "usuario" => $usuario));
         } else {
             echo json_encode(array("login" => false));

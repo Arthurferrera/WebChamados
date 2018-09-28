@@ -2,8 +2,8 @@
     // incluindo a conxao
     require_once "conexao.php";
 
-    // // resgatando o ID da url
-    // $idusuario = $_GET['idUsuario'];
+    // rsgatando o status do chamado
+    $status = $_GET['status'];
 
     // comando sql
     $tsql = "SELECT ch.id, ch.titulo, ch.mensagem, ch.status, ch.data,
@@ -11,7 +11,8 @@
                 FROM CHAMADOS_APP.dbo.chamados AS ch
                 INNER JOIN  CHAMADOS_APP.dbo.usuario AS u
                 ON u.id = ch.idUsuario
-                WHERE ch.status = 0";
+                WHERE ch.status = ".$status."ORDER BY ch.id DESC";
+
     // executando o comando
     $stm = sqlsrv_query($conexao, $tsql);
     // criando o array
