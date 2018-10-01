@@ -1,4 +1,5 @@
 <?php
+
 class Funcionario {
 
     public $idFuncionario;
@@ -13,7 +14,7 @@ class Funcionario {
     }
 
     public function Login($funcionario) {
-        session_start();
+        // session_start();
 
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                 AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
@@ -32,7 +33,7 @@ class Funcionario {
 
         if ($idFuncionario > 0) {
             $_SESSION['idAdmin'] =  $idFuncionario;
-            echo 1;
+            echo $_SESSION['idAdmin'];
         } else {
             echo 0;
             session_destroy();
@@ -40,9 +41,7 @@ class Funcionario {
     }
 
     public function Inserir($funcionario){
-        session_start();
 
-        if (validarSenha($funcionario->senha)) {
             $sql = "INSERT INTO usuarioAdm (nome, login, senha, idNivelUsuario) VALUES (?,?,?,1)";
             $params = array("$funcionario->nome", "$funcionario->usuario", "$funcionario->senha");
 
@@ -50,22 +49,13 @@ class Funcionario {
             $pdoCon = $con->Conectar();
 
             $stm = sqlsrv_query($pdoCon, $sql, $params);
+            return $stm;
 
             if ($stm) {
-                echo "<script>
-                    alert('Cadastro efetuado.');
-                    window.location.href = 'home.php?pag=cadastroUsuario';
-                </script>";
+                echo 1;
+            } else {
+                echo 0;
             }
-        } else {
-            echo "<script>
-                $(document).html(function(){
-                    alert('Senha deve conter letras e números');
-                })
-            </script>";
-        }
-
-
     }
 
     public function Editar($funcionario){
@@ -163,7 +153,7 @@ class Funcionario {
     }
 
     // função que exige um certo padrão para a senha
-    function validarSenha($senha){
+    public function validarSenha($senha){
 
         // filtra só os valores inteiros
         $temNumeros = filter_var($senha, FILTER_SANITIZE_NUMBER_INT) !== '';

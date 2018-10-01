@@ -1,10 +1,12 @@
 <?php
+    session_start();
+
     $controller = $_GET['controller'];
 
     switch ($controller) {
         case 'funcionario':
-            require_once('controller/controllerFuncionario.php');
-            require_once('model/funcionarioClass.php');
+            require_once($_SESSION['require']."model/funcionarioClass.php");
+            require_once($_SESSION['require']."controller/controllerFuncionario.php");
             $modo = $_GET['modo'];
             switch ($modo) {
                 case 'login':
@@ -13,8 +15,9 @@
                     return $retorno;
                     break;
                 case 'inserir':
+                    // echo "string";
                     $controllerFuncionario = new controllerFuncionario();
-                    $controllerFuncionario::Inserir();
+                    return $controllerFuncionario::Inserir();
                     break;
                 case 'excluir':
                     $controllerFuncionario = new controllerFuncionario();
@@ -44,8 +47,8 @@
             }
             break;
         case 'chamado':
-            require_once('controller/controllerChamado.php');
-            require_once('model/chamadoClass.php');
+            require_once($_SESSION['require']."controller/controllerChamado.php");
+            require_once($_SESSION['require']."model/chamadoClass.php");
             $modo = $_GET['modo'];
             switch ($modo) {
                 case 'inserir':

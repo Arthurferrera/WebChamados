@@ -22,7 +22,7 @@ class Chamado {
     }
 
     public function Atualizar($chamado){
-        session_start();
+        // session_start();
 
         $status = $chamado->status;
         $sqlInserirObservacao = "INSERT INTO observacao (observacao, idChamado, dataHora) VALUES ('".$chamado->observacao."', $chamado->idChamado, GETDATE())";

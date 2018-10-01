@@ -11,6 +11,8 @@
     $stm = sqlsrv_query($conexao, $update);
     if ($stm) {
         echo json_encode(array("sair" => true));
+    } else {
+        echo json_encode(array("sair" => false));
     }
 
  ?>

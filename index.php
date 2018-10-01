@@ -9,4 +9,7 @@
     } else {
         require_once("view/autenticacao.php");
     }
+
+    $caminho = $_SERVER['DOCUMENT_ROOT']."/WebChamados/";
+    $_SESSION['require'] = $caminho;
 ?>

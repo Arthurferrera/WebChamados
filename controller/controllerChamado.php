@@ -1,6 +1,8 @@
 <?php
 class controllerChamado {
-    function __construct() {}
+    function __construct() {
+        require_once($_SESSION['require']."model/chamadoClass.php");
+    }
 
     public function atualizarChamado(){
         $chamado = new Chamado();
@@ -25,7 +27,7 @@ class controllerChamado {
     }
 
     public function listarChamado($status, $tipoSelect){
-        require_once("../model/chamadoClass.php");
+        // require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
         if ($tipoSelect == 'SelectDiaResolvido') {
             $retornoChamado = $chamado::SelectDiaResolvido();
@@ -36,7 +38,7 @@ class controllerChamado {
     }
 
     public function filtroPorData(){
-        require_once("../model/chamadoClass.php");
+        // require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
         $chamado->dtInicio = $_POST['txtDtInicio'];
         $chamado->dtFim = $_POST['txtDtFim'];
@@ -45,7 +47,7 @@ class controllerChamado {
     }
 
     public function Estatisticas(){
-        require_once("../model/chamadoClass.php");
+        // require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
         $retornoEstatisticas = $chamado::Estatisticas();
         return $retornoEstatisticas;

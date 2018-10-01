@@ -1,16 +1,14 @@
-
 <?php
-    require_once("modulo.php");
-    // autentica();
-    $conexao = conexao();
     session_start();
+    require_once($_SESSION['require']."view/modulo.php");
+    $conexao = conexao();
+    // autentica();
 
     $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
     $result = sqlsrv_query($conexao, $sql);
     if ($rs = sqlsrv_fetch_array($result)) {
         $_SESSION['nomeUsuario'] = $rs['nome'];
     }
-
     $nome ="";
     $usuario ="";
     $senha ="";
@@ -113,30 +111,29 @@
             </section>
             <section id="content_principal">
                 <?php
-                if (isset($_GET['pag'])) {
-                    $pag = $_GET['pag'];
-                    switch ($pag) {
-                        case 'home':
-                            require_once("divHome.php");
-                            break;
-                        case 'chamadosPendentes':
-                            require_once("chamadosPendentes/listaChamados.php");
-                            break;
-                        case 'chamadosResolvidos':
-                            require_once("chamadosResolvidos/listaResolvidos.php");
-                            break;
-                        case 'cadastroUsuario':
-                            require_once("cadastroUsuario/cadastroUsuario.php");
-                            break;
-                        case 'estatistica':
-                            require_once("estatisticas/estatistica.php");
-                            break;
-                        default:
-                            require_once("divHome.php");
-                            break;
+                    if (isset($_GET['pag'])) {
+                        $pag = $_GET['pag'];
+                        switch ($pag) {
+                            case 'home':
+                                require_once("divHome.php");
+                                break;
+                            case 'chamadosPendentes':
+                                require_once("chamadosPendentes/listaChamados.php");
+                                break;
+                            case 'chamadosResolvidos':
+                                require_once("chamadosResolvidos/listaResolvidos.php");
+                                break;
+                            case 'cadastroUsuario':
+                                require_once("cadastroUsuario/cadastroUsuario.php");
+                                break;
+                            case 'estatistica':
+                                require_once("estatisticas/estatistica.php");
+                                break;
+                            default:
+                                require_once("divHome.php");
+                                break;
+                        }
                     }
-                }
-
                 ?>
             </section>
         </section>

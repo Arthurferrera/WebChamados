@@ -1,6 +1,7 @@
 <?php
-    require_once("modulo.php");
-    autentica();
+    require_once($_SESSION['require']."view/modulo.php");
+    // require_once("modulo.php");
+    // autentica();
     $conexao  = conexao();
     $idChamado = $chamado->idChamado;
     $titulo = $chamado->titulo;
@@ -115,7 +116,8 @@
          </div>
          <div class="contentObservacoes">
              <?php
-                    require_once('controller/controllerChamado.php');
+                    require_once($_SESSION['require']."controller/controllerChamado.php");
+                    // require_once('controller/controllerChamado.php');
                     $listObervacoes = new controllerChamado();
                     $rsObservacoes = $listObervacoes::buscarObservacoes($idChamado);
                     $cont = 0;

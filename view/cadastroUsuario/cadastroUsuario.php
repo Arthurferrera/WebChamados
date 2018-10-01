@@ -1,13 +1,10 @@
 <?php
-    require_once("../modulo.php");
-    autentica();
-    require_once("../model/funcionarioClass.php");
+    require_once($_SESSION['require']."view/modulo.php");
+    // autentica();
+    require_once($_SESSION['require']."model/funcionarioClass.php");
     $conexao  = conexao();
 
     $funcionario = new Funcionario();
-    // $nome = $funcionario->nome;
-    // $usuario = $funcionario->usuario;
-    // $senha = $funcionario->senha;
 ?>
 <script>
     $(document).ready(function(){
@@ -75,7 +72,7 @@
         </div>
         <div id="contentRegistrosUsuarios" class="contentRegistrosUsuarios">
             <?php
-                require_once("../controller/controllerFuncionario.php");
+                require_once($_SESSION['require']."controller/controllerFuncionario.php");
                 $listFuncionario = new controllerFuncionario();
                 $funcionario = $listFuncionario::listarFuncionario();
                 $cont = 0;

@@ -1,7 +1,10 @@
 <?php
+    // session_start();
     class controllerFuncionario
     {
-        function __construct(){}
+        function __construct(){
+            require_once($_SESSION['require']."model/funcionarioClass.php");
+        }
 
         function Login() {
             // cria uma instancia da classe
@@ -22,22 +25,28 @@
             $funcionario->senha = $_POST['txtSenha'];
             $funcionario->idFuncionario = $_POST['txtId'];
 
-            if ($funcionario->idFuncionario != null) {
-                $funcionario::Editar($funcionario);
+            $id = $_POST['txtId'];
+            // echo $funcionario->nome;
+            // echo $funcionario->usuario;
+            // echo $funcionario->senha;
+            // echo $funcionario->idFuncionario;
+
+            if ($id <> '') {
+                return $funcionario::Editar($funcionario);
             } else {
-                $funcionario::Inserir($funcionario);
+                return $funcionario->Inserir($funcionario);
             }
         }
 
         function listarFuncionario(){
-            require_once("../model/funcionarioClass.php");
+            // require_once("../model/funcionarioClass.php");
             $funcionario = new Funcionario();
             $retornoFuncionario = $funcionario::SelectAllFuncionario();
             return $retornoFuncionario;
         }
 
         function listarFuncionarioById(){
-            require_once("./model/funcionarioClass.php");
+            // require_once("./model/funcionarioClass./php");
             $funcionario = new Funcionario();
             $funcionario->idFuncionario = $_GET['id'];
             $retornoFuncionario = $funcionario::SelectByIdFuncionario($funcionario->idFuncionario);

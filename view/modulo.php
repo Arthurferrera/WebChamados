@@ -26,6 +26,7 @@
             $id = $_SESSION['idAdmin'];
             $idNivel;
             $sql = "SELECT idNivelUsuario FROM usuario WHERE idNivelUsuario = ".$id;
+            $conexao = conexao();
             $result = sqlsrv_query($conexao, $sql);
             if($rs = sqlsrv_fetch_array($result)){
                 $idNivel = $rs['idNivelUsuario'];

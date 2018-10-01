@@ -1,6 +1,5 @@
 <?php
-    require_once("../modulo.php");
-    autentica();
+    // autentica();
     $conexao  = conexao();
     $class = "";
 
@@ -68,11 +67,11 @@
     <form action="?pag=chamadosResolvidos" method="post">
         <div class="dtInicio">
             <span class="labelInput">Inicio periodo:</span>
-            <input class="inputData" type="date" name="txtDtInicio" value="<?php echo $dateAtualInicio; ?>" required>
+            <input class="inputData" type="date" name="txtDtInicio" value="<?php echo $dateAtualInicio; ?>">
         </div>
         <div class="dtFim">
             <span class="labelInput">Fim periodo:</span>
-            <input class="inputData" type="date" name="txtDtFim" value="<?php echo $dateAtualFim; ?>" required>
+            <input class="inputData" type="date" name="txtDtFim" value="<?php echo $dateAtualFim; ?>">
         </div>
         <div class="contentBotaoFiltro">
             <input class="botaoStyleFiltro" type="submit" name="btnFiltrar" value="filtrar">
@@ -111,7 +110,8 @@
     </div>
     <div class="contentRegistros">
         <?php
-            require_once("../controller/controllerChamado.php");
+            // require_once("../controller/controllerChamado.php");
+            require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
             if (isset($_POST['btnFiltrar'])) {
                 $dateAtualInicio = $_POST['txtDtInicio'];
@@ -130,7 +130,7 @@
         ?>
             <div class="linhaRegistro">
                 <div class="registroStatus">
-                    <img src="<?php echo $img; ?>">
+                    <img src="<?php echo $img; ?>" alt="status">
                 </div>
                 <div class="registroStatus">
                     <?php echo $cont+1 ?>

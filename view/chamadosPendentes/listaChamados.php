@@ -1,6 +1,7 @@
 <?php
-    require_once("../modulo.php");
-    autentica();
+    require_once($_SESSION['require']."view/modulo.php");
+    // require_once("../modulo.php");
+    // autentica();
     $conexao  = conexao();
 ?>
 <script>
@@ -75,7 +76,8 @@
     </div>
     <div class="contentRegistros">
         <?php
-            require_once("../controller/controllerChamado.php");
+            // require_once("../controller/controllerChamado.php");
+            require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
             $chamado = $listChamados::listarChamado(0, '');
             $cont = 0;
@@ -88,7 +90,7 @@
         ?>
             <div class="linhaRegistro">
                 <div class="registroStatus">
-                    <img src="<?php echo $img; ?>">
+                    <img src="<?php echo $img; ?>" alt="status">
                 </div>
                 <div class="registroStatus">
                     <?php echo $cont+1 ?>

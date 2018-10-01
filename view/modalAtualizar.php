@@ -1,7 +1,8 @@
 <?php
-    require_once("modulo.php");
+    session_start();
+    require_once($_SESSION['require']."view/modulo.php");
     $conexao  = conexao();
-    autentica();
+    // autentica();
     $idChamado = $_POST['id'];
  ?>
 <script src="./view/js/jquery.js"></script>
@@ -30,12 +31,12 @@
                  success: function(resposta){
                      //se o conteúdo da variável resposta for 1, significa que a observação foi inserida no banco
                      //então, é redirecionado para a lista
-                     alert(resposta);
 
                      if(resposta == 1){
+                         alert("Resposta inserida com sucesso");
                          window.location.href = "home.php?pag=chamadosPendentes";
                      }else{
-                         alert("Ocorreu um erro ao tentar inserir a observação. Contate o administrador do sistema.");
+                         alert("Ocorreu um erro ao tentar inserir a resposta. Contate o administrador do sistema.");
                      }
                  }
              });

@@ -1,7 +1,9 @@
 <?php
-    require_once("../modulo.php");
-    autentica();
-    require_once("../controller/controllerChamado.php");
+    require_once($_SESSION['require']."view/modulo.php");
+    // require_once("../modulos.php");
+    // autentica();
+    // require_once("../controller/controllerChamado.php");
+    require_once($_SESSION['require']."controller/controllerChamado.php");
     $conexao  = conexao();
 
     $chamado = new controllerChamado();
