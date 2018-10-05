@@ -14,7 +14,6 @@ class Funcionario {
     }
 
     public function Login($funcionario) {
-        // session_start();
 
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                 AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
@@ -33,7 +32,7 @@ class Funcionario {
 
         if ($idFuncionario > 0) {
             $_SESSION['idAdmin'] =  $idFuncionario;
-            echo $_SESSION['idAdmin'];
+            echo 1;
         } else {
             echo 0;
             session_destroy();
@@ -42,6 +41,10 @@ class Funcionario {
 
     public function Inserir($funcionario){
 
+        $temNumeros = filter_var($funcionario->senha, FILTER_SANITIZE_NUMBER_INT) !== '';
+        $temLetras = preg_match('/[a-z-A-Z]/', $funcionario->senha);
+
+        if ($temNumeros && $temLetras) {
             $sql = "INSERT INTO usuarioAdm (nome, login, senha, idNivelUsuario) VALUES (?,?,?,1)";
             $params = array("$funcionario->nome", "$funcionario->usuario", "$funcionario->senha");
 
@@ -49,13 +52,18 @@ class Funcionario {
             $pdoCon = $con->Conectar();
 
             $stm = sqlsrv_query($pdoCon, $sql, $params);
-            return $stm;
 
             if ($stm) {
+                // foi executado
                 echo 1;
             } else {
+                // não executou
                 echo 0;
             }
+        } else {
+            // senha fora do exigido
+            echo 2;
+        }
     }
 
     public function Editar($funcionario){

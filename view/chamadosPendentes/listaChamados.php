@@ -1,8 +1,9 @@
 <?php
+    @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    // require_once("../modulo.php");
-    // autentica();
+    autentica();
     $conexao  = conexao();
+    $pesquisaEmpresa = "";
 ?>
 <script>
     $(document).ready(function(){
@@ -45,6 +46,13 @@
     Lista de chamados - Pendentes
 </div>
 
+<div class="contentPesquisaPendentes">
+    <form action="?pag=chamadosPendentes" method="post">
+        <input class="inputPesquisa" type="search" name="txtPesquisa" value="<?php echo $pesquisaEmpresa; ?>" required>
+        <input class="btnPesquisar" type="submit" name="btnPesquisar" value="Pesquisar">
+    </form>
+</div>
+
 <div class="table">
     <div class="contentTitulos">
         <div class="tituloStatus">
@@ -76,10 +84,15 @@
     </div>
     <div class="contentRegistros">
         <?php
-            // require_once("../controller/controllerChamado.php");
             require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
-            $chamado = $listChamados::listarChamado(0, '');
+            if (isset($_POST['btnPesquisar'])) {
+                $pesquisaEmpresa = $_POST['txtPesquisa'];
+                // echo "<script>alert('".$pesquisaEmpresa."')</script>";
+                $chamado = $listChamados::pesquisaChamado($pesquisaEmpresa);
+            } else {
+                $chamado = $listChamados::listarChamado(0, '');
+            }
             $cont = 0;
             while($cont < count($chamado)){
                 if ($chamado[$cont]->status) {

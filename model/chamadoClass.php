@@ -16,6 +16,8 @@ class Chamado {
     public $dtInicio;
     public $dtFim;
     public $dataFechamento;
+    public $empresaInicial;
+    public $empresaFinal;
 
     function __construct() {
         require_once("bdClass.php");
@@ -176,28 +178,46 @@ class Chamado {
 
     public function FiltroPorData($chamado){
 
+        // resgatando os valores que será usado na query
         $dataInicio = $chamado->dtInicio;
         $dataFim = $chamado->dtFim;
+        $fornecedorInicio = $chamado->empresaInicial;
+        $fornecedorFim = $chamado->empresaFinal;
 
+        // verificando se as datas estão vazias
         if ($dataInicio != null && $dataFim != null) {
-
+            // conectando com o banco
             $con = new Sql_db();
             $pdoCon = $con->Conectar();
 
+            // verificando se a data inicial é maior que a final
             if (strtotime($dataInicio) > strtotime($dataFim)) {
                 return null;
             } else {
-                $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                        u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
-                        FROM chamados AS c
-                        INNER JOIN usuario AS u
-                        ON c.idUsuario = u.id
-                        WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
 
+                if ($fornecedorInicio == '' || $fornecedorFim == '') {
+                    $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                            u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                            FROM chamados AS c
+                            INNER JOIN usuario AS u
+                            ON c.idUsuario = u.id
+                            WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
+                } else {
+                    // SUPOSTO SELECT PARA O FILTRO COM FORNECEDOR
+                    $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                            u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                            FROM chamados AS c
+                            INNER JOIN usuario AS u
+                            ON c.idUsuario = u.id
+                            WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
+                            AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                }
+                // executando a query
                 $select = sqlsrv_query($pdoCon, $sql);
                 $rows_affected = sqlsrv_rows_affected($select);
                 $cont = 0;
 
+                // verificando se a query foi executada
                 if ($rows_affected === false) {
                     echo "Erro na chamada do sqlsrv_rows_affected\n";
                     die (print_r(sqlsrv_errors(), true));
@@ -240,34 +260,108 @@ class Chamado {
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
+        // executando no banco
         $selectTotal = sqlsrv_query($pdoCon, $sqlTotal);
         $selectResolvidos = sqlsrv_query($pdoCon, $sqlResolvidos);
         $selectPendentes = sqlsrv_query($pdoCon, $sqlPendentes);
 
+        // resgatando total de chamados
         if($rsTotal = sqlsrv_fetch_array($selectTotal)){
             $totalChamados = $rsTotal['totalChamados'];
         }
+        // resgatando quantidade de chamados resolvidos
         if($rsResolvidos = sqlsrv_fetch_array($selectResolvidos)){
             $resolvidos = $rsResolvidos['resolvidos'];
         }
+        // resgatando total de chamados pendentes
         if($rsPendentes = sqlsrv_fetch_array($selectPendentes)){
             $pendentes = $rsPendentes['pendentes'];
         }
+        // execuando no banco a query que verifia total de chamados respondidos
         for ($i=0; $i < 2; $i++) {
             $selectObservacoes = sqlsrv_query($pdoCon, $sqlObservacoes);
         }
+        // resgatando quantidade de chamados respondidos
         if($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
             $observacoes = $rsObservacoes['respostas'];
         }
-
+        // caso exista ao menos um chamado, calcula as porcentagem de cada atributo
         if ($totalChamados != 0) {
             $resolvidos = $resolvidos * 100 / $totalChamados;
             $pendentes = $pendentes * 100 / $totalChamados;
             $observacoes = ($observacoes * 100 / $totalChamados);
         }
         $con->Desconectar();
-
+        // retornando um array com todas as informações resgatadas
         return array($totalChamados, $resolvidos, $pendentes, $observacoes);
+    }
+
+    // função que busca todas as empresas cadastradas
+    // para ser carregadas no select de filtro
+    public function listarEmpresas(){
+
+        $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if ($rows_affected == -1) {
+            while($rs = sqlsrv_fetch_array($select)){
+                $chamado[] = new Chamado();
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $cont ++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
+    }
+
+    public function filtroPesquisaEmpresa($pesquisaEmpresa){
+        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                FROM chamados AS c
+                INNER JOIN usuario AS u
+                ON u.id = c.idUsuario
+                WHERE u.razaoSocial LIKE '%$pesquisaEmpresa%'
+                AND status = 0 ORDER BY c.id DESC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if($rows_affected == -1){
+            while ($rs = sqlsrv_fetch_array($select)){
+                $chamado[] = new Chamado();
+                $chamado[$cont]->idChamado = $rs['idChamado'];
+                $chamado[$cont]->titulo = $rs['titulo'];
+                $chamado[$cont]->mensagem = $rs['mensagem'];
+                $chamado[$cont]->status = $rs['status'];
+                $chamado[$cont]->dataAbertura = $rs['data'];
+                $chamado[$cont]->idUsuario = $rs['usuarioId'];
+                $chamado[$cont]->cnpj = $rs['cnpj'];
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $chamado[$cont]->nomeUsuario = $rs['nome'];
+                $cont++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
+
     }
 }
  ?>

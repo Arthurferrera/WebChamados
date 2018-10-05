@@ -49,7 +49,7 @@ textarea{
 .contentBotao{
     width: 25%;
     height: 25%;
-    /* background-color: gray; */
+    background-color: gray;
     margin-right: 5%;
     /*margin-left: 60%; */
     float: right;

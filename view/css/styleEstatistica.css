@@ -1,6 +1,6 @@
 .linhastatistica{
     width: 80%;
-    height: 5%;
+    height: 50px;
     margin-left: auto;
     margin-right: auto;
     /* background-color: orange; */
@@ -12,7 +12,7 @@
     height: 100%;
     /* background-color: blue; */
     text-align: center;
-    line-height: 7vh;
+    line-height: 50px;
     vertical-align: middle;
     float: left;
     font-weight: 900;
@@ -39,7 +39,7 @@
     height: 100%;
     /* background-color: blue; */
     text-align: center;
-    line-height: 7vh;
+    line-height: 50px;
     vertical-align: middle;
     float: left;
 }

@@ -1,12 +1,15 @@
 <?php
-    // autentica();
+    // inicia a sessão, importa o arquivo e chama a função que valida a autenticação do usuario
+    @session_start();
+    require_once($_SESSION['require']."view/modulo.php");
+    autentica();
+    // conexao com banco
     $conexao  = conexao();
     $class = "";
-
+    // definindo a data atual
     date_default_timezone_set('America/Sao_Paulo');
     $dateAtualInicio = date('Y-m-d');
     $dateAtualFim = date('Y-m-d');
-    // echo $dateAtual;
 ?>
 
 <script>
@@ -76,6 +79,42 @@
         <div class="contentBotaoFiltro">
             <input class="botaoStyleFiltro" type="submit" name="btnFiltrar" value="filtrar">
         </div>
+        <div class="selectInicio">
+            <span class="labelInput">Empresa Inicial:</span>
+            <select class="selectEmpresas" name="sltEmpresaInicial">
+                <option value="">Todas</option>
+                <?php
+                    require_once($_SESSION['require']."controller/controllerChamado.php");
+                    $listChamados = new controllerChamado();
+                    $chamado = $listChamados::empresas();
+                    $cont = 0;
+                    while($cont < count($chamado)){
+                 ?>
+                        <option value="<?php echo $chamado[$cont]->razaoSocial; ?>"><?php echo $chamado[$cont]->razaoSocial; ?></option>
+                <?php
+                        $cont++;
+                    }
+                ?>
+            </select>
+        </div>
+        <div class="selectFim">
+            <span class="labelInput">Empresa Final:</span>
+            <select class="selectEmpresas" name="sltEmpresaFinal">
+                <option value="">Todas</option>
+                <?php
+                    require_once($_SESSION['require']."controller/controllerChamado.php");
+                    $listChamados = new controllerChamado();
+                    $chamado = $listChamados::empresas();
+                    $cont = 0;
+                    while($cont < count($chamado)){
+                 ?>
+                        <option value="<?php echo $chamado[$cont]->razaoSocial; ?>"><?php echo $chamado[$cont]->razaoSocial; ?></option>
+                <?php
+                        $cont++;
+                    }
+                ?>
+            </select>
+        </div>
     </form>
 </div>
 
@@ -129,10 +168,10 @@
                 }
         ?>
             <div class="linhaRegistro">
-                <div class="registroStatus">
+                <div class="registroStatusResolvidos">
                     <img src="<?php echo $img; ?>" alt="status">
                 </div>
-                <div class="registroStatus">
+                <div class="registroStatusResolvidos">
                     <?php echo $cont+1 ?>
                 </div>
                 <div class="registros">

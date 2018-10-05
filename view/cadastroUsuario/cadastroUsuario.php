@@ -1,7 +1,8 @@
 <?php
+    @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    // autentica();
     require_once($_SESSION['require']."model/funcionarioClass.php");
+    autentica();
     $conexao  = conexao();
 
     $funcionario = new Funcionario();
@@ -20,7 +21,19 @@
                 processData: false,
                 async: true,
                 success: function(dados){
-                    Listar();
+                    if(dados == 1){
+                        // executou
+                        Listar();
+                    } else if (dados == 0){
+                        // erro ao tentar cadastrar
+                        alert('Erro ao cadastrar um novo usuário. Tente novamente mais tarde.');
+                    } else if (dados == 2){
+                        // senha fora do padrão exigido
+                        alert('Senha deve conter no letras e números.');
+                    } else if (dados == 3){
+                        // senha muito pequena
+                        alert('Senha deve conter no mínimo 6 caracteres.');
+                    }
                }
            });
         });
@@ -31,26 +44,26 @@
         Cadastro de Usuários
     </div>
 
-        <div class="contentCampos">
-            <form id="form" action="home.php?pag=cadastroUsuario" method="post">
-                <input id="id" type="hidden" name="txtId">
-                <div class="campos">
-                    <span>Nome:</span>
-                    <input id="inpNome" class="campoInput" maxlength="50" type="text" name="txtNome" required>
-                </div>
-                <div class="campos">
-                    <span>Login:</span>
-                    <input id="inpUsuario" class="campoInput" maxlength="25" type="text" name="txtLogin" required>
-                </div>
-                <div class="campos">
-                    <span>Senha:</span>
-                    <input id="inpSenha" class="campoInput" maxlength="20" type="password" name="txtSenha" required>
-                </div>
-                <div class="campoBotao">
-                    <input id="btnSalvar" class="botaoSalvar" type="submit" name="btnSalvar" value="Salvar">
-                </div>
-            </form>
-        </div>
+    <div class="contentCampos">
+        <form id="form" action="home.php?pag=cadastroUsuario" method="post">
+            <input id="id" type="hidden" name="txtId">
+            <div class="campos">
+                <span>Nome:</span>
+                <input id="inpNome" class="campoInput" maxlength="50" type="text" name="txtNome" required>
+            </div>
+            <div class="campos">
+                <span>Login:</span>
+                <input id="inpUsuario" class="campoInput" maxlength="25" type="text" name="txtLogin" required>
+            </div>
+            <div class="campos">
+                <span>Senha:</span>
+                <input id="inpSenha" class="campoInput" maxlength="20" type="password" name="txtSenha" required>
+            </div>
+            <div class="campoBotao">
+                <input id="btnSalvar" class="botaoSalvar" type="submit" name="btnSalvar" value="Salvar">
+            </div>
+        </form>
+    </div>
 
     <div class="tableUsuario">
         <div class="contentTitulosUsuarios">

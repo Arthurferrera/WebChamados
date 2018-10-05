@@ -15,9 +15,8 @@
                     return $retorno;
                     break;
                 case 'inserir':
-                    // echo "string";
                     $controllerFuncionario = new controllerFuncionario();
-                    return $controllerFuncionario::Inserir();
+                    return $controllerFuncionario->Inserir();
                     break;
                 case 'excluir':
                     $controllerFuncionario = new controllerFuncionario();
@@ -36,11 +35,6 @@
                     $array = [$funcionarioInfo->nome, $funcionarioInfo->usuario, $funcionarioInfo->senha, $funcionarioInfo->idFuncionario];
                     echo json_encode($array);
                     break;
-                // case 'editar':
-                //     $controllerFuncionario = new controllerFuncionario();
-                //     return $controllerFuncionario::Editar();
-                //
-                //     break;
                 default:
                     // code...
                     break;

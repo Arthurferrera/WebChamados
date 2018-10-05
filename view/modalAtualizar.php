@@ -1,8 +1,8 @@
 <?php
-    session_start();
+    @session_start();
     require_once($_SESSION['require']."view/modulo.php");
     $conexao  = conexao();
-    // autentica();
+    autentica();
     $idChamado = $_POST['id'];
  ?>
 <script src="./view/js/jquery.js"></script>

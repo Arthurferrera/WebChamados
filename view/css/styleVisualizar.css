@@ -1,17 +1,17 @@
 .tituloVisualizar{
     width: 100%;
-    height: 7vh;
+    height: 10%;
     /* background-color: red; */
     font-size: 1.5em;
     text-align: center;
-    line-height: 7vh;
+    line-height: 50px;
     vertical-align: middle;
     border-bottom: 2px solid #000000;
 }
 
 .contentVisualizarInformacoes{
     width: 92%;
-    height: 72vh;
+    height: 450px;
     /* background-color: green; */
     overflow: auto;
     padding-left: 3%;
@@ -20,7 +20,7 @@
 
 .linhaInformacoes{
     width: 100%;
-    min-height: 10vh;
+    min-height: 60px;
     /* background-color: yellow; */
     margin-top: 2%;
 }
@@ -30,7 +30,7 @@
     height: 100%;
     /* background-color: gray; */
     float: left;
-    line-height: 10vh;
+    line-height: 60px;
     vertical-align: middle;
     text-align: justify;
     font-weight: 900;
@@ -42,7 +42,7 @@
     height: 100%;
     /* background-color: red; */
     float: left;
-    line-height: 10vh;
+    line-height: 60px;
     vertical-align: middle;
     text-align: justify;
     padding-left: 3%;
@@ -66,7 +66,7 @@
 
 .linhaDescricao{
     width: 100%;
-    min-height: 10vh;
+    min-height: 60px;
     height: auto;
     /* background-color: orange; */
     margin-top: 2%;
@@ -74,9 +74,9 @@
 
 .labelDescricao{
     width: 15%;
-    height: 10vh;
+    height: 60px;
     /* background-color: gray; */
-    line-height: 10vh;
+    line-height: 60px;
     vertical-align: middle;
     text-align: justify;
     font-weight: 900;
@@ -86,7 +86,7 @@
 
 .visualizarDescricao{
     width: 70%;
-    min-height: 4vh;
+    min-height: 23px;
     height: auto;
     /* background-color: pink; */
     text-align: left;
@@ -98,6 +98,7 @@
 
 .linhaStatus{
     width: 70%;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
@@ -117,9 +118,9 @@
 
 .labelObservacao{
     width: 20%;
-    height: 10vh;
+    height: 60px;
     /* background-color: gray; */
-    line-height: 10vh;
+    line-height: 60px;
     vertical-align: middle;
     text-align: justify;
     font-weight: 900;
@@ -129,7 +130,7 @@
 
 .contentObservacoes{
     width: 71%;
-    min-height: 10vh;
+    min-height: 60px;
     height: auto;
     /* background-color: red; */
     padding: 2%;
@@ -139,19 +140,19 @@
 
 .linhaObservacao{
     width: 100%;
-    min-height: 10vh;
+    min-height: 60px;
     height: auto;
     /* background-color: #dcdcdc; */
-    margin-bottom: 2vh;
+    margin-bottom: 10px;
     margin-top: 2%;
     border-bottom: solid 2px #000000;
 }
 
 .mensagemObservacao{
     width: 100%;
-    min-height: 5vh;
+    min-height: 30px;
     /* background-color: #00ff00; */
-    margin-bottom: 1vh;
+    margin-bottom: 5px;
 }
 
 .labelMensagem{

@@ -27,9 +27,9 @@
                             if(resposta == 1){
                                 window.location.href = "view/home.php";
                             } else {
-                                alert(resposta);
                                 alert("Usuário e/ou Senha Incorretos!!");
                                 $('#txtSenha').val("");
+                                window.location.href = "index.php";
                             }
                         }
                     });

@@ -22,8 +22,8 @@ class controllerChamado {
     public function buscarObservacoes($idChamado){
         $listObervacoes = new Chamado();
         $listObervacoes->idChamado = $idChamado;
-        $retornoObservacoes = $listObervacoes::SelectObsById($listObervacoes->idChamado);
-        return $retornoObservacoes;
+        return $listObervacoes::SelectObsById($listObervacoes->idChamado);
+        // return $retornoObservacoes;
     }
 
     public function listarChamado($status, $tipoSelect){
@@ -42,6 +42,8 @@ class controllerChamado {
         $chamado = new Chamado();
         $chamado->dtInicio = $_POST['txtDtInicio'];
         $chamado->dtFim = $_POST['txtDtFim'];
+        $chamado->empresaInicial = $_POST['sltEmpresaInicial'];
+        $chamado->empresaFinal = $_POST['sltEmpresaFinal'];
         $retornoChamado = $chamado::FiltroPorData($chamado);
         return $retornoChamado;
     }
@@ -51,6 +53,16 @@ class controllerChamado {
         $chamado = new Chamado();
         $retornoEstatisticas = $chamado::Estatisticas();
         return $retornoEstatisticas;
+    }
+
+    public function empresas(){
+        $chamado = new Chamado();
+        return $chamado::listarEmpresas();
+    }
+
+    public function pesquisaChamado($pesquisaEmpresa){
+        $chamado = new Chamado();
+        return $chamado::filtroPesquisaEmpresa($pesquisaEmpresa);
     }
 }
  ?>

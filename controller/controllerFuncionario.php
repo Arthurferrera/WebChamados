@@ -18,19 +18,26 @@
             return $funcionario->Login($funcionario);
         }
 
+        // metodo que grava um novo funcionario
         function Inserir(){
+            // resgata as informações
             $funcionario = new Funcionario();
             $funcionario->nome = $_POST['txtNome'];
             $funcionario->usuario = $_POST['txtLogin'];
             $funcionario->senha = $_POST['txtSenha'];
             $funcionario->idFuncionario = $_POST['txtId'];
 
-            $id = $_POST['txtId'];
-            // echo $funcionario->nome;
-            // echo $funcionario->usuario;
-            // echo $funcionario->senha;
-            // echo $funcionario->idFuncionario;
+            // caso a senha seja menor que 6 caracteres
+            $senha = $funcionario->senha;
+            if (trim(strlen($senha)) < 6) {
+                echo 3;
+                return;
+            }
 
+            // verifica se o id esta vazio
+            // caso sim, chama o metodo Editar
+            // caso nao, chama o inserir
+            $id = $_POST['txtId'];
             if ($id <> '') {
                 return $funcionario::Editar($funcionario);
             } else {
@@ -38,15 +45,15 @@
             }
         }
 
+        // metodo que lista todos os funcionarios
         function listarFuncionario(){
-            // require_once("../model/funcionarioClass.php");
             $funcionario = new Funcionario();
             $retornoFuncionario = $funcionario::SelectAllFuncionario();
             return $retornoFuncionario;
         }
 
+        // metodo que busca um usuario pelo id
         function listarFuncionarioById(){
-            // require_once("./model/funcionarioClass./php");
             $funcionario = new Funcionario();
             $funcionario->idFuncionario = $_GET['id'];
             $retornoFuncionario = $funcionario::SelectByIdFuncionario($funcionario->idFuncionario);
@@ -58,21 +65,13 @@
             return $funcionario;
         }
 
+        // metodo que exclui um funcionario
         function Excluir(){
             $funcionario = new Funcionario();
             $funcionario->idFuncionario = $_GET['id'];
             $excluiu = $funcionario::Excluir($funcionario->idFuncionario);
             return $excluiu;
         }
-
-        // function Editar(){
-        //     $funcionario = new Funcionario();
-        //     $funcionario->idFuncionario = $_GET['id'];
-        //     $funcionario->nome = $_POST['txtNome'];
-        //     $funcionario->usuario = $_POST['txtLogin'];
-        //     $funcionario->senha = $_POST['txtSenha'];
-        //     return $funcionario::Editar($funcionario);
-        // }
     }
 
  ?>

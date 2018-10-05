@@ -1,12 +1,14 @@
 <?php
+    @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    // require_once("modulo.php");
-    // autentica();
+    autentica();
+
     $conexao  = conexao();
     $idChamado = $chamado->idChamado;
     $titulo = $chamado->titulo;
     $mensagem  = $chamado->mensagem;
     $status = $chamado->status;
+
     if (!$status) {
         $textStatus = "Pendente";
         $cor = "#ff0000";
@@ -33,6 +35,7 @@
     $razaoSocial = $chamado->razaoSocial;
     $nomeUsuario = $chamado->nomeUsuario;
  ?>
+ <!-- código que faz o efeito de fechar a modal -->
  <script>
      $(document).ready(function(){
          $('.fecharModal').click(function(){

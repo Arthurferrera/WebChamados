@@ -1,4 +1,6 @@
 <?php
+    autentica();
+
     function conexao(){
         // definindo o host do banco
         $serverName = 'LENOVO-PC';
@@ -19,20 +21,23 @@
     }
 
     function autentica(){
-
-        if ((isset($_SESSION['idAdmin']) ==  false) or (isset($_SESSION['nomeUsuario']) == false)) {
+        $idNivel;
+        // verifica se a variavel de sessão está nula
+        if ((isset($_SESSION['idAdmin']) ==  '')) {
             header('location:http://localhost/WebChamados/index.php?out=1');
         } else {
+            // caso a sessão não esteja nula, verifica o idNivelUsuario
             $id = $_SESSION['idAdmin'];
-            $idNivel;
-            $sql = "SELECT idNivelUsuario FROM usuario WHERE idNivelUsuario = ".$id;
+            $sql = "SELECT idNivelUsuario FROM usuarioAdm WHERE idNivelUsuario = ".$id;
+
             $conexao = conexao();
             $result = sqlsrv_query($conexao, $sql);
+
             if($rs = sqlsrv_fetch_array($result)){
                 $idNivel = $rs['idNivelUsuario'];
-            }
-            if ($idNivel != 1) {
-                header('location:http://localhost/WebChamados/index.php?out=1');
+                if ($idNivel != 1) {
+                    header('location:http://localhost/WebChamados/index.php?out=1');
+                }
             }
         }
     }

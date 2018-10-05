@@ -2,7 +2,7 @@
     session_start();
     require_once($_SESSION['require']."view/modulo.php");
     $conexao = conexao();
-    // autentica();
+    autentica();
 
     $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
     $result = sqlsrv_query($conexao, $sql);
@@ -75,70 +75,76 @@
     </head>
     <body id="body">
         <header>
-            <div class="alinha"></div>
-            <div class="logo"></div>
-            <div class="logoff">
-                <div class="informacoesUsuarios">
-                    <p>Bem vindo, <?php echo $_SESSION['nomeUsuario']; ?></p>
+            <section class="centralizaHeader">
+                <div class="alinha"></div>
+                <div class="logo"></div>
+                <div class="logoff">
+                    <div class="informacoesUsuarios">
+                        <p>Bem vindo, <?php echo $_SESSION['nomeUsuario']; ?></p>
+                    </div>
+                    <div class="sair">
+                        <a href="../index.php?out=1" id="textoSair">Sair</a>
+                    </div>
                 </div>
-                <div class="sair">
-                    <a href="../index.php?out=1" id="textoSair">Sair</a>
-                </div>
-            </div>
+            </section>
         </header>
         <section id="main">
-            <section id="menu_lateral">
-                <a href="?pag=chamadosPendentes">
-                    <div class="itens">
-                        Chamados Pendentes
-                    </div>
-                </a>
-                <a href="?pag=chamadosResolvidos">
-                    <div class="itens">
-                        Chamados Resolvidos
-                    </div>
-                </a>
-                <a href="?pag=estatistica">
-                    <div class="itens">
-                        Estatísticas
-                    </div>
-                </a>
-                <a onclick="Listar()" href="?pag=cadastroUsuario">
-                    <div class="itens">
-                        Cadastro de Usuário
-                    </div>
-                </a>
-            </section>
-            <section id="content_principal">
-                <?php
-                    if (isset($_GET['pag'])) {
-                        $pag = $_GET['pag'];
-                        switch ($pag) {
-                            case 'home':
-                                require_once("divHome.php");
-                                break;
-                            case 'chamadosPendentes':
-                                require_once("chamadosPendentes/listaChamados.php");
-                                break;
-                            case 'chamadosResolvidos':
-                                require_once("chamadosResolvidos/listaResolvidos.php");
-                                break;
-                            case 'cadastroUsuario':
-                                require_once("cadastroUsuario/cadastroUsuario.php");
-                                break;
-                            case 'estatistica':
-                                require_once("estatisticas/estatistica.php");
-                                break;
-                            default:
-                                require_once("divHome.php");
-                                break;
+            <section class="centralizaMain">
+                <section id="menu_lateral">
+                    <a href="?pag=chamadosPendentes">
+                        <div class="itens">
+                            Chamados Pendentes
+                        </div>
+                    </a>
+                    <a href="?pag=chamadosResolvidos">
+                        <div class="itens">
+                            Chamados Resolvidos
+                        </div>
+                    </a>
+                    <a href="?pag=estatistica">
+                        <div class="itens">
+                            Estatísticas
+                        </div>
+                    </a>
+                    <a onclick="Listar()" href="?pag=cadastroUsuario">
+                        <div class="itens">
+                            Cadastro de Usuário
+                        </div>
+                    </a>
+                </section>
+                <section id="content_principal">
+                    <?php
+                        if (isset($_GET['pag'])) {
+                            $pag = $_GET['pag'];
+                            switch ($pag) {
+                                case 'home':
+                                    require_once("divHome.php");
+                                    break;
+                                case 'chamadosPendentes':
+                                    require_once("chamadosPendentes/listaChamados.php");
+                                    break;
+                                case 'chamadosResolvidos':
+                                    require_once("chamadosResolvidos/listaResolvidos.php");
+                                    break;
+                                case 'cadastroUsuario':
+                                    require_once("cadastroUsuario/cadastroUsuario.php");
+                                    break;
+                                case 'estatistica':
+                                    require_once("estatisticas/estatistica.php");
+                                    break;
+                                default:
+                                    require_once("divHome.php");
+                                    break;
+                            }
                         }
-                    }
-                ?>
+                    ?>
+                </section>
             </section>
         </section>
         <footer>
-            Desenvolvido por:
+            <section class="centralizarFooter">
+                Desenvolvido por:
+            </section>
         </footer>
     </body>
 </html>

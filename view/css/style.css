@@ -6,9 +6,17 @@
 /* area do header/cabeçalho */
 header{
     width: 100%;
-    height: 12vh;
+    height: 100px;
     background-color: gray;
     color: #ffffff;
+}
+
+.centralizaHeader{
+    width: 1365px;
+    height: 100px;
+    background-color: gray;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .alinha{
@@ -41,7 +49,7 @@ header{
     height: 100%;
     /* background-color: green; */
     float: right;
-    margin-top: -12vh;
+    margin-top: -100px;
     text-align: center;
 }
 
@@ -50,8 +58,10 @@ header{
     height: 50%;
     /* background-color: pink; */
     font-size: 1em;
-    line-height: 6vh;
+    line-height: 50px;
     vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .sair{
@@ -59,7 +69,7 @@ header{
     height: 50%;
     /* background-color: blue; */
     font-size: 1em;
-    line-height: 6vh;
+    line-height: 50px;
     vertical-align: middle;
 }
 
@@ -71,52 +81,71 @@ header{
 /* area do conteudo */
 #main{
     width: 100%;
-    height: 80vh;
-    background-color: white;
+    height: 500px;
+}
+
+.centralizaMain{
+    width: 1365px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto
 }
 
 #menu_lateral{
     width: 15%;
-    height: 80vh;
+    height: 100%;
     background-color: #000000;
     float: left;
     color: #ffffff;
 }
 
 .itens{
-    width: 100%;
-    height: 10vh;
+    width: 97%;
+    height: 80px;
     background-color: #000000;
     font-size: 1.2em;
-    line-height: 10vh;
+    line-height: 80px;
     vertical-align: middle;
     border-bottom: solid 1px #ffffff;
     padding-left: 5px;
+    color: #ffffff;
 }
 
 .itens:hover{
+    width: 95%;
     border-left: 4px solid #ffffff;
     cursor: pointer;
 }
 
 #content_principal{
     width: 85%;
-    height: 80vh;
-    background-color: #ffffff;
+    height: 100%;
+    /* background-color: red; */
     float: left;
+}
+
+.centralizarFooter{
+    width: 1365px;
+    height: 100%;
+    background-color: gray;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* area do rodapé */
 footer{
     width: 100%;
-    height: 8vh;
+    height: 41px;
     text-align: center;
     font-size: 1.2em;
-    line-height: 8vh;
+    line-height: 40px;
     vertical-align: middle;
     background-color: gray;
     color: #ffffff;
     font-weight: 900;
+    z-index: 999;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* estilização dos links */
