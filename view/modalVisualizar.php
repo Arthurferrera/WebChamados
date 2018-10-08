@@ -42,6 +42,17 @@
              $('.container').fadeOut(600);
          });
      });
+
+     // FUNÇÃO QUE SOLICITA A IMPRESSÃE DE UM CHAMADO
+     function ImprimirChamado(id){
+         $('#iconeImprimirChamado').click(function(){
+             $.ajax({
+                 type: 'POST',
+                 url: '../view/printDetalhes.php',
+                 data: {idChamado:id}
+             });
+         });
+     }
  </script>
 
  <div class="fecharModal">
@@ -51,6 +62,9 @@
      Detalhes do chamado
  </div>
  <div class="contentVisualizarInformacoes">
+     <div class="printChamado">
+         <a id="iconeImprimirChamado" onclick="ImprimirChamado(<?php echo $chamado->idChamado;?>);"> <img src="imagens/print.png" alt="Imprimir Detalhes do chamado" title="Imprimir Detalhes do chamado" width="25" height="25"> </a>
+     </div>
      <div class="linhaInformacoes">
          <div class="labelVisualizar">
              Solicitante:

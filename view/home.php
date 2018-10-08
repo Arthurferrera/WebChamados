@@ -57,7 +57,6 @@
                     data: {id:idItem},
                     dataType: 'json',
                     success: function(dados){
-                        // alert(dados);
                         const nome = dados[0];
                         const usuario = dados[1];
                         const senha = dados[2];

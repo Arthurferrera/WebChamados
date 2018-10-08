@@ -7,14 +7,14 @@
 header{
     width: 100%;
     height: 100px;
-    background-color: gray;
-    color: #ffffff;
+    background-color: #ccc;
+    color: #000000;
 }
 
 .centralizaHeader{
     width: 1365px;
     height: 100px;
-    background-color: gray;
+    background-color: #ccc;
     margin-left: auto;
     margin-right: auto;
 }
@@ -34,7 +34,7 @@ header{
     /* background-color: blue; */
     margin-left: auto;
     margin-right: auto;
-    background-image: url('../imagens/logosincaesp.jpg');
+    background-image: url('../imagens/logo.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -127,7 +127,7 @@ header{
 .centralizarFooter{
     width: 1365px;
     height: 100%;
-    background-color: gray;
+    background-color: #ccc;
     margin-right: auto;
     margin-left: auto;
 }
@@ -140,8 +140,8 @@ footer{
     font-size: 1.2em;
     line-height: 40px;
     vertical-align: middle;
-    background-color: gray;
-    color: #ffffff;
+    background-color: #ccc;
+    color: #000000;
     font-weight: 900;
     z-index: 999;
     margin-right: auto;
@@ -150,15 +150,15 @@ footer{
 
 /* estilização dos links */
 a:link{
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
 }
 a:active{
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
 }
 a:visited{
-    color: #ffffff;
+    color: #000;
     text-decoration: none;
 }
 

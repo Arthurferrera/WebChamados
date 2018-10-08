@@ -64,10 +64,7 @@ form{
 
 .botaoSalvar:hover{
     cursor: pointer;
-}
-
-.botaoSalvar:active{
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0,0,0,.5);
 }
 
 .tableUsuario{
@@ -96,7 +93,6 @@ form{
     line-height: 35px;
     vertical-align: middle;
 }
-
 
 .contentRegistrosUsuarios{
     width: 100%;
@@ -134,18 +130,3 @@ form{
 .registroMaior{
     width: 25%;
 }
-
-/* .registroStatus{
-    width: 5%;
-    height: 100%;
-    float: left;
-    margin-right: 1%;
-    text-align: center;
-    line-height: 30px;
-    vertical-align: middle;
-}
-
-.registroStatus img{
-    width: 50%;
-    height: 60%;
-} */

@@ -5,6 +5,7 @@
     $conexao  = conexao();
     $pesquisaEmpresa = "";
 ?>
+<link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
 <script>
     $(document).ready(function(){
         $('.atualizar').click(function(){
@@ -36,6 +37,10 @@
             });
         }
     }
+
+    function ImprimirLista(){
+        window.print();
+    }
 </script>
 <div class="container">
     <div id="modal">
@@ -51,6 +56,10 @@
         <input class="inputPesquisa" type="search" name="txtPesquisa" value="<?php echo $pesquisaEmpresa; ?>" required>
         <input class="btnPesquisar" type="submit" name="btnPesquisar" value="Pesquisar">
     </form>
+</div>
+
+<div class="contentBotaoImprimir">
+    <input type="button" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir">
 </div>
 
 <div class="table">

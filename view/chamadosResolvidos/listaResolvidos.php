@@ -12,6 +12,10 @@
     $dateAtualFim = date('Y-m-d');
 ?>
 
+<!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
+<link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
+
+<!-- SEÇÃO DE SCRIPTS -->
 <script>
 // abrir modal
     $(document).ready(function(){
@@ -50,6 +54,11 @@
                 }
             });
         }
+    }
+
+    // FUNÇÃO QUE SOLICITA A IMPRESSÃE DA PÁGINA
+    function ImprimirLista(){
+        window.print();
     }
 </script>
 <div class="container">
@@ -118,12 +127,16 @@
     </form>
 </div>
 
+<div class="contentBotaoImprimir">
+    <input type="button" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir">
+</div>
+
 <div class="table tableResolvida">
-    <div class="contentTitulos">
+    <div class="contentTitulos thead">
         <div class="tituloStatus">
         </div>
 
-        <div class="tituloStatus opcoes">
+        <div class="tituloStatus">
             N°
         </div>
 
@@ -147,7 +160,7 @@
             OPÇÕES
         </div>
     </div>
-    <div class="contentRegistros">
+    <div class="contentRegistros tfoot">
         <?php
             // require_once("../controller/controllerChamado.php");
             require_once($_SESSION['require']."controller/controllerChamado.php");
@@ -187,8 +200,8 @@
                     <?php echo $chamado[$cont]->titulo; ?>
                 </div>
                 <div class="registros opcoes">
-                    <div class="atualizar" onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');" style="color:black;">
-                        <a> <img src="imagens/lupa.png" alt="visualizar Chamado" title="visualizar Chamado" width="25" height="25"> </a>
+                    <div class="atualizar">
+                        <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');"> <img src="imagens/lupa.png" alt="visualizar Chamado" title="visualizar Chamado" width="25" height="25"> </a>
                     </div>
                 </div>
             </div>

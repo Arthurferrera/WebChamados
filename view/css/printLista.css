@@ -1,0 +1,185 @@
+/* ELEMENTOS QUE NÃO DEVE APARECER NA IMPRESSÃO */
+/* PESQISA POR NOME DE FORNECEDOR,CHAMADOS PENDENTES */
+page{
+    margin-top: 10px;
+}
+
+.contentPesquisaPendentes{
+    display: none;
+}
+
+.inputPesquisa{
+    display: none;
+}
+
+.btnPesquisar{
+    display: none;
+}
+
+header{
+    display: none;
+}
+
+footer{
+    display: none;
+}
+
+#menu_lateral{
+    display: none;
+}
+
+.tituloTela{
+    width: 100%;
+    height: 50px;
+    font-size: 2.5em;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    text-decoration: underline;
+    font-weight: 900;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.table{
+    width: 95%;
+    min-height: 65%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.tableResolvida{
+    width: 95%;
+    min-height: 65%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.contentTitulos{
+    width: 100%;
+    height: 50px;
+    font-size: 12pt;
+    border-bottom: 4px solid #000000;
+}
+
+.tituloStatus{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.titulosTabela{
+    width: 15.15%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.tituloMaior{
+    width: 25.30%
+}
+
+.contentRegistros{
+    width: 100%;
+    height: 88%;
+    overflow-y: auto;
+}
+
+.linhaRegistro{
+    width: 100%;
+    height: 40px;
+    border-bottom: 2px solid #000000;
+}
+
+.registros{
+    width: 15%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    font-size: 10pt;
+    line-height: 40px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.atualizar{
+    width: 50%;
+    height: 100%;
+    margin-left: 25%;
+}
+
+.registroMaior{
+    width: 25%;
+}
+
+.registroStatus{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+.registroStatus img{
+    width: 50%;
+    height: 60%;
+}
+
+.registroStatusResolvidos{
+    width: 5%;
+    height: 100%;
+    float: left;
+    margin-right: 1%;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+.registroStatusResolvidos img{
+    width: 50%;
+    height: 60%;
+}
+
+.opcoes{
+    width: 6%;
+}
+
+/* PARTE DA MODAL */
+.fecharModal{
+    display: none;
+}
+.container{
+    display: none;
+}
+.modal{
+    display: none;
+}
+.modalVisualizar{
+    display: none;
+}
+
+/* PARTE DE FILTRO POR DATA E FORNECEDOR */
+.contentFiltro{
+    display: none;
+}
+
+/* BOTÃO DE IMPRIMIR */
+.contentBotaoImprimir{
+    display: none;
+}
