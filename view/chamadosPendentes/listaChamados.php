@@ -1,11 +1,21 @@
 <?php
+    // inicia a sessão, importa o arquivo e chama a função que valida a autenticação do usuario
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
     autentica();
+    // conexao com banco
     $conexao  = conexao();
+    // pegando a data do dia atual
+    date_default_timezone_set('America/Sao_Paulo');
+    // defifindo o formato da data
+    $dateAtualInicio = date('Y-m-d');
+    $dateAtualFim = date('Y-m-d');
     $pesquisaEmpresa = "";
 ?>
+<!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
 <link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
+
+<!-- SEÇÃO DE SCRIPTS -->
 <script>
     $(document).ready(function(){
         $('.atualizar').click(function(){
@@ -18,11 +28,10 @@
             document.getElementById('modal').setAttribute("class", "modalVisualizar");
             $.ajax({
                 type: "GET",
-                url: "../router.php?controller=chamado&modo=buscar",
+                url: "../router.php?controller=chamado&modo=buscar&tela=visualizar",
                 data: {id:idChamado},
                 success: function(dados){
                     $("#modal").html(dados);
-                    console.log(dados);
                 }
             });
         } else if(tipo == 'atualizar') {
@@ -51,10 +60,30 @@
     Lista de chamados - Pendentes
 </div>
 
-<div class="contentPesquisaPendentes">
+<div class="contentFiltro">
+    <div class="labelFiltro">
+        Filtrar por periodo:
+    </div>
     <form action="?pag=chamadosPendentes" method="post">
-        <input class="inputPesquisa" type="search" name="txtPesquisa" value="<?php echo $pesquisaEmpresa; ?>" required>
-        <input class="btnPesquisar" type="submit" name="btnPesquisar" value="Pesquisar">
+        <div class="dtInicio">
+            <span class="labelInput">Inicio periodo:</span>
+            <input class="inputData" type="date" name="txtDtInicio" value="<?php echo $dateAtualInicio; ?>">
+        </div>
+        <div class="dtFim">
+            <span class="labelInput">Fim periodo:</span>
+            <input class="inputData" type="date" name="txtDtFim" value="<?php echo $dateAtualFim; ?>">
+        </div>
+        <div class="contentBotaoFiltro">
+            <input class="botaoStyleFiltro" type="submit" name="btnFiltrar" value="filtrar">
+        </div>
+        <div class="selectInicio">
+            <span class="labelInput">Empresa Inicial:</span>
+            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresa; ?>" alt="Empresa Inicial" title="Empresa Inicial">
+        </div>
+        <div class="selectFim">
+            <span class="labelInput">Empresa Final:</span>
+            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresa; ?>" alt="Empresa Final" title="Empresa Final">
+        </div>
     </form>
 </div>
 
@@ -95,10 +124,8 @@
         <?php
             require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
-            if (isset($_POST['btnPesquisar'])) {
-                $pesquisaEmpresa = $_POST['txtPesquisa'];
-                // echo "<script>alert('".$pesquisaEmpresa."')</script>";
-                $chamado = $listChamados::pesquisaChamado($pesquisaEmpresa);
+            if (isset($_POST['btnFiltrar'])) {
+                $chamado = $listChamados::filtroPorData(0);
             } else {
                 $chamado = $listChamados::listarChamado(0, '');
             }

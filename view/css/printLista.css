@@ -1,7 +1,11 @@
 /* ELEMENTOS QUE NÃO DEVE APARECER NA IMPRESSÃO */
 /* PESQISA POR NOME DE FORNECEDOR,CHAMADOS PENDENTES */
-page{
+.page{
     margin-top: 10px;
+}
+
+.page-break {
+    page-break-before: always;
 }
 
 .contentPesquisaPendentes{

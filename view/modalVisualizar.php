@@ -35,6 +35,10 @@
     $razaoSocial = $chamado->razaoSocial;
     $nomeUsuario = $chamado->nomeUsuario;
  ?>
+
+ <link href="css/printChamado.css" rel="stylesheet" type="text/css" media="print">
+
+
  <!-- código que faz o efeito de fechar a modal -->
  <script>
      $(document).ready(function(){
@@ -43,16 +47,18 @@
          });
      });
 
-     // FUNÇÃO QUE SOLICITA A IMPRESSÃE DE UM CHAMADO
-     function ImprimirChamado(id){
-         $('#iconeImprimirChamado').click(function(){
-             $.ajax({
-                 type: 'POST',
-                 url: '../view/printDetalhes.php',
-                 data: {idChamado:id}
-             });
+     // FUNÇÃO QUE SOLICITA A IMPRESSÃO DE UM CHAMADO
+     function ImprimirChamado(idChamado){
+         $.ajax({
+             type: "GET",
+             url: "../router.php?controller=chamado&modo=buscar&tela=imprimir",
+             data: {id:idChamado},
+             success: function(dados){
+                 // alert(dados);
+                 window.open("printDetalhes.php?chamado="+dados);
+             }
          });
-     }
+    }
  </script>
 
  <div class="fecharModal">
@@ -63,7 +69,7 @@
  </div>
  <div class="contentVisualizarInformacoes">
      <div class="printChamado">
-         <a id="iconeImprimirChamado" onclick="ImprimirChamado(<?php echo $chamado->idChamado;?>);"> <img src="imagens/print.png" alt="Imprimir Detalhes do chamado" title="Imprimir Detalhes do chamado" width="25" height="25"> </a>
+         <a id="iconeImprimirChamado" onclick="ImprimirChamado(<?php echo $idChamado ?>);"> <img src="imagens/print.png" alt="Imprimir Detalhes do chamado" title="Imprimir Detalhes do chamado" width="25" height="25"> </a>
      </div>
      <div class="linhaInformacoes">
          <div class="labelVisualizar">

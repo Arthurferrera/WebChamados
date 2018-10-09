@@ -176,7 +176,7 @@ class Chamado {
         $con->Desconectar();
     }
 
-    public function FiltroPorData($chamado){
+    public function FiltroPorData($chamado, $status){
 
         // resgatando os valores que será usado na query
         $dataInicio = $chamado->dtInicio;
@@ -196,21 +196,46 @@ class Chamado {
             } else {
 
                 if ($fornecedorInicio == '' || $fornecedorFim == '') {
-                    $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                            u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
-                            FROM chamados AS c
-                            INNER JOIN usuario AS u
-                            ON c.idUsuario = u.id
-                            WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
+                    if($status == 1){
+                        // select de chamados resolvidos, são puxados pela data de Fechamento
+                        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                FROM chamados AS c
+                                INNER JOIN usuario AS u
+                                ON c.idUsuario = u.id
+                                WHERE status = $status AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
+                    } else {
+                        // select de chamados resolvidos, são puxados pela data de abertura
+                        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                FROM chamados AS c
+                                INNER JOIN usuario AS u
+                                ON c.idUsuario = u.id
+                                WHERE status = $status AND data BETWEEN '$dataInicio' AND '$dataFim 23:59:59' ORDER BY idChamado DESC";
+                    }
+
                 } else {
-                    // SUPOSTO SELECT PARA O FILTRO COM FORNECEDOR
-                    $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                            u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
-                            FROM chamados AS c
-                            INNER JOIN usuario AS u
-                            ON c.idUsuario = u.id
-                            WHERE status = 1 AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
-                            AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                    // SELECT PARA O FILTRO COM FORNECEDOR
+                    if($status == 1){
+                        // select de chamados resolvidos, são puxados pela data de Fechamento
+                        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                FROM chamados AS c
+                                INNER JOIN usuario AS u
+                                ON c.idUsuario = u.id
+                                WHERE status = $status AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
+                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                    }else{
+                        // select de chamados resolvidos, são puxados pela data de abertura
+                        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                FROM chamados AS c
+                                INNER JOIN usuario AS u
+                                ON c.idUsuario = u.id
+                                WHERE status = $status AND data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
+                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                    }
+
                 }
                 // executando a query
                 $select = sqlsrv_query($pdoCon, $sql);
@@ -298,70 +323,70 @@ class Chamado {
 
     // função que busca todas as empresas cadastradas
     // para ser carregadas no select de filtro
-    public function listarEmpresas(){
+    // public function listarEmpresas(){
+    //
+    //     $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
+    //
+    //     $con = new Sql_db();
+    //     $pdoCon = $con->Conectar();
+    //
+    //     $select = sqlsrv_query($pdoCon, $sql);
+    //     $rows_affected = sqlsrv_rows_affected($select);
+    //     $cont = 0;
+    //
+    //     if ($rows_affected === false) {
+    //         echo "erro na chamada";
+    //     } else if ($rows_affected == -1) {
+    //         while($rs = sqlsrv_fetch_array($select)){
+    //             $chamado[] = new Chamado();
+    //             $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+    //             $cont ++;
+    //         }
+    //         return $chamado;
+    //     } else {
+    //         return null;
+    //     }
+    //     $con->Desconectar();
+    // }
 
-        $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
-
-        $con = new Sql_db();
-        $pdoCon = $con->Conectar();
-
-        $select = sqlsrv_query($pdoCon, $sql);
-        $rows_affected = sqlsrv_rows_affected($select);
-        $cont = 0;
-
-        if ($rows_affected === false) {
-            echo "erro na chamada";
-        } else if ($rows_affected == -1) {
-            while($rs = sqlsrv_fetch_array($select)){
-                $chamado[] = new Chamado();
-                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
-                $cont ++;
-            }
-            return $chamado;
-        } else {
-            return null;
-        }
-        $con->Desconectar();
-    }
-
-    public function filtroPesquisaEmpresa($pesquisaEmpresa){
-        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
-                FROM chamados AS c
-                INNER JOIN usuario AS u
-                ON u.id = c.idUsuario
-                WHERE u.razaoSocial LIKE '%$pesquisaEmpresa%'
-                AND status = 0 ORDER BY c.id DESC";
-
-        $con = new Sql_db();
-        $pdoCon = $con->Conectar();
-
-        $select = sqlsrv_query($pdoCon, $sql);
-        $rows_affected = sqlsrv_rows_affected($select);
-        $cont = 0;
-
-        if ($rows_affected === false) {
-            echo "erro na chamada";
-        } else if($rows_affected == -1){
-            while ($rs = sqlsrv_fetch_array($select)){
-                $chamado[] = new Chamado();
-                $chamado[$cont]->idChamado = $rs['idChamado'];
-                $chamado[$cont]->titulo = $rs['titulo'];
-                $chamado[$cont]->mensagem = $rs['mensagem'];
-                $chamado[$cont]->status = $rs['status'];
-                $chamado[$cont]->dataAbertura = $rs['data'];
-                $chamado[$cont]->idUsuario = $rs['usuarioId'];
-                $chamado[$cont]->cnpj = $rs['cnpj'];
-                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
-                $chamado[$cont]->nomeUsuario = $rs['nome'];
-                $cont++;
-            }
-            return $chamado;
-        } else {
-            return null;
-        }
-        $con->Desconectar();
-
-    }
+    // MÉTODO QUA FAZ UMA BUSCA DE TODOS OS CHAMADOS RELACIONADOS COM A EMPRESA DESEJADA
+    // public function filtroPesquisaEmpresa($pesquisaEmpresa){
+    //     $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+    //             u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+    //             FROM chamados AS c
+    //             INNER JOIN usuario AS u
+    //             ON u.id = c.idUsuario
+    //             WHERE u.razaoSocial LIKE '%$pesquisaEmpresa%'
+    //             AND status = 0 ORDER BY c.id DESC";
+    //
+    //     $con = new Sql_db();
+    //     $pdoCon = $con->Conectar();
+    //
+    //     $select = sqlsrv_query($pdoCon, $sql);
+    //     $rows_affected = sqlsrv_rows_affected($select);
+    //     $cont = 0;
+    //
+    //     if ($rows_affected === false) {
+    //         echo "erro na chamada";
+    //     } else if($rows_affected == -1){
+    //         while ($rs = sqlsrv_fetch_array($select)){
+    //             $chamado[] = new Chamado();
+    //             $chamado[$cont]->idChamado = $rs['idChamado'];
+    //             $chamado[$cont]->titulo = $rs['titulo'];
+    //             $chamado[$cont]->mensagem = $rs['mensagem'];
+    //             $chamado[$cont]->status = $rs['status'];
+    //             $chamado[$cont]->dataAbertura = $rs['data'];
+    //             $chamado[$cont]->idUsuario = $rs['usuarioId'];
+    //             $chamado[$cont]->cnpj = $rs['cnpj'];
+    //             $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+    //             $chamado[$cont]->nomeUsuario = $rs['nome'];
+    //             $cont++;
+    //         }
+    //         return $chamado;
+    //     } else {
+    //         return null;
+    //     }
+    //     $con->Desconectar();
+    // }
 }
  ?>

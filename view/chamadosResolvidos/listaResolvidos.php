@@ -5,11 +5,13 @@
     autentica();
     // conexao com banco
     $conexao  = conexao();
-    $class = "";
-    // definindo a data atual
+    // pegando a data do dia atual
     date_default_timezone_set('America/Sao_Paulo');
+    // defifindo o formato da data
     $dateAtualInicio = date('Y-m-d');
     $dateAtualFim = date('Y-m-d');
+    $pesquisaEmpresa = "";
+
 ?>
 
 <!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
@@ -90,39 +92,11 @@
         </div>
         <div class="selectInicio">
             <span class="labelInput">Empresa Inicial:</span>
-            <select class="selectEmpresas" name="sltEmpresaInicial">
-                <option value="">Todas</option>
-                <?php
-                    require_once($_SESSION['require']."controller/controllerChamado.php");
-                    $listChamados = new controllerChamado();
-                    $chamado = $listChamados::empresas();
-                    $cont = 0;
-                    while($cont < count($chamado)){
-                 ?>
-                        <option value="<?php echo $chamado[$cont]->razaoSocial; ?>"><?php echo $chamado[$cont]->razaoSocial; ?></option>
-                <?php
-                        $cont++;
-                    }
-                ?>
-            </select>
+            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresa; ?>" required alt="Empresa Inicial" title="Empresa Inicial">
         </div>
         <div class="selectFim">
             <span class="labelInput">Empresa Final:</span>
-            <select class="selectEmpresas" name="sltEmpresaFinal">
-                <option value="">Todas</option>
-                <?php
-                    require_once($_SESSION['require']."controller/controllerChamado.php");
-                    $listChamados = new controllerChamado();
-                    $chamado = $listChamados::empresas();
-                    $cont = 0;
-                    while($cont < count($chamado)){
-                 ?>
-                        <option value="<?php echo $chamado[$cont]->razaoSocial; ?>"><?php echo $chamado[$cont]->razaoSocial; ?></option>
-                <?php
-                        $cont++;
-                    }
-                ?>
-            </select>
+            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresa; ?>" required alt="Empresa Final" title="Empresa Final">
         </div>
     </form>
 </div>
@@ -162,13 +136,10 @@
     </div>
     <div class="contentRegistros tfoot">
         <?php
-            // require_once("../controller/controllerChamado.php");
             require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
             if (isset($_POST['btnFiltrar'])) {
-                $dateAtualInicio = $_POST['txtDtInicio'];
-                $dateAtualFim = $_POST['txtDtFim'];
-                $chamado = $listChamados::filtroPorData();
+                $chamado = $listChamados::filtroPorData(1);
             } else {
                 $chamado = $listChamados::listarChamado(1, 'SelectDiaResolvido');
             }

@@ -23,11 +23,9 @@ class controllerChamado {
         $listObervacoes = new Chamado();
         $listObervacoes->idChamado = $idChamado;
         return $listObervacoes::SelectObsById($listObervacoes->idChamado);
-        // return $retornoObservacoes;
     }
 
     public function listarChamado($status, $tipoSelect){
-        // require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
         if ($tipoSelect == 'SelectDiaResolvido') {
             $retornoChamado = $chamado::SelectDiaResolvido();
@@ -37,32 +35,26 @@ class controllerChamado {
         return $retornoChamado;
     }
 
-    public function filtroPorData(){
-        // require_once("../model/chamadoClass.php");
+    public function filtroPorData($status){
         $chamado = new Chamado();
         $chamado->dtInicio = $_POST['txtDtInicio'];
         $chamado->dtFim = $_POST['txtDtFim'];
-        $chamado->empresaInicial = $_POST['sltEmpresaInicial'];
-        $chamado->empresaFinal = $_POST['sltEmpresaFinal'];
-        $retornoChamado = $chamado::FiltroPorData($chamado);
+        $chamado->empresaInicial = $_POST['txtEmpresaInicial'];
+        $chamado->empresaFinal = $_POST['txtEmpresaFinal'];
+        $retornoChamado = $chamado::FiltroPorData($chamado, $status);
         return $retornoChamado;
     }
 
     public function Estatisticas(){
-        // require_once("../model/chamadoClass.php");
         $chamado = new Chamado();
         $retornoEstatisticas = $chamado::Estatisticas();
         return $retornoEstatisticas;
     }
 
-    public function empresas(){
-        $chamado = new Chamado();
-        return $chamado::listarEmpresas();
-    }
-
-    public function pesquisaChamado($pesquisaEmpresa){
-        $chamado = new Chamado();
-        return $chamado::filtroPesquisaEmpresa($pesquisaEmpresa);
-    }
+    // função que chama o método que retorna as empresas de clientes cadastrados
+    // public function empresas(){
+    //     $chamado = new Chamado();
+    //     return $chamado::listarEmpresas();
+    // }
 }
  ?>

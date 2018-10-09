@@ -1,12 +1,3 @@
-/* ICONE QUE SOLICITA IMPRESSÃO DE UM CHAMADO */
-.printChamado{
-    width: 50px;
-    height: 50px;
-    float: right;
-    margin-top: 15px;
-    /* background-color: blue; */
-}
-
 .printChamado img{
     margin-left: 12px;
     margin-top: 12px;
@@ -14,8 +5,8 @@
 
 .tituloVisualizar{
     width: 100%;
-    height: 10%;
-    /* background-color: red; */
+    height: 50px;
+    background-color: gray;
     font-size: 1.5em;
     text-align: center;
     line-height: 50px;
@@ -24,8 +15,9 @@
 }
 
 .contentVisualizarInformacoes{
-    width: 92%;
-    height: 450px;
+    width: 100%;
+    min-height: 450px;
+    height: auto;
     /* background-color: green; */
     overflow: auto;
     padding-left: 3%;
@@ -48,18 +40,18 @@
     vertical-align: middle;
     text-align: justify;
     font-weight: 900;
-    padding-left: 3%;
+    /* padding-left: 3%; */
 }
 
 .visualizarInformacoes{
     min-width: 23%;
-    min-height: 60px;
+    height: 60px;
     /* background-color: red; */
     float: left;
     line-height: 60px;
     vertical-align: middle;
     text-align: justify;
-    padding-left: 3%;
+    /* padding-left: 3%; */
 }
 
 .dataSolcitacao{
@@ -95,7 +87,7 @@
     text-align: justify;
     font-weight: 900;
     float: left;
-    padding-left: 3%;
+    /* padding-left: 3%; */
 }
 
 .visualizarDescricao{
@@ -127,7 +119,7 @@
 
 .linhaContentObservacao{
     display: none;
-    /* background-color: blue; */
+    /* background-color: orange; */
 }
 
 .labelObservacao{
@@ -139,7 +131,7 @@
     text-align: justify;
     font-weight: 900;
     float: left;
-    padding-left: 3%;
+    /* padding-left: 3%; */
 }
 
 .contentObservacoes{
@@ -147,9 +139,9 @@
     min-height: 60px;
     height: auto;
     /* background-color: red; */
-    padding: 1%;
+    padding: 2%;
     text-align: justify;
-    float: right;
+    clear: both;
 }
 
 .linhaObservacao{
@@ -158,6 +150,7 @@
     height: auto;
     /* background-color: #dcdcdc; */
     margin-bottom: 10px;
+    margin-top: 2%;
     border-bottom: solid 2px #000000;
 }
 

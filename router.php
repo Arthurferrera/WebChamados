@@ -53,7 +53,13 @@
                     $idChamado = $_GET['id'];
                     $controllerChamado = new controllerChamado();
                     $chamado = $controllerChamado::buscarChamado($idChamado);
-                    require_once("view/modalVisualizar.php");
+                    if($_GET['tela'] == 'imprimir'){
+                        echo $chamado->idChamado;
+                    } else if ($_GET['tela'] == 'visualizar') {
+                        require_once("view/modalVisualizar.php");
+                    } else if($_GET['tela'] == 'impressao'){
+                        require_once("view/printDetalhes.php");
+                    }
                     break;
                 case 'buscarObservacoes':
                     $idChamado = $_GET['id'];
