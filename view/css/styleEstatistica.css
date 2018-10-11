@@ -1,5 +1,35 @@
+#canvas-holder {
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    /* background-color: red; */
+}
+
+#chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: rgb(0, 0, 0);
+    color: white;
+    border-radius: 20px;
+    -webkit-transition: all .1s ease;
+    transition: all .1s ease;
+    pointer-events: none;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.chartjs-tooltip-key {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+}
+
 .linhastatistica{
-    width: 80%;
+    width: 30%;
     height: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -8,8 +38,9 @@
 }
 
 .labelEstatistica{
-    width: 15%;
+    width: 50%;
     height: 100%;
+    font-size: 15px;
     /* background-color: blue; */
     text-align: center;
     line-height: 50px;
@@ -18,34 +49,14 @@
     font-weight: 900;
 }
 
-.centralizarBarra{
-    width: 80%;
-    height: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1%;
-    border-radius: 15px;
-}
-
-.contentBarra{
-    width: 70%;
-    height: 100%;
-    /* background-color: yellow; */
-    float: left;
-}
-
 .porcentagem{
-    width: 15%;
+    width: 40%;
     height: 100%;
+    font-size: 15px;
     /* background-color: blue; */
     text-align: center;
     line-height: 50px;
     vertical-align: middle;
     float: left;
-}
-
-.barraEstatistica{
-    height: 100%;
-    background-color: black;
-    border-radius: 13px;
+    margin-left: 5%;
 }

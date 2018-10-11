@@ -5,14 +5,20 @@
     autentica();
     $idChamado = $_POST['id'];
  ?>
+
+<!-- linkando o arquivo jquery -->
 <script src="./view/js/jquery.js"></script>
+
  <script>
+    // FUNÇÃO QUE FECHA A MODAL
      $(document).ready(function(){
          $('.fecharModal').click(function(){
              $('.container').fadeOut(600);
          });
      });
 
+     // FUNÇÃO QUE PARA O EVENTO SUBMIT DO FORMULARIO
+     // E PASSA DE FORMA ASSINCRONA PARA A ROUTER
      $(document).ready(function(){
          $('#formObs').submit(function(event){
              event.preventDefault();
@@ -31,7 +37,6 @@
                  success: function(resposta){
                      //se o conteúdo da variável resposta for 1, significa que a observação foi inserida no banco
                      //então, é redirecionado para a lista
-
                      if(resposta == 1){
                          alert("Resposta inserida com sucesso");
                          window.location.href = "home.php?pag=chamadosPendentes";
@@ -43,13 +48,16 @@
          });
      });
  </script>
-
+    <!-- FECHA A MODAL -->
      <div class="fecharModal">
          X
      </div>
+     <!-- TITULO DA MODAL -->
     <div class="tituloModal">
         Atualizar Chamado
     </div>
+
+    <!-- FORMULARIO COM OS INPUTS -->
     <form id="formObs" method="post">
         <div class="conteudoModal">
             <div class="linhaCampo">

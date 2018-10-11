@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="view/css/styleLogin.css">
         <script src="./view/js/jquery.js"></script>
         <script>
+            // função que para o evento SUBMIT do formulario
+            // pega o formulario inteiro, e chama a router
+            // para exeutar o restante do processo
             $(document).ready(function(){
                 $('#formLogin').submit(function(event){
                     event.preventDefault();
@@ -24,13 +27,13 @@
                         success: function(resposta){
                             //se o conteúdo da variável resposta for 1, significa que o usuário existe no banco
                             //então, é redirecionado para a home
-                            if(resposta == 1){
-                                window.location.href = "view/home.php";
-                            } else {
-                                alert("Usuário e/ou Senha Incorretos!!");
-                                $('#txtSenha').val("");
-                                window.location.href = "index.php";
-                            }
+                            console.log(resposta);
+                            // if(resposta){
+                            //     window.location.href = "view/home.php";
+                            // } else {
+                            //     alert("Usuário e/ou Senha Incorretos!!");
+                            //     $('#txtSenha').val("");
+                            // }
                         }
                     });
                 });
@@ -38,6 +41,7 @@
         </script>
     </head>
     <body>
+        <!-- sessão que possui os elementos da tela de login, form, inputs... -->
         <section class="mainLogin">
             <div class="titulo">
                 Login

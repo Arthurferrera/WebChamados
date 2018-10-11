@@ -2,12 +2,15 @@
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
     require_once($_SESSION['require']."model/funcionarioClass.php");
+
     autentica();
     $conexao  = conexao();
 
     $funcionario = new Funcionario();
 ?>
 <script>
+    // para o evento submit do form e passa as
+    // informações de forma assincrona para a router
     $(document).ready(function(){
            $('#form').submit(function(){
               event.preventDefault();
@@ -39,6 +42,7 @@
         });
     });
 </script>
+<!-- sessão que contém o form para o cadastro de usuario -->
 <section class="contentForm">
     <div class="tituloForm">
         Cadastro de Usuários
@@ -65,6 +69,7 @@
         </form>
     </div>
 
+    <!-- sessão da tabela que lista todos os usuários -->
     <div class="tableUsuario">
         <div class="contentTitulosUsuarios">
             <div class="titulosTabelaUsuario">
@@ -85,6 +90,7 @@
         </div>
         <div id="contentRegistrosUsuarios" class="contentRegistrosUsuarios">
             <?php
+                // chama-se a função que traz todos os usuários cadastrados
                 require_once($_SESSION['require']."controller/controllerFuncionario.php");
                 $listFuncionario = new controllerFuncionario();
                 $funcionario = $listFuncionario::listarFuncionario();

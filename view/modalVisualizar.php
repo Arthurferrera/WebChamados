@@ -1,9 +1,12 @@
 <?php
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    autentica();
 
+    // chamando funções necessárias
+    autentica();
     $conexao  = conexao();
+
+    // resgatando as informações do chamado
     $idChamado = $chamado->idChamado;
     $titulo = $chamado->titulo;
     $mensagem  = $chamado->mensagem;
@@ -36,11 +39,12 @@
     $nomeUsuario = $chamado->nomeUsuario;
  ?>
 
+<!-- linkando com o arquivo css, que muda o layout quando a pagina é submetida a uma impressão -->
  <link href="css/printChamado.css" rel="stylesheet" type="text/css" media="print">
 
 
- <!-- código que faz o efeito de fechar a modal -->
  <script>
+    // código que faz o efeito de fechar a modal
      $(document).ready(function(){
          $('.fecharModal').click(function(){
              $('.container').fadeOut(600);
@@ -61,14 +65,18 @@
     }
  </script>
 
+<!-- fecha a modal -->
  <div class="fecharModal">
      X
  </div>
+ <!-- titulo da modal -->
  <div class="tituloVisualizar">
      Detalhes do chamado
  </div>
+ <!-- content que mostra todos os detalhes de um chamado -->
  <div class="contentVisualizarInformacoes">
      <div class="printChamado">
+         <!-- link que quando acionado, abre a tela de impressão da pagina -->
          <a id="iconeImprimirChamado" onclick="ImprimirChamado(<?php echo $idChamado ?>);"> <img src="imagens/print.png" alt="Imprimir Detalhes do chamado" title="Imprimir Detalhes do chamado" width="25" height="25"> </a>
      </div>
      <div class="linhaInformacoes">
@@ -139,8 +147,9 @@
          </div>
          <div class="contentObservacoes">
              <?php
+                    // aqui pega o id do chamado e solicita à uma função
+                    // todas as observações/respostas de um chamado
                     require_once($_SESSION['require']."controller/controllerChamado.php");
-                    // require_once('controller/controllerChamado.php');
                     $listObervacoes = new controllerChamado();
                     $rsObservacoes = $listObervacoes::buscarObservacoes($idChamado);
                     $cont = 0;

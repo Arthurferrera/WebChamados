@@ -1,14 +1,15 @@
 <?php
-    session_start();
+    @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    $conexao = conexao();
-    autentica();
 
-    $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
-    $result = sqlsrv_query($conexao, $sql);
-    if ($rs = sqlsrv_fetch_array($result)) {
-        $_SESSION['nomeUsuario'] = $rs['nome'];
-    }
+    autentica();
+    $conexao = conexao();
+    //
+    // $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
+    // $result = sqlsrv_query($conexao, $sql);
+    // if ($rs = sqlsrv_fetch_array($result)) {
+    //     $_SESSION['nomeUsuario'] = $rs['nome'];
+    // }
     $nome ="";
     $usuario ="";
     $senha ="";
@@ -27,6 +28,7 @@
         <link rel="stylesheet" href="css/styleEstatistica.css">
         <script src="../view/js/jquery.js"></script>
         <script>
+            // função que exclui um usuário
             function Excluir(idItem){
                 if (confirm('Deseja realmente excluir este usuário?') ==  true) {
                     $.ajax({
@@ -40,6 +42,7 @@
                 }
             }
 
+            // função que lista todos os usuários
             function Listar(){
                 $.ajax({
                     type: "GET",
@@ -50,6 +53,7 @@
                 });
             }
 
+            // função que busca as informações de um usuário
             function Buscar(idItem){
                 $.ajax({
                     type: "GET",
@@ -73,13 +77,16 @@
         </script>
     </head>
     <body id="body">
+        <!-- sessão do cabeçalho do sistema
+        onde possui a logo, nome do usuario e
+        link para fazer o logoff do sistema -->
         <header>
             <section class="centralizaHeader">
                 <div class="alinha"></div>
                 <div class="logo"></div>
                 <div class="logoff">
                     <div class="informacoesUsuarios">
-                        <p>Bem vindo, <?php echo $_SESSION['nomeUsuario']; ?></p>
+                        <p>Bem vindo, <?php echo $_SESSION['idAdmin']; ?></p>
                     </div>
                     <div class="sair">
                         <a href="../index.php?out=1" id="textoSair">Sair</a>
@@ -88,6 +95,7 @@
             </section>
         </header>
         <section id="main">
+            <!-- sessão do menu lateral -->
             <section class="centralizaMain">
                 <section id="menu_lateral">
                     <a href="?pag=chamadosPendentes">
@@ -111,6 +119,7 @@
                         </div>
                     </a>
                 </section>
+                <!-- content principal, muda o conteudo conforme o menu que estiver selecionado -->
                 <section id="content_principal">
                     <?php
                         if (isset($_GET['pag'])) {
@@ -140,9 +149,10 @@
                 </section>
             </section>
         </section>
+        <!-- sessão do rodapé do site -->
         <footer>
             <section class="centralizarFooter">
-                Desenvolvido por:
+                © COPYRIGHT 2018 - SINCAESP, TODOS OS DIREITOS RESERVADOS.
             </section>
         </footer>
     </body>

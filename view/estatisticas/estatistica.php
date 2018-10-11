@@ -1,10 +1,13 @@
 <?php
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    autentica();
     require_once($_SESSION['require']."controller/controllerChamado.php");
+
+    autentica();
     $conexao  = conexao();
 
+    // chama o método que traz os valores das
+    // Estatísicas e resgata os valores
     $chamado = new controllerChamado();
     $retornoEstatisticas = $chamado::Estatisticas();
     $totalChamados = $retornoEstatisticas[0];
@@ -12,43 +15,28 @@
     $pendentes = $retornoEstatisticas[2];
     $observacoes = $retornoEstatisticas[3];
 ?>
+
+<!-- arquivos js, para o gráfico de pizza -->
 <script src="js/Chart.bundle.js"></script>
 <script src="js/utils.js"></script>
-<style>
 
-	#canvas-holder {
-		width: 100%;
-		margin-top: 50px;
-		text-align: center;
-        margin-right: auto;
-        margin-left: auto;
-	}
-
-	#chartjs-tooltip {
-		opacity: 1;
-		position: absolute;
-		background: rgb(0, 0, 0);
-		color: white;
-		border-radius: 20px;
-		-webkit-transition: all .1s ease;
-		transition: all .1s ease;
-		pointer-events: none;
-		-webkit-transform: translate(-50%, 0);
-		transform: translate(-50%, 0);
-	}
-
-	.chartjs-tooltip-key {
-		display: inline-block;
-		width: 10px;
-		height: 10px;
-		margin-right: 10px;
-	}
-</style>
 <section class="contentForm">
+    <!-- titulo -->
     <div class="tituloForm">
         Estatísicas
     </div>
 
+    <!-- total de chamdos -->
+    <div class="linhastatistica">
+        <div class="labelEstatistica">
+            Total de Solicitações:
+        </div>
+        <div class="porcentagem">
+            <?php echo $totalChamados; ?>
+        </div>
+    </div>
+
+    <!-- div que contém o gráfico -->
     <div id="canvas-holder" style="width: 300px;">
 		<canvas id="chart-area" width="300" height="300"></canvas>
 		<div id="chartjs-tooltip">
@@ -122,16 +110,14 @@
 			type: 'pie',
 			data: {
 				datasets: [{
-					data: [<?php echo $totalChamados; ?>, <?php echo number_format($observacoes); ?>, <?php echo number_format($resolvidos); ?>, <?php echo number_format($pendentes); ?>],
+					data: [<?php echo number_format($observacoes); ?>, <?php echo number_format($resolvidos); ?>, <?php echo number_format($pendentes); ?>],
 					backgroundColor: [
-						window.chartColors.yellow,
 						window.chartColors.blue,
 						window.chartColors.green,
                         window.chartColors.red
 					],
 				}],
 				labels: [
-                    'Total Solicitações',
 					'% Respondidas',
 					'% Resolvidas',
 					'% Pendentes'
@@ -147,11 +133,10 @@
 				}
 			}
 		};
-
+        // ao carregar a pagina, faz o efeito do gráfico aparecendo
 		window.onload = function() {
 			var ctx = document.getElementById('chart-area').getContext('2d');
 			window.myPie = new Chart(ctx, config);
 		};
 	</script>
-
 </section>

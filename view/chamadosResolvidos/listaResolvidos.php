@@ -2,15 +2,20 @@
     // inicia a sessão, importa o arquivo e chama a função que valida a autenticação do usuario
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    autentica();
+
     // conexao com banco
     $conexao  = conexao();
+    autentica();
+
     // pegando a data do dia atual
     date_default_timezone_set('America/Sao_Paulo');
     // defifindo o formato da data
     $dateAtualInicio = date('Y-m-d');
     $dateAtualFim = date('Y-m-d');
-    $pesquisaEmpresa = "";
+
+    // variaveis do filtro por nome de empresa
+    $pesquisaEmpresaInicial = "";
+    $pesquisaEmpresaFInal = "";
 
 ?>
 
@@ -38,7 +43,7 @@
             document.getElementById('modal').setAttribute("class", "modalVisualizar");
             $.ajax({
                 type: "GET",
-                url: "../router.php?controller=chamado&modo=buscar",
+                url: "../router.php?controller=chamado&modo=buscar&tela=visualizar",
                 data: {id:idChamado},
                 success: function(dados){
                     $("#modal").html(dados);
@@ -58,11 +63,13 @@
         }
     }
 
-    // FUNÇÃO QUE SOLICITA A IMPRESSÃE DA PÁGINA
+    // FUNÇÃO QUE SOLICITA A IMPRESSÃO DA PÁGINA
     function ImprimirLista(){
         window.print();
     }
 </script>
+
+<!-- sessão da modal -->
 <div class="container">
     <div id="modal">
         <div class="fecharModal">
@@ -71,9 +78,12 @@
     </div>
 </div>
 
+<!-- titulo -->
 <div class="tituloTela">
     Lista de chamados - Resolvidos
 </div>
+
+<!-- sessão de filtros -->
 <div class="contentFiltro">
     <div class="labelFiltro">
         Filtrar por periodo:
@@ -92,19 +102,21 @@
         </div>
         <div class="selectInicio">
             <span class="labelInput">Empresa Inicial:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresa; ?>" required alt="Empresa Inicial" title="Empresa Inicial">
+            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
         </div>
         <div class="selectFim">
             <span class="labelInput">Empresa Final:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresa; ?>" required alt="Empresa Final" title="Empresa Final">
+            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFInal; ?>" title="Empresa Final">
         </div>
     </form>
 </div>
 
+<!-- botão que solicita a IMPRESSÃO de um chamado -->
 <div class="contentBotaoImprimir">
     <input type="button" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir">
 </div>
 
+<!-- tabela que lista os chamados -->
 <div class="table tableResolvida">
     <div class="contentTitulos thead">
         <div class="tituloStatus">
@@ -136,8 +148,11 @@
     </div>
     <div class="contentRegistros tfoot">
         <?php
+            // chama-se a função que traz os chamados
             require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
+            // verifica se o formulario de filtros foi submetido
+            // para chamar a função de listagem correta
             if (isset($_POST['btnFiltrar'])) {
                 $chamado = $listChamados::filtroPorData(1);
             } else {

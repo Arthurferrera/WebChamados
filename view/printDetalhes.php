@@ -2,12 +2,16 @@
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
     require_once($_SESSION['require']."controller/controllerChamado.php");
-    autentica();
 
+    autentica();
     $conexao  = conexao();
+
+    // pega o id do chamado, chama o método que traz as informações do chamado
     $id = $_GET['chamado'];
     $controllerChamado = new controllerChamado();
     $chamado = $controllerChamado::buscarChamado($id);
+
+    // resgatando todas as informações do chamado
     $idChamado = $chamado->idChamado;
     $titulo = $chamado->titulo;
     $mensagem  = $chamado->mensagem;
@@ -39,6 +43,8 @@
     $razaoSocial = $chamado->razaoSocial;
     $nomeUsuario = $chamado->nomeUsuario;
  ?>
+
+
 <!DOCTYPE html>
 <html lang="pt" dir="ltr">
     <head>
@@ -49,6 +55,7 @@
         <link href="css/styleVisualizar.css" rel="stylesheet" type="text/css" media="screen">
         <script src="../view/js/jquery.js"></script>
         <script>
+            // faz a 'Solicitação de impressão'
             $(document).ready(function(){
                 window.print();
             });
@@ -141,14 +148,16 @@
                 </div>
                 <div class="contentObservacoes">
                     <?php
-                           require_once($_SESSION['require']."controller/controllerChamado.php");
-                           // require_once('controller/controllerChamado.php');
-                           $listObervacoes = new controllerChamado();
-                           $rsObservacoes = $listObervacoes::buscarObservacoes($idChamado);
-                           $cont = 0;
-                           while($cont < count($rsObservacoes)){
+                        // pega o id do chamado e chama o método que traz todas as
+                        // observações/respostas de um chamado
+                        require_once($_SESSION['require']."controller/controllerChamado.php");
+                        $listObervacoes = new controllerChamado();
+                        $rsObservacoes = $listObervacoes::buscarObservacoes($idChamado);
+                        $cont = 0;
+                        while($cont < count($rsObservacoes)){
                      ?>
                        <script>
+                            // deixa a seção de observações/respostas visivel
                            document.getElementById('linhaContentObservacao').style.display = "block";
                        </script>
                         <div class="linhaObservacao">
