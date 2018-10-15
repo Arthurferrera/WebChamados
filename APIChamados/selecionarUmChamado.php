@@ -2,6 +2,7 @@
     //conexao com o banco
     require_once("conexao.php");
     require_once("selecionarObservacoes.php");
+    
     //resgatando o id
     $id = $_GET['id'];
     //comando sql

@@ -1,5 +1,10 @@
 <?php
     // session_start();
+    require_once($_SESSION['require']."view/modulo.php");
+    autentica();
+    $conexao  = conexao();
+
+    // session_start();
     class controllerFuncionario
     {
         function __construct(){
@@ -15,7 +20,7 @@
             $funcionario->senha = $_POST['txtSenha'];
 
             // chama a função de login
-            return $funcionario->Login($funcionario);
+            return $funcionario::Login($funcionario);
         }
 
         // metodo que grava um novo funcionario

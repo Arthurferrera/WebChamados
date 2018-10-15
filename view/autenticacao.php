@@ -27,13 +27,13 @@
                         success: function(resposta){
                             //se o conteúdo da variável resposta for 1, significa que o usuário existe no banco
                             //então, é redirecionado para a home
-                            console.log(resposta);
-                            // if(resposta){
-                            //     window.location.href = "view/home.php";
-                            // } else {
-                            //     alert("Usuário e/ou Senha Incorretos!!");
-                            //     $('#txtSenha').val("");
-                            // }
+                            // console.log(resposta);
+                            if(resposta){
+                                window.location.href = "view/home.php";
+                            } else {
+                                alert("Usuário e/ou Senha Incorretos!!");
+                                $('#txtSenha').val("");
+                            }
                         }
                     });
                 });

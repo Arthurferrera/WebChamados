@@ -1,7 +1,12 @@
 <?php
+    // session_start();
+    // require_once($_SESSION['require']."view/modulo.php");
+    autentica();
+    // $conexao  = conexao();
 
 class Funcionario {
 
+    // atributos de um funcionario
     public $idFuncionario;
     public $nome;
     public $idNivel;
@@ -13,11 +18,11 @@ class Funcionario {
         require_once("bdClass.php");
     }
 
+    // método que recebe login e senha como parâmetro
+    // faz a autentição do usuario no sistema
     public function Login($funcionario) {
-
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
-                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
-
+                        AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
@@ -25,13 +30,13 @@ class Funcionario {
         $idFuncionario = 0;
 
         if($rs = sqlsrv_fetch_array($select)){
-            $idFuncionario = $rs['id'];
+            $nome = $rs['nome'];
         }
 
         $con->Desconectar();
 
-        if ($idFuncionario > 0) {
-            $_SESSION['idAdmin'] =  $idFuncionario;
+        if ($nome != '') {
+            $_SESSION['nome'] =  $nome;
             echo 1;
         } else {
             echo 0;
@@ -39,11 +44,15 @@ class Funcionario {
         }
     }
 
+    // método que cadastra um novo usuario do sistema
+    // recebe um objeto do tipo 'funcionario' como parametro
     public function Inserir($funcionario){
 
+        // faz um filtro na senha, para ver se contém letras e números
         $temNumeros = filter_var($funcionario->senha, FILTER_SANITIZE_NUMBER_INT) !== '';
         $temLetras = preg_match('/[a-z-A-Z]/', $funcionario->senha);
 
+        // faz a verificação da senha
         if ($temNumeros && $temLetras) {
             $sql = "INSERT INTO usuarioAdm (nome, login, senha, idNivelUsuario) VALUES (?,?,?,1)";
             $params = array("$funcionario->nome", "$funcionario->usuario", "$funcionario->senha");
@@ -66,6 +75,7 @@ class Funcionario {
         }
     }
 
+    // método que atualiza as informações do usuario
     public function Editar($funcionario){
             $sql = "UPDATE usuarioAdm SET nome = '".$funcionario->nome."', login = '".$funcionario->usuario."', senha = '".$funcionario->senha."' WHERE id =".$funcionario->idFuncionario;
 
@@ -75,10 +85,13 @@ class Funcionario {
             $stm = sqlsrv_query($pdoCon, $sql);
 
             if ($stm) {
-                return true;
+                echo 1;
+            } else {
+                echo 0;
             }
     }
 
+    // traz um usuario pelo id que está cadastrado no banco
     public function SelectByIdFuncionario($idFuncionario){
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
                 FROM usuarioAdm AS u
@@ -108,6 +121,8 @@ class Funcionario {
         $con->Desconectar();
     }
 
+    // método que traz todos os usuários cadastrados no banco
+    // para fazer a listagem dos registros
     public function SelectAllFuncionario(){
 
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
@@ -140,6 +155,8 @@ class Funcionario {
         $con->Desconectar();
     }
 
+    // método recebe um ID, como paramêtro
+    // para excluir um usuario
     public function Excluir($id){
         $sql = "DELETE FROM usuarioAdm WHERE id =".$id;
 
@@ -160,21 +177,21 @@ class Funcionario {
 
     }
 
-    // função que exige um certo padrão para a senha
-    public function validarSenha($senha){
-
-        // filtra só os valores inteiros
-        $temNumeros = filter_var($senha, FILTER_SANITIZE_NUMBER_INT) !== '';
-        // 1 (true, tem maiusculas) ou 0 (false, não tem)
-        $temLetras = preg_match('/[a-z-A-Z]/', $senha);
-        // 1 (true, tem maiusculas) ou 0 (false, não tem)
-        // $temMaiusculas = preg_match('/[A-Z]/', $senha);
-
-        if ($temNumeros && $temLetras) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // // função que exige um certo padrão para a senha
+    // public function validarSenha($senha){
+    //
+    //     // filtra só os valores inteiros
+    //     $temNumeros = filter_var($senha, FILTER_SANITIZE_NUMBER_INT) !== '';
+    //     // 1 (true, tem maiusculas) ou 0 (false, não tem)
+    //     $temLetras = preg_match('/[a-z-A-Z]/', $senha);
+    //     // 1 (true, tem maiusculas) ou 0 (false, não tem)
+    //     // $temMaiusculas = preg_match('/[A-Z]/', $senha);
+    //
+    //     if ($temNumeros && $temLetras) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }
  ?>

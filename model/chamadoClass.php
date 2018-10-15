@@ -1,6 +1,12 @@
 <?php
+// session_start();
+require_once($_SESSION['require']."view/modulo.php");
+autentica();
+$conexao  = conexao();
+
 class Chamado {
 
+    // atibutos de um chamado
     public $idChamado;
     public $titulo;
     public $mensagem;
@@ -23,6 +29,8 @@ class Chamado {
         require_once("bdClass.php");
     }
 
+    // método que recebe um objeto 'chamado', e atualiza
+     // as informações no banco (ADICIONA RESPOSTA/OBSERVAÇÃO E ATUALIZA O STATUS)
     public function Atualizar($chamado){
         // session_start();
 
@@ -48,7 +56,8 @@ class Chamado {
         $con->Desconectar();
     }
 
-    public function SelectAllPendentes($status){
+    // seleciona todos os chamados do banco, conforme o STATUS, soicitado
+    public function SelectAll($status){
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
                 u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
                 FROM chamados AS c
@@ -86,6 +95,8 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que seleciona todos os CHAMADOS
+    // cujo a data de fechamento é a do dia atual
     public function SelectDiaResolvido(){
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
                 u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
@@ -96,7 +107,7 @@ class Chamado {
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
-        // echo $sql;
+
         $select = sqlsrv_query($pdoCon, $sql);
         $rows_affected = sqlsrv_rows_affected($select);
         $cont = 0;
@@ -124,6 +135,7 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que retorno um chamado, que é buscado pelo ID
     public function SelectById($idChamado){
 
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
@@ -154,6 +166,8 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que traz todas as respostas/observações de um chamado
+    // recebe o id do chamado
     public function SelectObsById($idChamado){
 
         $sql = "SELECT *, CONVERT(nvarchar(30), dataHora, 126) AS dataConvertida from observacao WHERE idChamado =".$idChamado;
@@ -176,6 +190,8 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que busca no banco CHAMADO
+    // cujo estejam no range de data selecionado, e sejam de uma empresa especifica
     public function FiltroPorData($chamado, $status){
 
         // resgatando os valores que será usado na query
@@ -224,7 +240,8 @@ class Chamado {
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
                                 WHERE status = $status AND dataFechamento BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
-                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim'
+                                AND u.razaoSocial LIKE '%$fornecedorInicio%' ORDER BY idChamado DESC";
                     }else{
                         // select de chamados resolvidos, são puxados pela data de abertura
                         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
@@ -233,7 +250,8 @@ class Chamado {
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
                                 WHERE status = $status AND data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
-                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim' ORDER BY idChamado DESC";
+                                AND u.razaoSocial BETWEEN '$fornecedorInicio' AND '$fornecedorFim'
+                                AND u.razaoSocial LIKE '%$fornecedorInicio%' ORDER BY idChamado DESC";
                     }
 
                 }
@@ -271,6 +289,8 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que faz os selects que traz as informações
+    // de Estatisticas (TOTALCHAMADOS, RESOLVIDOS, PENDENTES, RESPONDIDOS)
     public function Estatisticas(){
         // RETORNA O TOTAL DE CHAMADOS
         $sqlTotal = "select count(*) AS totalChamados from chamados";
@@ -323,31 +343,31 @@ class Chamado {
 
     // função que busca todas as empresas cadastradas
     // para ser carregadas no select de filtro
-    // public function listarEmpresas(){
-    //
-    //     $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
-    //
-    //     $con = new Sql_db();
-    //     $pdoCon = $con->Conectar();
-    //
-    //     $select = sqlsrv_query($pdoCon, $sql);
-    //     $rows_affected = sqlsrv_rows_affected($select);
-    //     $cont = 0;
-    //
-    //     if ($rows_affected === false) {
-    //         echo "erro na chamada";
-    //     } else if ($rows_affected == -1) {
-    //         while($rs = sqlsrv_fetch_array($select)){
-    //             $chamado[] = new Chamado();
-    //             $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
-    //             $cont ++;
-    //         }
-    //         return $chamado;
-    //     } else {
-    //         return null;
-    //     }
-    //     $con->Desconectar();
-    // }
+    public function listarEmpresas(){
+
+        $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if ($rows_affected == -1) {
+            while($rs = sqlsrv_fetch_array($select)){
+                $chamado[] = new Chamado();
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $cont ++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
+    }
 
     // MÉTODO QUA FAZ UMA BUSCA DE TODOS OS CHAMADOS RELACIONADOS COM A EMPRESA DESEJADA
     // public function filtroPesquisaEmpresa($pesquisaEmpresa){

@@ -2,6 +2,7 @@
     // inicia a sessão, importa o arquivo e chama a função que valida a autenticação do usuario
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
+    require_once($_SESSION['require']."controller/controllerChamado.php");
 
     // conexao com banco
     $conexao  = conexao();
@@ -15,9 +16,19 @@
     $dateAtualFim = date('Y-m-d');
     $pesquisaEmpresaInicial = "";
     $pesquisaEmpresaFinal = "";
+
+    $listChamados = new controllerChamado();
+    $chamado = $listChamados::empresas();
+    $cont = 0;
+    while($cont < count($chamado)){
+        $listaEmpresas[$cont] = $chamado[$cont]->razaoSocial;
+        $cont++;
+    }
 ?>
 <!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
 <link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- SEÇÃO DE SCRIPTS -->
 <script>
@@ -58,6 +69,16 @@
     function ImprimirLista(){
         window.print();
     }
+
+    $(function() {
+      var availableTags = [
+        "Frutamina",
+        "fruticola valinhos ltda"
+      ];
+      $( "#tags" ).autocomplete({
+        source: availableTags
+      });
+    });
 </script>
 
 <!-- CONTENTS DA MODAL -->
@@ -90,11 +111,11 @@
         </div>
         <div class="selectInicio">
             <span class="labelInput">Empresa Inicial:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
+            <input autocomplete="off" id="tags" class="inputPesquisa" type="text" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
         </div>
         <div class="selectFim">
             <span class="labelInput">Empresa Final:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFinal; ?>" title="Empresa Final">
+            <input class="inputPesquisa" type="text" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFinal; ?>" title="Empresa Final">
         </div>
     </form>
 </div>

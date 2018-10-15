@@ -24,12 +24,12 @@
     // função que faz a verificação se o usuário tem permissão ou está logado
     function autentica(){
         // verifica se a variavel de sessão está nula
-        if (isset($_SESSION['idAdmin'])) {
+        if (isset($_SESSION['nome'])) {
             // pode fazer algo;
             // TODO: ARRUMAR LOGIN/AUTENTICAÇÃO
         } else {
             echo "string";
-            // header('location:http://localhost/WebChamados/index.php?out=1
+            // header('location:http://localhost/WebChamados/index.php?out=1');
         }
     }
  ?>

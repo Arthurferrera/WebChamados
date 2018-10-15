@@ -86,7 +86,7 @@
                 <div class="logo"></div>
                 <div class="logoff">
                     <div class="informacoesUsuarios">
-                        <p>Bem vindo, <?php echo $_SESSION['idAdmin']; ?></p>
+                        <p>Bem vindo, <?php echo $_SESSION['nome']; ?></p>
                     </div>
                     <div class="sair">
                         <a href="../index.php?out=1" id="textoSair">Sair</a>

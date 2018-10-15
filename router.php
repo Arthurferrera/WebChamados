@@ -1,5 +1,8 @@
 <?php
     session_start();
+    require_once($_SESSION['require']."view/modulo.php");
+    autentica();
+    $conexao  = conexao();
 
     $controller = $_GET['controller'];
 
@@ -11,22 +14,19 @@
             switch ($modo) {
                 case 'login':
                     $controllerFuncionario = new controllerFuncionario();
-                    $retorno = $controllerFuncionario->Login();
-                    return $retorno;
+                    return $controllerFuncionario::Login();
                     break;
                 case 'inserir':
                     $controllerFuncionario = new controllerFuncionario();
-                    return $controllerFuncionario->Inserir();
+                    return $controllerFuncionario::Inserir();
                     break;
                 case 'excluir':
                     $controllerFuncionario = new controllerFuncionario();
-                    $sucesso = $controllerFuncionario::Excluir();
-                    return $sucesso;
+                    return $controllerFuncionario::Excluir();
                     break;
                 case 'consultar':
                     $controllerFuncionario = new controllerFuncionario();
                     $funcionarioInfo = $controllerFuncionario::listarFuncionarioById();
-
                     // removendo os espaços do inicio e do fim da string
                     $funcionarioInfo->nome = trim($funcionarioInfo->nome);
                     $funcionarioInfo->usuario = trim($funcionarioInfo->usuario);
@@ -66,6 +66,11 @@
                     $controllerChamado = new controllerChamado();
                     $chamado = $controllerChamado::buscarObservacoes($idChamado);
                     require_once("view/modalVisualizar.php");
+                    break;
+                case 'empresas':
+                    $controllerChamado = new controllerChamado();
+                    return $controllerChamado::empresas();
+                    // require_once("view/modalVisualizar.php");
                     break;
                 default:
                     // code...

@@ -6,7 +6,7 @@
     $idusuario = $_GET['idUsuario'];
 
     // comando sql
-    $tsql = "SELECT * FROM chamados WHERE status = 1 and idUsuario =".$idusuario;
+    $tsql = "SELECT * FROM chamados WHERE status = 1 and idUsuario = $idusuario ORDER BY id DESC";
     // executando o comando
     $stm = sqlsrv_query($conexao, $tsql);
     // criando o array
