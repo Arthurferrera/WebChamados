@@ -1,9 +1,4 @@
 <?php
-    // session_start();
-    // require_once($_SESSION['require']."view/modulo.php");
-    autentica();
-    // $conexao  = conexao();
-
 class Funcionario {
 
     // atributos de um funcionario
@@ -23,6 +18,7 @@ class Funcionario {
     public function Login($funcionario) {
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                         AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
+
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
@@ -33,15 +29,13 @@ class Funcionario {
             $nome = $rs['nome'];
         }
 
-        $con->Desconectar();
-
-        if ($nome != '') {
+        $rows_affected = sqlsrv_rows_affected($select);
+        // verificando se algum registro foi retornado
+        if ($rows_affected > 0) {
             $_SESSION['nome'] =  $nome;
             echo 1;
-        } else {
-            echo 0;
-            session_destroy();
         }
+        $con->Desconectar();
     }
 
     // método que cadastra um novo usuario do sistema

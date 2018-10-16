@@ -10,12 +10,13 @@
 
     // pegando a data do dia atual
     date_default_timezone_set('America/Sao_Paulo');
-
     // defifindo o formato da data
     $dateAtualInicio = date('Y-m-d');
     $dateAtualFim = date('Y-m-d');
+
+    // variaveis do filtro por nome de empresa
     $pesquisaEmpresaInicial = "";
-    $pesquisaEmpresaFinal = "";
+    $pesquisaEmpresaFInal = "";
 
     $listChamados = new controllerChamado();
     $chamado = $listChamados::empresas();
@@ -24,7 +25,9 @@
         $listaEmpresas[$cont] = $chamado[$cont]->razaoSocial;
         $cont++;
     }
+    $stringLista =  implode("|",$listaEmpresas);
 ?>
+
 <!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
 <link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -71,13 +74,12 @@
     }
 
     $(function() {
-      var availableTags = [
-        "Frutamina",
-        "fruticola valinhos ltda"
-      ];
-      $( "#tags" ).autocomplete({
-        source: availableTags
-      });
+        var arrayEmpresas, stringArray;
+        stringArray = "<?php echo $stringLista; ?>";
+        arrayEmpresas = stringArray.split("|");
+        $(".inputPesquisa").autocomplete({
+            source: arrayEmpresas
+        });
     });
 </script>
 
@@ -111,11 +113,11 @@
         </div>
         <div class="selectInicio">
             <span class="labelInput">Empresa Inicial:</span>
-            <input autocomplete="off" id="tags" class="inputPesquisa" type="text" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
+            <input autocomplete="off" class="inputPesquisa" type="text" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
         </div>
         <div class="selectFim">
             <span class="labelInput">Empresa Final:</span>
-            <input class="inputPesquisa" type="text" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFinal; ?>" title="Empresa Final">
+            <input autocomplete="off" class="inputPesquisa" type="text" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFInal; ?>" title="Empresa Final">
         </div>
     </form>
 </div>

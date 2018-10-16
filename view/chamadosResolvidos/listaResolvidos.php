@@ -2,6 +2,7 @@
     // inicia a sessão, importa o arquivo e chama a função que valida a autenticação do usuario
     @session_start();
     require_once($_SESSION['require']."view/modulo.php");
+    require_once($_SESSION['require']."controller/controllerChamado.php");
 
     // conexao com banco
     $conexao  = conexao();
@@ -17,10 +18,20 @@
     $pesquisaEmpresaInicial = "";
     $pesquisaEmpresaFInal = "";
 
+    $listChamados = new controllerChamado();
+    $chamado = $listChamados::empresas();
+    $cont = 0;
+    while($cont < count($chamado)){
+        $listaEmpresas[$cont] = $chamado[$cont]->razaoSocial;
+        $cont++;
+    }
+    $stringLista =  implode("|",$listaEmpresas);
 ?>
 
 <!-- linkando com o arquivo css, que muda o layout quando a pagina for solicitada para imressão -->
 <link href="css/printLista.css" rel="stylesheet" type="text/css" media="print">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- SEÇÃO DE SCRIPTS -->
 <script>
@@ -67,6 +78,15 @@
     function ImprimirLista(){
         window.print();
     }
+
+    $(function() {
+        var arrayEmpresas, stringArray;
+        stringArray = "<?php echo $stringLista; ?>";
+        arrayEmpresas = stringArray.split("|");
+        $(".inputPesquisa").autocomplete({
+            source: arrayEmpresas
+        });
+    });
 </script>
 
 <!-- sessão da modal -->
@@ -102,11 +122,11 @@
         </div>
         <div class="selectInicio">
             <span class="labelInput">Empresa Inicial:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
+            <input autocomplete="off" class="inputPesquisa" type="text" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>" title="Empresa Inicial">
         </div>
         <div class="selectFim">
             <span class="labelInput">Empresa Final:</span>
-            <input class="inputPesquisa" type="search" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFInal; ?>" title="Empresa Final">
+            <input autocomplete="off" class="inputPesquisa" type="text" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFInal; ?>" title="Empresa Final">
         </div>
     </form>
 </div>
@@ -149,7 +169,6 @@
     <div class="contentRegistros tfoot">
         <?php
             // chama-se a função que traz os chamados
-            require_once($_SESSION['require']."controller/controllerChamado.php");
             $listChamados = new controllerChamado();
             // verifica se o formulario de filtros foi submetido
             // para chamar a função de listagem correta

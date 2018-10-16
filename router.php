@@ -70,7 +70,6 @@
                 case 'empresas':
                     $controllerChamado = new controllerChamado();
                     return $controllerChamado::empresas();
-                    // require_once("view/modalVisualizar.php");
                     break;
                 default:
                     // code...

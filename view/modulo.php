@@ -1,6 +1,4 @@
 <?php
-    autentica();
-
     // função que conecta como banco
     function conexao(){
         // definindo o host do banco
@@ -16,7 +14,7 @@
         if($conexao){
         //        echo "conexao sucedida";
         } else {
-           echo "conexao falhada";
+           echo "Falha na conexão";
            die(print_r(sqlsrv_errors(), true));
         }
     }
@@ -28,8 +26,8 @@
             // pode fazer algo;
             // TODO: ARRUMAR LOGIN/AUTENTICAÇÃO
         } else {
-            echo "string";
-            // header('location:http://localhost/WebChamados/index.php?out=1');
+            // echo "string";
+            header('location:http://localhost/WebChamados/index.php?out=1');
         }
     }
  ?>

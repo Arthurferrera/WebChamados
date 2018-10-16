@@ -4,12 +4,7 @@
 
     autentica();
     $conexao = conexao();
-    //
-    // $sql = "SELECT * FROM usuarioAdm WHERE id =".$_SESSION['idAdmin'];
-    // $result = sqlsrv_query($conexao, $sql);
-    // if ($rs = sqlsrv_fetch_array($result)) {
-    //     $_SESSION['nomeUsuario'] = $rs['nome'];
-    // }
+    
     $nome ="";
     $usuario ="";
     $senha ="";
@@ -26,6 +21,8 @@
         <link rel="stylesheet" href="css/styleModal.css">
         <link rel="stylesheet" href="css/styleVisualizar.css">
         <link rel="stylesheet" href="css/styleEstatistica.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="../view/js/jquery.js"></script>
         <script>
             // função que exclui um usuário
@@ -152,7 +149,7 @@
         <!-- sessão do rodapé do site -->
         <footer>
             <section class="centralizarFooter">
-                © COPYRIGHT 2018 - SINCAESP, TODOS OS DIREITOS RESERVADOS.
+                © COPYRIGHT 2018 - APESP, TODOS OS DIREITOS RESERVADOS.
             </section>
         </footer>
     </body>

@@ -29,12 +29,12 @@ header{
 }
 
 .logo{
-    width: 20%;
+    width: 30%;
     height: 100%;
     /* background-color: blue; */
     margin-left: auto;
     margin-right: auto;
-    background-image: url('../imagens/logo.png');
+    background-image: url('../imagens/logoApesp.jpg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -127,7 +127,7 @@ header{
 .centralizarFooter{
     width: 1365px;
     height: 100%;
-    background-color: #ccc;
+    background-color: #CCC;
     margin-right: auto;
     margin-left: auto;
 }
@@ -137,7 +137,7 @@ footer{
     width: 100%;
     height: 41px;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 12px;
     line-height: 40px;
     vertical-align: middle;
     background-color: #ccc;
