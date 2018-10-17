@@ -2,7 +2,7 @@
 <html lang="pt" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Login | Chamados - SINCAESP</title>
+        <title>Login | Chamados - APESP</title>
         <link rel="stylesheet" href="view/css/styleLogin.css">
         <script src="./view/js/jquery.js"></script>
         <script>
@@ -27,7 +27,8 @@
                         success: function(resposta){
                             //se o conteúdo da variável resposta for 1, significa que o usuário existe no banco
                             //então, é redirecionado para a home
-                            if(resposta == 1){
+                            // alert(resposta);
+                            if(resposta){
                                 window.location.href = "view/home.php";
                             } else {
                                 alert("Usuário e/ou Senha Incorretos!!");

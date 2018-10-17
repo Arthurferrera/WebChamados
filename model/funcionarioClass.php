@@ -17,23 +17,28 @@ class Funcionario {
     // faz a autentição do usuario no sistema
     public function Login($funcionario) {
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
-                        AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
+                AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
         $select = sqlsrv_query($pdoCon, $sql);
-        $idFuncionario = 0;
 
         if($rs = sqlsrv_fetch_array($select)){
             $nome = $rs['nome'];
         }
-
         $rows_affected = sqlsrv_rows_affected($select);
+
+
         // verificando se algum registro foi retornado
         if ($rows_affected > 0) {
-            $_SESSION['nome'] =  $nome;
+            $_SESSION['nome'] = $nome;
+            $_SESSION['login'] = true;
             echo 1;
+        } else {
+            unset($_SESSION['nome']);
+            unset($_SESSION['login']);
+            return false;
         }
         $con->Desconectar();
     }
@@ -122,7 +127,8 @@ class Funcionario {
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
                 FROM usuarioAdm AS u
                 INNER JOIN nivelUsuario AS n
-                ON n.idNivelUsuario = u.idNivelUsuario";
+                ON n.idNivelUsuario = u.idNivelUsuario
+                WHERE u.id != 1";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();

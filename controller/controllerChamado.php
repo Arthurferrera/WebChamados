@@ -1,7 +1,7 @@
 <?php
     // session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    autentica();
+    //autentica();
     $conexao  = conexao();
 
 class controllerChamado {

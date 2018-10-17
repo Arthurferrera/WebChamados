@@ -11,23 +11,20 @@
         return $conexao;
 
         // retornando mensagem caso não conecte
-        if($conexao){
-        //        echo "conexao sucedida";
-        } else {
-           echo "Falha na conexão";
-           die(print_r(sqlsrv_errors(), true));
+        if(!$conexao){
+            echo "Falha na conexão";
+            die(print_r(sqlsrv_errors(), true));
         }
     }
 
     // função que faz a verificação se o usuário tem permissão ou está logado
     function autentica(){
         // verifica se a variavel de sessão está nula
-        if (isset($_SESSION['nome'])) {
+        if (isset($_SESSION['login'])) {
             // pode fazer algo;
-            // TODO: ARRUMAR LOGIN/AUTENTICAÇÃO
         } else {
-            // echo "string";
-            header('location:http://localhost/WebChamados/index.php?out=1');
+            $redirect = "http://localhost/WebChamados/index.php?out=1";
+            header('location:'.$redirect);
         }
     }
  ?>

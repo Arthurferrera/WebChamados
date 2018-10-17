@@ -61,10 +61,6 @@
             });
 
             // TODO: FECHAR TELA PRINT AO APERTAR ESC
-            // function tecla(){
-            //    window.alert("O código da tecla pressionada foi: " + event.keyCode);
-            //  }
-            //  document.body.onkeypress = tecla();
         </script>
     </head>
     <body id="body">

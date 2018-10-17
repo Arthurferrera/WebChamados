@@ -4,7 +4,7 @@
 
     autentica();
     $conexao = conexao();
-    
+
     $nome ="";
     $usuario ="";
     $senha ="";
@@ -14,7 +14,7 @@
 <html lang="pt" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Gerenciador de Chamados - SINCAESP</title>
+        <title>Gerenciador de Chamados - APESP</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/stylePendentes.css">
         <link rel="stylesheet" href="css/styleCadastroUsuario.css">

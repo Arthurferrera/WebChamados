@@ -1,12 +1,13 @@
 <?php
     session_start();
     require_once($_SESSION['require']."view/modulo.php");
-    autentica();
+    //autentica();
     $conexao  = conexao();
 
     $controller = $_GET['controller'];
 
     switch ($controller) {
+        // caso foi chamado algo chamado em relação a um funcionario
         case 'funcionario':
             require_once($_SESSION['require']."model/funcionarioClass.php");
             require_once($_SESSION['require']."controller/controllerFuncionario.php");
@@ -14,7 +15,7 @@
             switch ($modo) {
                 case 'login':
                     $controllerFuncionario = new controllerFuncionario();
-                    return $controllerFuncionario::Login();
+                    return $controllerFuncionario->Login();
                     break;
                 case 'inserir':
                     $controllerFuncionario = new controllerFuncionario();
@@ -40,6 +41,7 @@
                     break;
             }
             break;
+        // caso foi chamado algo chamado em relação a um chamado
         case 'chamado':
             require_once($_SESSION['require']."controller/controllerChamado.php");
             require_once($_SESSION['require']."model/chamadoClass.php");
