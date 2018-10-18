@@ -123,7 +123,8 @@
                             $pag = $_GET['pag'];
                             switch ($pag) {
                                 case 'home':
-                                    require_once("divHome.php");
+                                    require_once("chamadosPendentes/listaChamados.php");
+                                    // require_once("divHome.php");
                                     break;
                                 case 'chamadosPendentes':
                                     require_once("chamadosPendentes/listaChamados.php");
@@ -138,7 +139,8 @@
                                     require_once("estatisticas/estatistica.php");
                                     break;
                                 default:
-                                    require_once("divHome.php");
+                                    require_once("chamadosPendentes/listaChamados.php");
+                                    // require_once("divHome.php");
                                     break;
                             }
                         }

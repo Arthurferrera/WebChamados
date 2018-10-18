@@ -13,7 +13,7 @@
     $stmObs = sqlsrv_query($conexao, $sqlObs, $paramsObs);
 
     // atualizando o status do chamado
-    $sqlUpdate = "UPDATE chamados SET status = '".$status."' WHERE id = ".$idChamado;
+    $sqlUpdate = "UPDATE chamados SET status = '".$status."', dataFechamento = GETDATE() WHERE id = ".$idChamado;
     $stmUpdate = sqlsrv_query($conexao, $sqlUpdate);
 
     // verificando se os comandos foram executados

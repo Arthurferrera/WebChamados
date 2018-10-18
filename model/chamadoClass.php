@@ -329,12 +329,14 @@ class Chamado {
         // resgatando quantidade de chamados respondidos
         if($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
             $observacoes = $rsObservacoes['respostas'];
+        } else {
+            $observacoes = 0;
         }
         // caso exista ao menos um chamado, calcula as porcentagem de cada atributo
         if ($totalChamados != 0) {
             $resolvidos = $resolvidos * 100 / $totalChamados;
             $pendentes = $pendentes * 100 / $totalChamados;
-            $observacoes = ($observacoes * 100 / $totalChamados);
+            $observacoes = $observacoes * 100 / $totalChamados;
         }
         $con->Desconectar();
         // retornando um array com todas as informações resgatadas

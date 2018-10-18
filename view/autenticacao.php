@@ -29,7 +29,7 @@
                             //então, é redirecionado para a home
                             // alert(resposta);
                             if(resposta){
-                                window.location.href = "view/home.php";
+                                window.location.href = "view/home.php?pag=home";
                             } else {
                                 alert("Usuário e/ou Senha Incorretos!!");
                                 $('#txtSenha').val("");
