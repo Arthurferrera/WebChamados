@@ -42,81 +42,78 @@
         });
     });
 </script>
-<!-- sessão que contém o form para o cadastro de usuario -->
-<section class="contentForm">
-    <div class="tituloForm">
-        Cadastro de Usuários
-    </div>
 
-    <div class="contentCampos">
-        <form id="form" action="home.php?pag=cadastroUsuario" method="post">
-            <input id="id" type="hidden" name="txtId">
-            <div class="campos">
-                <span>Nome:</span>
-                <input id="inpNome" class="campoInput" maxlength="50" type="text" name="txtNome" required>
-            </div>
-            <div class="campos">
-                <span>Login:</span>
-                <input id="inpUsuario" class="campoInput" maxlength="25" type="text" name="txtLogin" required>
-            </div>
-            <div class="campos">
-                <span>Senha:</span>
-                <input id="inpSenha" class="campoInput" maxlength="20" type="password" name="txtSenha" required>
-            </div>
-            <div class="campoBotao">
-                <input id="btnSalvar" class="botaoSalvar" type="submit" name="btnSalvar" value="Salvar">
-            </div>
-        </form>
-    </div>
+<div class="tab-pane fade show active" id="v-pills-usuario" role="tabpanel" aria-labelledby="v-pills-usuario-tab">
+    <!-- sessão que contém o form para o cadastro de usuario -->
+    <section class="contentForm">
+        <h3 class="card-title">
+            Cadastro de Usuários
+        </h3>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="well">
+                <!-- <div class="col-sm-8"></div> -->
+                <form class="form-inline" id="form" action="home.php?pag=cadastroUsuario" method="post">
+                    <input id="id" type="hidden" name="txtId">
 
-    <!-- sessão da tabela que lista todos os usuários -->
-    <div class="tableUsuario">
-        <div class="contentTitulosUsuarios">
-            <div class="titulosTabelaUsuario">
-                NOME
-            </div>
+                    <label for="txtNome" class="sr-only">Nome</label>
+                    <input id="inpNome" type="text" placeholder="Nome" class="form-control mb-2 mr-sm-2" name="txtNome" maxlength="50" required>
 
-            <div class="titulosTabelaUsuario">
-                LOGIN
-            </div>
+                    <label for="txtLogin" class="sr-only">Login</label>
+                    <input id="inpUsuario" type="text" placeholder="Login" class="form-control mb-2 mr-sm-2" name="txtLogin" maxlength="25" required>
 
-            <div class="titulosTabelaUsuario">
-                SENHA
-            </div>
+                    <label for="txtSenha" class="sr-only">Senha</label>
+                    <input id="inpSenha" placeholder="Senha" class="form-control mb-2 mr-sm-2" maxlength="20" type="password" name="txtSenha" required>
 
-            <div class="titulosTabelaUsuario">
-                OPÇÕES
+                    <input id="btnSalvar" class="btn btn-primary mb-2" type="submit" name="btnSalvar" value="Salvar">
+                </form>
             </div>
+            <div class="col-md-2"></div>
         </div>
-        <div id="contentRegistrosUsuarios" class="contentRegistrosUsuarios">
-            <?php
-                // chama-se a função que traz todos os usuários cadastrados
-                require_once($_SESSION['require']."controller/controllerFuncionario.php");
-                $listFuncionario = new controllerFuncionario();
-                $funcionario = $listFuncionario::listarFuncionario();
-                $cont = 0;
-                while($cont < count($funcionario)){
-            ?>
-                <div class="linhaRegistroUsuario">
-                    <div class="registrosUsuarios">
-                        <?php echo $funcionario[$cont]->nome; ?>
-                    </div>
-                    <div class="registrosUsuarios">
-                        <?php echo $funcionario[$cont]->usuario; ?>
-                    </div>
-                    <div class="registrosUsuarios">
-                        <?php echo $funcionario[$cont]->senha; ?>
-                    </div>
-                    <div class="registrosUsuarios">
-                        <div class="atualizar">
-                            <a id="excluir" onclick="Excluir(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/deletar.png" alt="Deletar Funcionário" title="Deletar Funcionário" width="25" height="25"> </a>
-                            <a id="editar" onclick="Buscar(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/editarUsuario.png" alt="Editar Funcionário" title="Editar Funcionário" width="25" height="25"> </a>
-                        </div>
-                    </div>
+
+
+
+        <!-- sessão da tabela que lista todos os usuários -->
+        <div class="text-overflow ">
+            <table class="table table-striped col-sm-10">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Login</th>
+                        <th scope="col">Senha</th>
+                        <th scope="col">Opções</th>
+                    </tr>
+                </thead>
+                <div class="table-overflow">
+                    <tbody class="table-overflow">
+                        <?php
+                        // chama-se a função que traz todos os usuários cadastrados
+                        require_once($_SESSION['require']."controller/controllerFuncionario.php");
+                        $listFuncionario = new controllerFuncionario();
+                        $funcionario = $listFuncionario::listarFuncionario();
+                        $cont = 0;
+                        while($cont < count($funcionario)){
+                            ?>
+                            <tr>
+                                <td>
+                                    <?php echo $funcionario[$cont]->nome; ?>
+                                </td>
+                                <td>
+                                    <?php echo $funcionario[$cont]->usuario; ?>
+                                </td>
+                                <td>
+                                    <?php echo $funcionario[$cont]->senha; ?>
+                                </td>
+                                <td>
+                                    <a id="excluir" onclick="Excluir(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/deletar.png" alt="Deletar Funcionário" title="Deletar Funcionário" width="25" height="25"> </a>
+                                    <a id="editar" onclick="Buscar(<?php echo $funcionario[$cont]->idFuncionario ?>);"> <img src="imagens/editarUsuario.png" alt="Editar Funcionário" title="Editar Funcionário" width="25" height="25"> </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $cont++;
+                        } ?>
+                    </tbody>
                 </div>
-            <?php
-                    $cont++;
-                } ?>
+            </table>
         </div>
-    </div>
-</section>
+</div>

@@ -8,13 +8,13 @@
         // conectando no banco
         $conexao = sqlsrv_connect($serverName, $conexaoInfo);
 
-        return $conexao;
-
         // retornando mensagem caso não conecte
         if(!$conexao){
             echo "Falha na conexão";
             die(print_r(sqlsrv_errors(), true));
         }
+
+        return $conexao;
     }
 
     // função que faz a verificação se o usuário tem permissão ou está logado

@@ -1,6 +1,7 @@
 .contentForm{
-    width: 80%;
-    height: 50px;
+    width: 100%;
+    height: auto;
+    /* min-height: 50px; */
     /* background-color: red; */
     margin-left: auto;
     margin-right: auto;
@@ -24,6 +25,18 @@
     height: auto;
     /* background-color: orange; */
     padding-left: 5%;
+}
+
+.well{
+    min-width: 750px;
+    position: absolute;
+    right: 50%;
+    transform: translate(50%, 5%);
+}
+
+.table-overflow {
+    max-height: 100px;
+    overflow-y: auto;
 }
 
 .campos{

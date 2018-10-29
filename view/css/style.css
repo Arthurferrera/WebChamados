@@ -1,55 +1,56 @@
+/* // Usage as a mixin */
+.heading {
+  @include text-hide;
+}
+
 *{
     padding: 0px;
     margin: 0px;
+    /* background-color: #cccccc; */
 }
 
 /* area do header/cabeçalho */
 header{
     width: 100%;
     height: 100px;
-    background-color: #ccc;
     color: #000000;
+    padding: 0;
+    margin: 0;
 }
 
-.centralizaHeader{
+/* .centralizaHeader{
     width: 1365px;
     height: 100px;
     background-color: #ccc;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
-.alinha{
+/* .alinha{
     width: 20%;
     height: 100%;
-    /* background-color: yellow; */
+    background-color: yellow;
     float: left;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .logo{
-    width: 30%;
+    margin-top: -60px;
     height: 100%;
-    /* background-color: blue; */
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url('../imagens/logoApesp.jpg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
+    float: left;
 }
 
 .logo img{
-    margin-left: 40px;
+    height: 120px;
 }
 
 .logoff{
     width: 20%;
-    height: 100%;
+    height: 100px;
     /* background-color: green; */
     float: right;
-    margin-top: -100px;
+    margin-top: -50px;
     text-align: center;
 }
 
@@ -75,20 +76,28 @@ header{
 
 #textoSair:hover{
     text-decoration: underline;
-    /* font-weight: bold; */
 }
 
 /* area do conteudo */
 #main{
     width: 100%;
-    height: 500px;
+    min-height: 500px;
+    height: auto;
+    /* background-color: pink; */
+}
+
+.teste{
+    /* background-color: green; */
+    min-height: 500px;
+    height: auto;
 }
 
 .centralizaMain{
     width: 1365px;
-    height: 500px;
-    margin-left: auto;
-    margin-right: auto
+    min-height: 500px;
+    /* background-color: yellow; */
+    height: auto;
+    /* height: inherit; */
 }
 
 #menu_lateral{
@@ -133,20 +142,7 @@ header{
 }
 
 /* area do rodapé */
-footer{
-    width: 100%;
-    height: 35px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 40px;
-    vertical-align: middle;
-    background-color: #ccc;
-    color: #000000;
-    font-weight: 900;
-    z-index: 999;
-    margin-right: auto;
-    margin-left: auto;
-}
+
 
 /* estilização dos links */
 a:link{
