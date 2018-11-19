@@ -11,6 +11,6 @@
         require_once("view/autenticacao.php");
     }
     // coloca em uma variavel de sessão, o caminho padrão dos require
-    $caminho = $_SERVER['DOCUMENT_ROOT']."/WebChamados/";
+    $caminho = $_SERVER['DOCUMENT_ROOT']."/webchamados/";
     $_SESSION['require'] = $caminho;
 ?>

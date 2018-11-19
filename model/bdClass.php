@@ -15,10 +15,10 @@ class Sql_db {
 
     // contrutor, atribui-se os valores
     public function __construct() {
-        $this->server = "LENOVO-PC";
-        $this->user = "sa";
-        $this->password = "123456";
-        $this->dataBaseName = "CHAMADOS_APP";
+        $this->server = "mssql.demarchicompany.com.br";
+        $this->user = "demarchicompany";
+        $this->password = "ImohtepHotep71";
+        $this->dataBaseName = "demarchicompany";
     }
 
     // função que conecta com o banco de dados

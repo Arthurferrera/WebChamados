@@ -4,23 +4,24 @@
 
     // rsgatando o status do chamado
     $status = $_GET['status'];
+    $idUsuario = $_GET['idUsuario'];
 
     if ($status) {
         // comando sql
         $tsql = "SELECT ch.id, ch.titulo, ch.mensagem, ch.status, ch.data, ch.dataFechamento,
                     ch.idUsuario, u.razaoSocial, u.nome
-                    FROM CHAMADOS_APP.dbo.chamados AS ch
-                    INNER JOIN  CHAMADOS_APP.dbo.usuario AS u
+                    FROM chamados AS ch
+                    INNER JOIN usuario AS u
                     ON u.id = ch.idUsuario
-                    WHERE ch.status = $status ORDER BY ch.dataFechamento DESC";
+                    WHERE ch.status = $status AND idUsuario = $idUsuario ORDER BY ch.dataFechamento DESC";
     } else {
         // comando sql
         $tsql = "SELECT ch.id, ch.titulo, ch.mensagem, ch.status, ch.data,
                     ch.idUsuario, u.razaoSocial, u.nome
-                    FROM CHAMADOS_APP.dbo.chamados AS ch
-                    INNER JOIN  CHAMADOS_APP.dbo.usuario AS u
+                    FROM chamados AS ch
+                    INNER JOIN usuario AS u
                     ON u.id = ch.idUsuario
-                    WHERE ch.status = $status ORDER BY ch.data DESC";
+                    WHERE ch.status = $status AND idUsuario = $idUsuario ORDER BY ch.data DESC";
     }
 
     // executando o comando

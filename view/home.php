@@ -14,16 +14,22 @@
 <html lang="pt" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gerenciador de Chamados - APESP</title>
+        <!-- Início - plugins:css -->
+        <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+        <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+        <!-- Final - plugins:css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/stylePendentes.css">
-        <link rel="stylesheet" href="css/styleCadastroUsuario.css">
-        <!-- <link rel="stylesheet" href="css/styleModal.css"> -->
-        <!-- <link rel="stylesheet" href="css/styleVisualizar.css"> -->
+        <!-- <link rel="stylesheet" href="css/stylePendentes.css"> -->
+        <!-- <link rel="stylesheet" href="css/styleCadastroUsuario.css"> -->
+        <link rel="stylesheet" href="css/styleModal.css">
+        <link rel="stylesheet" href="css/styleVisualizar.css">
         <link rel="stylesheet" href="css/styleEstatistica.css">
-        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="shortcut icon" type="image/x-icon" href="imagens/favicon.ico">
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="../view/js/jquery.js"></script>
         <script>
@@ -74,94 +80,177 @@
                 });
             }
         </script>
+        <style>
+            @media (max-width: 991px) {
+                .navbar.default-layout .navbar-menu-wrapper {
+                    width: 10%;
+                    margin-left: 68%;
+                }
+            }
+        </style>
     </head>
     <body id="body">
-        <!-- sessão do cabeçalho do sistema
-        onde possui a logo, nome do usuario e
-        link para fazer o logoff do sistema -->
-        <header class="jumbotron">
-            <!-- <section class="centralizaHeader"> -->
-                <!-- <div class="alinha"></div> -->
-                <div class="h-100 col-sm-3 float-left"></div>
-                <div class="col-sm-6 logo text-center">
-                    <img src="imagens/logoApesp.jpg" class="img-fluid" alt="Logo APESP">
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="opa navbar default-layout col-lg-12 col-12 col-sm-12 p-0 fixed-top d-flex flex-row">
+                <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html">
+                    <img id="imgLogo" src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
+                </a>
+                <a class="navbar-brand brand-logo brand-logo-mini" href="index.html">
+                    <img id="imgLogoMin" src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
+                </a>
+                <!-- <a class="navbar-brand brand-logo-mini" href="index.html">
+                    <img src="imagens/logo.png" alt="logo" />
+                </a> -->
                 </div>
-                <div class="col-sm-3 logoff float-right">
-                    <div class="informacoesUsuarios">
-                        <p>Bem vindo, <?php echo $_SESSION['nome']; ?></p>
+                <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <span class="profile-text">Olá, Administrador !</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                        <a class="dropdown-item" href="../index.php?out=1" id="textoSair" style="margin-top: 5%;">Sair</a>
                     </div>
-                    <div class="sair">
-                        <a href="../index.php?out=1" id="textoSair">Sair</a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <!-- Início - Chamados -->
+                    <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-chamados" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="menu-icon mdi mdi-ticket-account"></i>
+                        <span class="menu-title">Chamados</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-chamados">
+                        <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="?pag=chamadosPendentes">Pendentes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="?pag=chamadosResolvidos">Resolvidos</a>
+                        </li>
+                        </ul>
+                    </div>
+                    </li>
+                    <!-- Final - Chamados  -->
+                    <!-- Início - Estatísticas -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-estatisticas" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="menu-icon mdi mdi-chart-areaspline"></i>
+                        <span class="menu-title">Estatísticas</span>
+                        <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-estatisticas">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                            <a class="nav-link" href="?pag=estatisticaParcial">Parciais</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="?pag=estatistica">Gerais</a>
+                            </li>
+                        </ul>
+                        </div>
+                    </li>
+                    <!-- Final - Estatísticas -->
+                    <!-- Início - Usuários -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="?pag=cadastroUsuario">
+                        <i class="menu-icon mdi mdi-account-multiple"></i>
+                        <span class="menu-title">Usuários do Sistema</span>
+                        </a>
+                    </li>
+                    <!-- Final - Usuários -->
+                </ul>
+                </nav>
+                <!-- Conteúdo -->
+
+                <div class="main-panel" id="content_principal" style="height: 100%;">
+                <div class="content-wrapper">
+                    <div class="row" style="margin-top: 3%;">
+                    <div class="col-lg-12 grid-margin">
+                        <div class="card">
+                            <!-- <div class="card-body">
+                                <h4 class="card-title">Conteúdo das telas</h4>
+                            </div> -->
+                            <section id="main">
+                                    <!-- content principal, muda o conteudo conforme o menu que estiver selecionado -->
+                                    <section id="content_principal">
+                                        <?php
+                                            if (isset($_GET['pag'])) {
+                                                $pag = $_GET['pag'];
+                                                switch ($pag) {
+                                                    case 'home':
+                                                        require_once("chamadosPendentes/listaChamados.php");
+                                                        // require_once("divHome.php");
+                                                        break;
+                                                    case 'chamadosPendentes':
+                                                        require_once("chamadosPendentes/listaChamados.php");
+                                                        break;
+                                                    case 'chamadosResolvidos':
+                                                        require_once("chamadosResolvidos/listaResolvidos.php");
+                                                        break;
+                                                    case 'cadastroUsuario':
+                                                        require_once("cadastroUsuario/cadastroUsuario.php");
+                                                        break;
+                                                    case 'estatistica':
+                                                        require_once("estatisticas/estatistica.php");
+                                                        break;
+                                                    case 'estatisticaParcial':
+                                                        require_once("estatisticas/estatisticaParcial.php");
+                                                        break;
+                                                    default:
+                                                        require_once("chamadosPendentes/listaChamados.php");
+                                                        // require_once("divHome.php");
+                                                        break;
+                                                }
+                                            }
+                                        ?>
+                                    </section>
+                                </section>
+                            </section>
+                        </div>
+                    </div>
                     </div>
                 </div>
-            <!-- </section> -->
-        </header>
-        <section class="centralizaMain col-sm-12">
-            <!-- sessão do menu lateral -->
-            <!-- <section class="centralizaMain row"> -->
-                <section id="dropdown-menu" class="col-md-3 float-left">
-                    <div class="nav flex-column nav-pills teste" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link" id="v-pills-pendentes-tab" data-toggle="pill" role="tab" aria-controls="v-pills-pendentes" aria-selected="true" href="?pag=chamadosPendentes">
-                            <!-- <div class="dropdown-item"> -->
-                                Chamados Pendentes
-                            <!-- </div> -->
-                        </a>
-                        <a class="nav-link" id="v-pills-resolvidos-tab" data-toggle="pill" role="tab" aria-controls="v-pills-resolvidos" aria-selected="false" href="?pag=chamadosResolvidos">
-                            <!-- <div class="dropdown-item"> -->
-                                Chamados Resolvidos
-                            <!-- </div> -->
-                        </a>
-                        <a class="nav-link" id="v-pills-estatistica-tab" data-toggle="pill" role="tab" aria-controls="v-pills-estatistica" aria-selected="false" href="?pag=estatistica">
-                            <!-- <div class="dropdown-item"> -->
-                                Estatísticas
-                            <!-- </div> -->
-                        </a>
-                        <a class="nav-link" id="v-pills-usuario-tab" data-toggle="pill" role="tab" aria-controls="v-pills-usuario" aria-selected="false" onclick="Listar()" href="?pag=cadastroUsuario">
-                            <!-- <div class="dropdown-item"> -->
-                                Cadastro de Usuário
-                            <!-- </div> -->
-                        </a>
+
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <!-- sessão do rodapé do site -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                    <span class="text-muted d-block text-center text-sm-left d-sm-inline-block" style="color: black;">Copyright © 2018
+                        APESP. Todos os direitos reservados.</span>
                     </div>
-                </section>
-                <!-- content principal, muda o conteudo conforme o menu que estiver selecionado -->
-                <section class="col-9 float-left" id="main">
-                    <div class="tab-content teste" id="v-pills-tabContent">
-                        <?php
-                            if (isset($_GET['pag'])) {
-                                $pag = $_GET['pag'];
-                                switch ($pag) {
-                                    case 'home':
-                                        require_once("chamadosPendentes/listaChamados.php");
-                                        // require_once("divHome.php");
-                                        break;
-                                    case 'chamadosPendentes':
-                                        require_once("chamadosPendentes/listaChamados.php");
-                                        break;
-                                    case 'chamadosResolvidos':
-                                        require_once("chamadosResolvidos/listaResolvidos.php");
-                                        break;
-                                    case 'cadastroUsuario':
-                                        require_once("cadastroUsuario/cadastroUsuario.php");
-                                        break;
-                                    case 'estatistica':
-                                        require_once("estatisticas/estatistica.php");
-                                        break;
-                                    default:
-                                        require_once("chamadosPendentes/listaChamados.php");
-                                        // require_once("divHome.php");
-                                        break;
-                                }
-                            }
-                        ?>
-                    </div>
-                </section>
-            <!-- </section> -->
-        </section>
-        <!-- sessão do rodapé do site -->
-        <footer class="card-footer text-muted text-center">
-            <section class="footer">
-                © COPYRIGHT 2018 - APESP, TODOS OS DIREITOS RESERVADOS.
-            </section>
-        </footer>
+                </footer>
+                <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+        <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+
+        <!-- plugins:js -->
+        <script src="vendors/js/vendor.bundle.base.js"></script>
+        <script src="vendors/js/vendor.bundle.addons.js"></script>
+        <!-- endinject -->
+        <!-- inject:js -->
+        <script src="js/off-canvas.js"></script>
+        <script src="js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="js/dashboard.js"></script>
+        <!-- End custom js for this page-->
     </body>
 </html>

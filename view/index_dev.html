@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Gerenciador de Chamados - APESP</title>
+  <!-- Início - plugins:css -->
+  <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+  <!-- Final - plugins:css -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html">
+          <!-- <img src="images/logo.svg" alt="logo" /> -->
+
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="index.html">
+          <!-- <img src="images/logo-mini.svg" alt="logo" /> -->
+          <h1>GC</h1>
+        </a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown d-none d-xl-inline-block">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <span class="profile-text">Olá, Administrador !</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <a class="dropdown-item">
+                Sair
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">        
+          <!-- Início - Chamados -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-chamados" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-ticket-account"></i>
+              <span class="menu-title">Chamados</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-chamados">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/buttons.html">Pendentes</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/typography.html">Resolvidos</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- Final - Chamados  -->
+          <!-- Início - Estatísticas -->
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-estatisticas" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon mdi mdi-chart-areaspline"></i>
+                <span class="menu-title">Estatísticas</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-estatisticas">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Parciais</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Gerais</a>
+                  </li>
+                </ul>
+              </div>
+            </li>          
+          <!-- Final - Estatísticas -->
+          <!-- Início - Usuários -->
+          <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="menu-icon mdi mdi-account-multiple"></i>
+                <span class="menu-title">Usuários</span>
+              </a>
+            </li>          
+          <!-- Final - Usuários -->
+        </ul>
+      </nav>
+      <!-- Conteúdo -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row" style="margin-top: 3%;">
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Conteúdo das telas</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block" style="color: black;">Copyright © 2018
+                APESP. Todos os direitos reservados.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

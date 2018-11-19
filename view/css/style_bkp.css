@@ -1,0 +1,178 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+/* area do header/cabeçalho */
+header{
+    width: 100%;
+    height: 100px;
+    background-color: #ccc;
+    color: #000000;
+}
+
+.centralizaHeader{
+    width: 1365px;
+    height: 100px;
+    background-color: #ccc;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alinha{
+    width: 20%;
+    height: 100%;
+    /* background-color: yellow; */
+    float: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo{
+    width: 30%;
+    height: 100%;
+    /* background-color: blue; */
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url('../imagens/logoapesp.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    /* float: left;
+    margin-left: 10px; */
+}
+
+.logoToth{
+    margin-left: 270px;
+    float: left;
+}
+
+.logoff{
+    width: 20%;
+    height: 100%;
+    /* background-color: green; */
+    float: right;
+    margin-top: -100px;
+    text-align: center;
+    /* margin-right: 150px; */
+}
+
+.informacoesUsuarios{
+    width: 100%;
+    height: 50%;
+    /* background-color: pink; */
+    font-size: 1em;
+    line-height: 50px;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sair{
+    width: 100%;
+    height: 50%;
+    /* background-color: blue; */
+    font-size: 1em;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+#textoSair:hover{
+    text-decoration: underline;
+    /* font-weight: bold; */
+}
+
+/* area do conteudo */
+#main{
+    width: 100%;
+    height: 500px;
+}
+
+.centralizaMain{
+    width: 1365px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+#menu_lateral{
+    width: 15%;
+    height: 100%;
+    background-color: #000000;
+    float: left;
+    color: #ffffff;
+}
+
+.itens{
+    width: 97%;
+    height: 80px;
+    background-color: #000000;
+    font-size: 1.2em;
+    line-height: 80px;
+    vertical-align: middle;
+    border-bottom: solid 1px #ffffff;
+    padding-left: 5px;
+    color: #ffffff;
+}
+
+.itens:hover{
+    width: 95%;
+    border-left: 4px solid #ffffff;
+    cursor: pointer;
+}
+
+#content_principal{
+    width: 85%;
+    height: 100%;
+    /* background-color: red; */
+    float: left;
+}
+
+.centralizarFooter{
+    width: 1365px;
+    height: 100%;
+    background-color: #CCC;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* area do rodapé */
+footer{
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 40px;
+    vertical-align: middle;
+    background-color: #ccc;
+    color: #000000;
+    font-weight: 900;
+    z-index: 999;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* estilização dos links */
+a:link{
+    color: #000;
+    text-decoration: none;
+}
+a:active{
+    color: #000;
+    text-decoration: none;
+}
+a:visited{
+    color: #000;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #FFF;
+    height: 3px;
+}
+
+::-webkit-scrollbar{
+    height: 8px;
+    width:  7px;
+    background-color: #454545;
+}

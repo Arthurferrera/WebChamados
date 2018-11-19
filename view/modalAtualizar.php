@@ -47,35 +47,58 @@
              });
          });
      });
+
+    $(function () {
+         $('#myModal').modal('toggle');        
+    });
+
+    function fecharModal(){
+        location.reload();
+    }     
  </script>
-    <!-- FECHA A MODAL -->
-     <div class="fecharModal">
-         X
-     </div>
-     <!-- TITULO DA MODAL -->
-    <div class="tituloModal">
-        Atualizar Chamado
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Atualizar Chamado</h4>
+      </div>
+      <div class="modal-body">
+            <!-- FORMULARIO COM OS INPUTS -->
+            <form id="formObs" method="post">
+                <div class="conteudoModal">
+                    <div class="linhaCampo">
+                        <div class="labelModal">
+                            Observação:
+                        </div>
+                        <textarea name="txtObservacao" required></textarea>
+                    </div>
+                    <div class="linhaCampo">
+                        <div class="labelModal">
+                            Finalizar chamado:
+                        </div>
+                        <div style="margin-left: 5%;">
+                            <input type="hidden" name="txtIdChamado" value="<?php echo $idChamado; ?>">
+                            <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="true">Sim
+                            <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="false" checked>Não
+                        </div>
+                        <div style="margin-left: 5%; margin-top: 5%;">
+                            <button type="button" class="btn btn-danger fecharModal" data-dismiss="modal" onclick="fecharModal()"><span class="mdi mdi-close-circle"></span> Cancelar</button>
+                            <button type="submit" class="btn btn-success"><span class="mdi mdi-content-save"></span> Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+      
+      
+      
+      </div>
     </div>
 
-    <!-- FORMULARIO COM OS INPUTS -->
-    <form id="formObs" method="post">
-        <div class="conteudoModal">
-            <div class="linhaCampo">
-                <div class="labelModal">
-                    Observação:
-                </div>
-                <textarea name="txtObservacao" required></textarea>
-            </div>
-            <div class="linhaCampo">
-                <div class="labelModal">
-                    Finalizar chamado:
-                </div>
-                <input type="hidden" name="txtIdChamado" value="<?php echo $idChamado; ?>">
-                <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="true">Sim
-                <input class="radioFinalizar" type="radio" name="rdoFinalizar" value="false" checked>Não
-                <div class="contentBotao">
-                    <button class="botaoStyle">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </form>
+  </div>
+</div>

@@ -11,7 +11,7 @@
             require_once($_SESSION['require']."model/funcionarioClass.php");
         }
 
-        function Login() {
+        public static function Login() {
             // cria uma instancia da classe
             $funcionario = new Funcionario();
 
@@ -24,7 +24,7 @@
         }
 
         // metodo que grava um novo funcionario
-        function Inserir(){
+        public static function Inserir(){
             // resgata as informações
             $funcionario = new Funcionario();
             $funcionario->nome = $_POST['txtNome'];
@@ -51,14 +51,14 @@
         }
 
         // metodo que lista todos os funcionarios
-        function listarFuncionario(){
+        public static function listarFuncionario(){
             $funcionario = new Funcionario();
             $retornoFuncionario = $funcionario::SelectAllFuncionario();
             return $retornoFuncionario;
         }
 
         // metodo que busca um usuario pelo id
-        function listarFuncionarioById(){
+        public static function listarFuncionarioById(){
             $funcionario = new Funcionario();
             $funcionario->idFuncionario = $_GET['id'];
             $retornoFuncionario = $funcionario::SelectByIdFuncionario($funcionario->idFuncionario);
@@ -71,7 +71,7 @@
         }
 
         // metodo que exclui um funcionario
-        function Excluir(){
+        public static function Excluir(){
             $funcionario = new Funcionario();
             $funcionario->idFuncionario = $_GET['id'];
             $excluiu = $funcionario::Excluir($funcionario->idFuncionario);

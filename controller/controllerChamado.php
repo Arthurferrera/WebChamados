@@ -10,7 +10,7 @@ class controllerChamado {
     }
 
     // atualiza o chamado, ou seja, adiciona alguma observação/resposta, e muda ou não o status
-    public function atualizarChamado(){
+    public static function atualizarChamado(){
         $chamado = new Chamado();
         $chamado->observacao = $_POST['txtObservacao'];
         $chamado->status = $_POST['rdoFinalizar'];
@@ -19,7 +19,7 @@ class controllerChamado {
     }
 
     // método busca um chamado pelo id
-    public function buscarChamado($idChamado){
+    public static function buscarChamado($idChamado){
         $chamado = new Chamado();
         $chamado->idChamado = $idChamado;
         $retornoChamado = $chamado::SelectById($chamado->idChamado);
@@ -27,14 +27,14 @@ class controllerChamado {
     }
 
     // busca as observações de um chamado
-    public function buscarObservacoes($idChamado){
+    public static function buscarObservacoes($idChamado){
         $listObervacoes = new Chamado();
         $listObervacoes->idChamado = $idChamado;
         return $listObervacoes::SelectObsById($listObervacoes->idChamado);
     }
 
     // lista todos os chamados de acordo com o status desejado
-    public function listarChamado($status, $tipoSelect){
+    public static function listarChamado($status, $tipoSelect){
         $chamado = new Chamado();
         if ($tipoSelect == 'SelectDiaResolvido') {
             $retornoChamado = $chamado::SelectDiaResolvido();
@@ -45,25 +45,53 @@ class controllerChamado {
     }
 
     // método filtra od chamados pela data e o nome da empresa
-    public function filtroPorData($status){
+    public static function filtroPorData($status){
         $chamado = new Chamado();
         $chamado->dtInicio = $_POST['txtDtInicio'];
         $chamado->dtFim = $_POST['txtDtFim'];
         $chamado->empresaInicial = $_POST['txtEmpresaInicial'];
         $chamado->empresaFinal = $_POST['txtEmpresaFinal'];
+
+        $chamado->dtInicio = explode("-", $chamado->dtInicio);
+        $chamado->dtInicio = $chamado->dtInicio[2]."/".$chamado->dtInicio[1]."/".$chamado->dtInicio[0];
+
+        $chamado->dtFim = explode("-", $chamado->dtFim);
+        $chamado->dtFim = $chamado->dtFim[2]."/".$chamado->dtFim[1]."/".$chamado->dtFim[0];
+
         $retornoChamado = $chamado::FiltroPorData($chamado, $status);
         return $retornoChamado;
     }
 
     // método que traz as informações de Estatisticas dos chamados
-    public function Estatisticas(){
+    public static function Estatisticas(){
         $chamado = new Chamado();
         $retornoEstatisticas = $chamado::Estatisticas();
         return $retornoEstatisticas;
     }
 
+    public static function parcialEstatistica($tipoEstatistica){
+        $chamado = new Chamado();
+        if ($tipoEstatistica == "filtro") {
+            $chamado->dtInicio = $_POST['txtDtInicio'];
+            $chamado->dtFim = $_POST['txtDtFim'];
+
+            $chamado->dtInicio = explode("-", $chamado->dtInicio);
+            $chamado->dtInicio = $chamado->dtInicio[2]."/".$chamado->dtInicio[1]."/".$chamado->dtInicio[0];
+
+            $chamado->dtFim = explode("-", $chamado->dtFim);
+            $chamado->dtFim = $chamado->dtFim[2]."/".$chamado->dtFim[1]."/".$chamado->dtFim[0];
+        } else if ($tipoEstatistica == "dia") {
+            $chamado->dtInicio = "";
+            $chamado->dtFim = "";
+        }
+        $retornoEstatisticas = $chamado::EstatisticasParciais($chamado, $tipoEstatistica);
+
+        return $retornoEstatisticas;
+    }
+
+
     // função que chama o método que retorna as empresas de clientes cadastrados
-    public function empresas(){
+    public static function empresas(){
         $chamado = new Chamado();
         return $chamado::listarEmpresas();
     }

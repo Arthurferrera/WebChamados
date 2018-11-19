@@ -31,7 +31,7 @@ class Chamado {
 
     // método que recebe um objeto 'chamado', e atualiza
      // as informações no banco (ADICIONA RESPOSTA/OBSERVAÇÃO E ATUALIZA O STATUS)
-    public function Atualizar($chamado){
+    public static function Atualizar($chamado){
         // session_start();
 
         $status = $chamado->status;
@@ -57,9 +57,9 @@ class Chamado {
     }
 
     // seleciona todos os chamados do banco, conforme o STATUS, soicitado
-    public function SelectAll($status){
+    public static function SelectAll($status){
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                 FROM chamados AS c
                 INNER JOIN usuario AS u
                 ON c.idUsuario = u.id
@@ -97,7 +97,7 @@ class Chamado {
 
     // método que seleciona todos os CHAMADOS
     // cujo a data de fechamento é a do dia atual
-    public function SelectDiaResolvido(){
+    public static function SelectDiaResolvido(){
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
                 u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                 FROM chamados AS c
@@ -122,6 +122,7 @@ class Chamado {
                 $chamado[$cont]->mensagem = $rs['mensagem'];
                 $chamado[$cont]->status = $rs['status'];
                 $chamado[$cont]->dataAbertura = $rs['data'];
+                $chamado[$cont]->dataFechamento = $rs['dataFechamento'];
                 $chamado[$cont]->idUsuario = $rs['usuarioId'];
                 $chamado[$cont]->cnpj = $rs['cnpj'];
                 $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
@@ -136,7 +137,7 @@ class Chamado {
     }
 
     // método que retorno um chamado, que é buscado pelo ID
-    public function SelectById($idChamado){
+    public static function SelectById($idChamado){
 
         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
                     u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, CONVERT(nvarchar(30), c.data, 126) AS data
@@ -168,9 +169,9 @@ class Chamado {
 
     // método que traz todas as respostas/observações de um chamado
     // recebe o id do chamado
-    public function SelectObsById($idChamado){
+    public static function SelectObsById($idChamado){
 
-        $sql = "SELECT *, CONVERT(nvarchar(30), dataHora, 126) AS dataConvertida from observacao WHERE idChamado =".$idChamado;
+        $sql = "SELECT *, CONVERT(nvarchar(30), dataHora, 126) AS dataConvertida FROM observacao WHERE idChamado =".$idChamado;
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
@@ -192,7 +193,7 @@ class Chamado {
 
     // método que busca no banco CHAMADO
     // cujo estejam no range de data selecionado, e sejam de uma empresa especifica
-    public function FiltroPorData($chamado, $status){
+    public static function FiltroPorData($chamado, $status){
 
         // resgatando os valores que será usado na query
         $dataInicio = $chamado->dtInicio;
@@ -215,7 +216,7 @@ class Chamado {
                     if($status == 1){
                         // select de chamados resolvidos, são puxados pela data de Fechamento
                         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                                 FROM chamados AS c
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
@@ -223,7 +224,7 @@ class Chamado {
                     } else {
                         // select de chamados resolvidos, são puxados pela data de abertura
                         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                                 FROM chamados AS c
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
@@ -235,7 +236,7 @@ class Chamado {
                     if($status == 1){
                         // select de chamados resolvidos, são puxados pela data de Fechamento
                         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                                 FROM chamados AS c
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
@@ -245,7 +246,7 @@ class Chamado {
                     }else{
                         // select de chamados resolvidos, são puxados pela data de abertura
                         $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data
+                                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
                                 FROM chamados AS c
                                 INNER JOIN usuario AS u
                                 ON c.idUsuario = u.id
@@ -272,6 +273,7 @@ class Chamado {
                         $listaChamados[$cont]->mensagem = $rs['mensagem'];
                         $listaChamados[$cont]->status = $rs['status'];
                         $listaChamados[$cont]->dataAbertura = $rs['data'];
+                        $listaChamados[$cont]->dataFechamento = $rs['dataFechamento'];
                         $listaChamados[$cont]->idUsuario = $rs['usuarioId'];
                         $listaChamados[$cont]->cnpj = $rs['cnpj'];
                         $listaChamados[$cont]->razaoSocial = $rs['razaoSocial'];
@@ -291,13 +293,13 @@ class Chamado {
 
     // método que faz os selects que traz as informações
     // de Estatisticas (TOTALCHAMADOS, RESOLVIDOS, PENDENTES, RESPONDIDOS)
-    public function Estatisticas(){
+    public static function Estatisticas(){
         // RETORNA O TOTAL DE CHAMADOS
-        $sqlTotal = "select count(*) AS totalChamados from chamados";
+        $sqlTotal = "SELECT COUNT(*) AS totalChamados FROM chamados";
         // RETORNA TOTAL DE CHAMADOS RESOLVIDOS
-        $sqlResolvidos = "select count(*) AS resolvidos from chamados where status = 1";
+        $sqlResolvidos = "SELECT COUNT(*) AS resolvidos FROM chamados WHERE status = 1";
         // RETORNA TOTAL DE CHAMADOS pendentes
-        $sqlPendentes = "select count(*) AS pendentes from chamados where status = 0";
+        $sqlPendentes = "SELECT COUNT(*) AS pendentes FROM chamados WHERE status = 0";
         // RETORNA O TOTAL DE OBSERVAÇÕES
         $sqlObservacoes = "SELECT @@ROWCOUNT AS respostas FROM observacao GROUP BY idChamado";
 
@@ -343,9 +345,87 @@ class Chamado {
         return array($totalChamados, $resolvidos, $pendentes, $observacoes);
     }
 
+    // método que faz os selects que traz as informações
+    // de Estatisticas (TOTALCHAMADOS, RESOLVIDOS, PENDENTES, RESPONDIDOS)
+    public static function EstatisticasParciais($chamado, $tipoEstatistica){
+
+        $dataInicio = $chamado->dtInicio;
+        $dataFim = $chamado->dtFim;
+        if ($tipoEstatistica == "filtro") {
+            // RETORNA O TOTAL DE CHAMADOS
+            $sqlTotal = "SELECT COUNT(*) AS totalChamados FROM chamados WHERE data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'";
+            // RETORNA TOTAL DE CHAMADOS RESOLVIDOS
+            $sqlResolvidos = "SELECT COUNT(*) AS resolvidos FROM chamados WHERE status = 1 AND data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'";
+            // RETORNA TOTAL DE CHAMADOS pendentes
+            $sqlPendentes = "SELECT COUNT(*) AS pendentes FROM chamados WHERE status = 0 AND data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'";
+            // RETORNA O TOTAL DE OBSERVAÇÕES
+            $sqlObservacoes = "SELECT @@ROWCOUNT AS respostas FROM chamados
+                                INNER JOIN observacao ON observacao.idchamado = chamados.id
+                                WHERE data BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
+                                AND dataHora BETWEEN '$dataInicio' AND '$dataFim 23:59:59'
+                                GROUP BY chamados.id";
+        } else if ($tipoEstatistica == "dia") {
+            // RETORNA O TOTAL DE CHAMADOS
+            $sqlTotal = "SELECT COUNT(*) AS totalChamados FROM chamados WHERE data BETWEEN CONVERT(date, GETDATE()) AND GETDATE()";
+            // RETORNA TOTAL DE CHAMADOS RESOLVIDOS
+            $sqlResolvidos = "SELECT COUNT(*) AS resolvidos FROM chamados WHERE status = 1 AND data BETWEEN CONVERT(date, GETDATE()) AND GETDATE()";
+            // RETORNA TOTAL DE CHAMADOS pendentes
+            $sqlPendentes = "SELECT COUNT(*) AS pendentes FROM chamados WHERE status = 0 AND data BETWEEN CONVERT(date, GETDATE()) AND GETDATE()";
+            // RETORNA O TOTAL DE OBSERVAÇÕES
+            $sqlObservacoes = "SELECT @@ROWCOUNT AS respostas FROM chamados
+                                INNER JOIN observacao ON observacao.idchamado = chamados.id
+                                WHERE data BETWEEN CONVERT(date, GETDATE()) AND GETDATE()
+                                AND dataHora BETWEEN CONVERT(date, GETDATE()) AND GETDATE()
+                                GROUP BY chamados.id";
+            // $sqlObservacoes = "SELECT @@ROWCOUNT AS respostas FROM observacao WHERE dataHora BETWEEN CONVERT(date, GETDATE()) AND GETDATE() GROUP BY idChamado";
+        }
+
+
+        // conexao com o banco
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        // executando no banco
+        $selectTotal = sqlsrv_query($pdoCon, $sqlTotal);
+        $selectResolvidos = sqlsrv_query($pdoCon, $sqlResolvidos);
+        $selectPendentes = sqlsrv_query($pdoCon, $sqlPendentes);
+
+        // resgatando total de chamados
+        if($rsTotal = sqlsrv_fetch_array($selectTotal)){
+            $totalChamados = $rsTotal['totalChamados'];
+        }
+        // resgatando quantidade de chamados resolvidos
+        if($rsResolvidos = sqlsrv_fetch_array($selectResolvidos)){
+            $resolvidos = $rsResolvidos['resolvidos'];
+        }
+        // resgatando total de chamados pendentes
+        if($rsPendentes = sqlsrv_fetch_array($selectPendentes)){
+            $pendentes = $rsPendentes['pendentes'];
+        }
+        // execuando no banco a query que verifia total de chamados respondidos
+        for ($i=0; $i < 2; $i++) {
+            $selectObservacoes = sqlsrv_query($pdoCon, $sqlObservacoes);
+        }
+        // resgatando quantidade de chamados respondidos
+        if($rsObservacoes = sqlsrv_fetch_array($selectObservacoes)){
+            $observacoes = $rsObservacoes['respostas'];
+        } else {
+            $observacoes = 0;
+        }
+        // caso exista ao menos um chamado, calcula as porcentagem de cada atributo
+        if ($totalChamados != 0) {
+            $resolvidos = $resolvidos * 100 / $totalChamados;
+            $pendentes = $pendentes * 100 / $totalChamados;
+            $observacoes = $observacoes * 100 / $totalChamados;
+        }
+        $con->Desconectar();
+        // retornando um array com todas as informações resgatadas
+        return array($totalChamados, $resolvidos, $pendentes, $observacoes);
+    }
+
     // função que busca todas as empresas cadastradas
     // para ser carregadas no select de filtro
-    public function listarEmpresas(){
+    public static function listarEmpresas(){
 
         $sql = "SELECT razaoSocial FROM usuario GROUP BY razaoSocial ORDER BY razaoSocial ASC";
 

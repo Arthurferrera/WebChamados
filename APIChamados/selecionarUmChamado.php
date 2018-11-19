@@ -7,7 +7,7 @@
     $id = $_GET['id'];
     //comando sql
     $tsql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
-                    u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data AS data
+                    u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data AS data, c.local
                     FROM chamados AS c
                     INNER JOIN usuario AS u
                     ON c.idUsuario = u.id

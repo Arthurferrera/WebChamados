@@ -56,7 +56,7 @@
                 }
             });
         } else if(tipo == 'atualizar') {
-            document.getElementById('modal').setAttribute("class", "modal");
+            document.getElementById('modal').setAttribute("class", "modalAtualizar");
             $.ajax({
                 type: "POST",
                 url: "modalAtualizar.php",
@@ -83,198 +83,109 @@
     });
 </script>
 
-<div class="tab-pane fade show active" id="v-pills-pendentes" role="tabpanel" aria-labelledby="v-pills-pendentes-tab">
-    <!-- CONTENTS DA MODAL -->
-    <div class="container">
-        <div id="modal">
-        </div>
+<!-- CONTENTS DA MODAL -->
+<div class="container">
+    <div id="modal">
     </div>
+</div>
 
-    <!-- TITULO DA PAGINA -->
-    <h3 class="card-title">
-        Lista de chamados - Pendentes
-    </h3>
+<!-- TITULO DA PAGINA -->
+<!-- <div class="tituloTela"></div> -->
 
-    <!-- sessão que fica o form de filtros que podem ser aplicados -->
-    <div class="col-12">
-        <!-- <div class="labelFiltro">
-            Filtrar por periodo:
-        </div> -->
-        <form action="?pag=chamadosPendentes" method="post">
-            <div class="form-row">
-                <div class="col-3"></div>
-                <div class="col-3 form-group">
-                    <label for="dataInicio">Inicio periodo:</label>
-                    <input id="dataInicio" class="form-control" type="date" name="txtDtInicio" value="<?php echo $dateAtualInicio; ?>">
-                </div>
-                <div class="col-3 form-group">
-                    <label for="dataFim">Fim periodo:</label>
-                    <input id="dataFim" class="form-control" type="date" name="txtDtFim" value="<?php echo $dateAtualFim; ?>">
-                </div>
-                <div class="col-3"></div>
-            </div>
-            <div class="form-row">
-                <div class="col-2"></div>
-                <div class="col-4 form-group">
-                    <input placeholder="Empresa Inicial" autocomplete="off" class="form-control" type="text" name="txtEmpresaInicial" value="<?php echo $pesquisaEmpresaInicial; ?>">
-                </div>
-                <div class="col-4 form-group">
-                    <input placeholder="Empresa Final" autocomplete="off" class="form-control" type="text" name="txtEmpresaFinal" value="<?php echo $pesquisaEmpresaFInal; ?>">
-                </div>
-                <div class="col-2">
-                    <input class="btn btn-primary" type="submit" name="btnFiltrar" value="Filtrar">
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <!-- botão de impressão da lista -->
-    <div class="contentBotaoImprimir">
-        <input class="btn btn-secondary" type="button" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir">
-    </div>
-
-<table class="table table-striped col-10">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">N°</th>
-            <th scope="col">EMPRESA</th>
-            <th scope="col">CNPJ</th>
-            <th scope="col">SOLICITANTE</th>
-            <th scope="col">TITULO</th>
-            <th scope="col">OPÇÕES</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-            // chama o método adequado para a listagem dos chamados
-            require_once($_SESSION['require']."controller/controllerChamado.php");
-            $listChamados = new controllerChamado();
-            // verifica se o form de filtro foi submetido
-            // para chamar a função de listagem correta
-            if (isset($_POST['btnFiltrar'])) {
-                $chamado = $listChamados::filtroPorData(0);
-            } else {
-                $chamado = $listChamados::listarChamado(0, '');
-            }
-            $cont = 0;
-            while($cont < count($chamado)){
-                if ($chamado[$cont]->status) {
-                    $img = "./imagens/statusVerde.png";
-                } else {
-                    $img = "./imagens/statusVermelho.png";
-                }
-        ?>
-        <tr>
-            <td class="registroStatus">
-                <img src="<?php echo $img; ?>" alt="status">
-            </td>
-            <th scope="row">
-                <?php echo $cont+1 ?>
-            </th>
-            <td>
-                <?php echo $chamado[$cont]->razaoSocial; ?>
-            </td>
-            <td>
-                <?php echo $chamado[$cont]->cnpj; ?>
-            </td>
-            <td>
-                <?php echo $chamado[$cont]->nomeUsuario; ?>
-            </td>
-            <td>
-                <?php echo $chamado[$cont]->titulo; ?>
-            </td>
-            <td>
-                <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'atualizar');"> <img src="imagens/atualizar.png" alt="Atualizar Chamado" title="Atualizar Chamado" width="20" height="20"> </a>
-                <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');"> <img src="imagens/lupa.png" alt="Visualizar Chamado" title="Visualizar Chamado" width="20" height="20"> </a>
-            </td>
-        </tr>
-        <?php
-                $cont++;
-            } ?>
-    </tbody>
-</table>
-
-
-    <!-- tabela que lista os chamados -->
-    <!-- <div class="table">
-        <div class="contentTitulos">
-            <div class="tituloStatus">
-            </div>
-
-            <div class="tituloStatus">
-                N°
-            </div>
-
-            <div class="titulosTabela">
-                EMPRESA
-            </div>
-
-            <div class="titulosTabela">
-                CNPJ
-            </div>
-
-            <div class="titulosTabela">
-                SOLICITANTE
-            </div>
-
-            <div class="titulosTabela tituloMaior">
-                TITULO
-            </div>
-
-            <div class="titulosTabela opcoes">
-                OPÇÕES
-            </div>
-        </div>
-        <div class="contentRegistros">
-            <?php
-                // chama o método adequado para a listagem dos chamados
-                require_once($_SESSION['require']."controller/controllerChamado.php");
-                $listChamados = new controllerChamado();
-                // verifica se o form de filtro foi submetido
-                // para chamar a função de listagem correta
-                if (isset($_POST['btnFiltrar'])) {
-                    $chamado = $listChamados::filtroPorData(0);
-                } else {
-                    $chamado = $listChamados::listarChamado(0, '');
-                }
-                $cont = 0;
-                while($cont < count($chamado)){
-                    if ($chamado[$cont]->status) {
-                        $img = "./imagens/statusVerde.png";
-                    } else {
-                        $img = "./imagens/statusVermelho.png";
-                    }
-            ?>
-                <div class="linhaRegistro">
-                    <div class="registroStatus">
-                        <img src="<?php echo $img; ?>" alt="status">
-                    </div>
-                    <div class="registroStatus">
-                        <?php echo $cont+1 ?>
-                    </div>
-                    <div class="registros">
-                        <?php echo $chamado[$cont]->razaoSocial; ?>
-                    </div>
-                    <div class="registros">
-                        <?php echo $chamado[$cont]->cnpj; ?>
-                    </div>
-                    <div class="registros">
-                        <?php echo $chamado[$cont]->nomeUsuario; ?>
-                    </div>
-                    <div class="registros registroMaior">
-                        <?php echo $chamado[$cont]->titulo; ?>
-                    </div>
-                    <div class="registros opcoes">
-                        <div class="atualizar">
-                            <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'atualizar');"> <img src="imagens/atualizar.png" alt="Atualizar Chamado" title="Atualizar Chamado" width="20" height="20"> </a>
-                            <a onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');"> <img src="imagens/lupa.png" alt="Visualizar Chamado" title="Visualizar Chamado" width="20" height="20"> </a>
+<div class="card-body">
+    <h1 id="opi" class="card-title"><i class="menu-icon mdi mdi-ticket-account"></i> Chamados - Pendentes</h1>
+        <br>
+        <div class="panel panel-info">
+            <div class="panel-heading">Filtrar por período</div>
+            <div class="panel-body">
+                <form action="?pag=chamadosPendentes" method="post">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="col-md control-label" for="textinput">Início do período</label>
+                            <input name="txtDtInicio" type="date" placeholder="Data inicial" class="inputData form-control input-md" value="<?php echo $dateAtualInicio; ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-md control-label" for="textinput">Final do período</label>
+                            <input name="txtDtFim" type="date" placeholder="Data Final" class="inputData form-control input-md" value="<?php echo $dateAtualFim; ?>">
                         </div>
                     </div>
-                </div>
-            <?php
-                    $cont++;
-                } ?>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="col-md control-label" for="textinput">Empresa inicial</label>
+                            <input autocomplete="of" title="Empresa Inicial" name="txtEmpresaInicial" type="text" placeholder="Empresa inicial" class="form-control input-md" value="<?php echo $pesquisaEmpresaInicial; ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-md control-label" for="textinput">Empresa final</label>
+                            <input autocomplete="off" title="Empresa Final" name="txtEmpresaFinal" type="text" placeholder="Empresa Final" class="form-control input-md" value="<?php echo $pesquisaEmpresaFInal; ?>">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary" name="btnFiltrar" value="filtrar" style="margin-top: 2%; margin-left: 1%;"><i class="mdi mdi-filter-outline"></i>Filtrar</button>
+                    <!-- botão de impressão da lista -->
+                    <button type="button" class="btn btn-primary" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir" style="margin-top: 2%; margin-left: 1%;"><i class="mdi mdi-printer"></i>Imprimir</button>
+                </form>
+            </div>
         </div>
-    </div> -->
+
+        <!-- Tabela que lista os chamados pendentes -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Nº</th>
+                    <th>Empresa</th>
+                    <th>CNPJ</th>
+                    <th>Solicitante</th>
+                    <th>Título</th>
+                    <th>Data</th>
+                    <th>Opções</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                    // chama o método adequado para a listagem dos chamados
+                    require_once($_SESSION['require']."controller/controllerChamado.php");
+                    $listChamados = new controllerChamado();
+                    // verifica se o form de filtro foi submetido
+                    // para chamar a função de listagem correta
+                    if (isset($_POST['btnFiltrar'])) {
+                        $chamado = $listChamados::filtroPorData(0);
+                    } else {
+                        $chamado = $listChamados::listarChamado(0, '');
+                    }
+                    $cont = 0;
+                    while($cont < count($chamado)){
+                        if ($chamado[$cont]->status) {
+                            $img = "./imagens/statusVerde.png";
+                        } else {
+                            $img = "./imagens/statusVermelho.png";
+                        }
+                ?>
+                <tr>
+                    <td><img src="<?php echo $img; ?>" alt="status"></td>
+                    <td><?php echo $cont+1 ?></td>
+                    <td><?php echo $chamado[$cont]->razaoSocial; ?></td>
+                    <td><?php echo $chamado[$cont]->cnpj; ?></td>
+                    <td><?php echo $chamado[$cont]->nomeUsuario; ?></td>
+                    <td><?php echo $chamado[$cont]->titulo; ?></td>
+                    <td>
+                        <?php
+                            $dataBanco = $chamado[$cont]->dataAbertura;
+                            echo $dataBanco->format('d/m/Y');
+                        ?>
+                    </td>
+                    <td>
+                        <div class="atualizar">
+                            <button onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'atualizar');" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-lead-pencil"></i></button>
+                            <button onclick="modal(<?php echo $chamado[$cont]->idChamado; ?>, 'visualizar');" type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-magnify-plus"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                $cont++;
+            } ?>
+                </tbody>
+            </table>
+
+    </div>
 </div>

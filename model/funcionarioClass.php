@@ -15,7 +15,7 @@ class Funcionario {
 
     // método que recebe login e senha como parâmetro
     // faz a autentição do usuario no sistema
-    public function Login($funcionario) {
+    public static function Login($funcionario) {
         $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                 AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
 
@@ -45,7 +45,7 @@ class Funcionario {
 
     // método que cadastra um novo usuario do sistema
     // recebe um objeto do tipo 'funcionario' como parametro
-    public function Inserir($funcionario){
+    public static function Inserir($funcionario){
 
         // faz um filtro na senha, para ver se contém letras e números
         $temNumeros = filter_var($funcionario->senha, FILTER_SANITIZE_NUMBER_INT) !== '';
@@ -75,7 +75,7 @@ class Funcionario {
     }
 
     // método que atualiza as informações do usuario
-    public function Editar($funcionario){
+    public static function Editar($funcionario){
             $sql = "UPDATE usuarioAdm SET nome = '".$funcionario->nome."', login = '".$funcionario->usuario."', senha = '".$funcionario->senha."' WHERE id =".$funcionario->idFuncionario;
 
             $con = new Sql_db();
@@ -91,7 +91,7 @@ class Funcionario {
     }
 
     // traz um usuario pelo id que está cadastrado no banco
-    public function SelectByIdFuncionario($idFuncionario){
+    public static function SelectByIdFuncionario($idFuncionario){
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
                 FROM usuarioAdm AS u
                 INNER JOIN nivelUsuario AS n
@@ -122,13 +122,13 @@ class Funcionario {
 
     // método que traz todos os usuários cadastrados no banco
     // para fazer a listagem dos registros
-    public function SelectAllFuncionario(){
+    public static function SelectAllFuncionario(){
 
         $sql = "SELECT u.id, u.nome, u.login, u.senha, u.idNivelUsuario
                 FROM usuarioAdm AS u
                 INNER JOIN nivelUsuario AS n
                 ON n.idNivelUsuario = u.idNivelUsuario
-                WHERE u.id != 1";
+                WHERE u.id != 2";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
@@ -157,7 +157,7 @@ class Funcionario {
 
     // método recebe um ID, como paramêtro
     // para excluir um usuario
-    public function Excluir($id){
+    public static function Excluir($id){
         $sql = "DELETE FROM usuarioAdm WHERE id =".$id;
 
         $con = new Sql_db();
