@@ -16,29 +16,67 @@ class Funcionario {
     // método que recebe login e senha como parâmetro
     // faz a autentição do usuario no sistema
     public static function Login($funcionario) {
-        $sql = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
+        $sqlADMINISTRADOR = "SELECT * FROM usuarioAdm WHERE BINARY_CHECKSUM(login) = BINARY_CHECKSUM('$funcionario->usuario')
                 AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 1";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
 
-        $select = sqlsrv_query($pdoCon, $sql);
+        $select = sqlsrv_query($pdoCon, $sqlADMINISTRADOR);
 
         if($rs = sqlsrv_fetch_array($select)){
-            $nome = $rs['nome'];
-        }
-        $rows_affected = sqlsrv_rows_affected($select);
+            $id             = $rs['id'];
+            $nome           = $rs['nome'];
+            $perfilUsuario  = $rs['idNivelUsuario'];
+        }        
 
+        $rows_affected = sqlsrv_rows_affected($select);
 
         // verificando se algum registro foi retornado
         if ($rows_affected > 0) {
-            $_SESSION['nome'] = $nome;
-            $_SESSION['login'] = true;
+            $_SESSION['id']              = $id;
+            $_SESSION['nome']            = $nome;
+            $_SESSION['idNivelUsuario']  = $perfilUsuario;
+            $_SESSION['login']           = true;
+
             echo 1;
         } else {
+            unset($_SESSION['id']);
             unset($_SESSION['nome']);
+            unset($_SESSION['idNivelUsuario']);
             unset($_SESSION['login']);
-            return false;
+
+            $sql = "SELECT * FROM usuario WHERE BINARY_CHECKSUM(usuario) = BINARY_CHECKSUM('$funcionario->usuario')
+            AND BINARY_CHECKSUM(senha) = BINARY_CHECKSUM('$funcionario->senha') AND idNivelUsuario = 2";
+    
+            $con = new Sql_db();
+            $pdoCon = $con->Conectar();
+    
+            $select = sqlsrv_query($pdoCon, $sql);
+    
+            if($rs = sqlsrv_fetch_array($select)){
+                $id             = $rs['id'];
+                $nome           = $rs['nome'];
+                $perfilUsuario  = $rs['idNivelUsuario'];
+            }        
+    
+            $rows_affected = sqlsrv_rows_affected($select);
+
+            // verificando se algum registro foi retornado
+            if ($rows_affected > 0) {
+                $_SESSION['id']              = $id;
+                $_SESSION['nome']            = $nome;
+                $_SESSION['idNivelUsuario']  = $perfilUsuario;
+                $_SESSION['login']           = true;
+
+                echo 1;
+            } else {            
+                unset($_SESSION['id']);
+                unset($_SESSION['nome']);
+                unset($_SESSION['idNivelUsuario']);
+                unset($_SESSION['login']);
+                return false;
+            }
         }
         $con->Desconectar();
     }
@@ -107,11 +145,12 @@ class Funcionario {
             echo "erro na chamada";
         } elseif ($rows_affected == -1) {
             if ($rs = sqlsrv_fetch_array($select)) {
-                $funcionario = new Funcionario();
-                $funcionario->nome = $rs['nome'];
-                $funcionario->usuario = $rs['login'];
-                $funcionario->senha = $rs['senha'];
-                $funcionario->idFuncionario = $rs['id'];
+                $funcionario                    = new Funcionario();
+                $funcionario->nome              = $rs['nome'];
+                $funcionario->usuario           = $rs['login'];
+                $funcionario->senha             = $rs['senha'];
+                $funcionario->idFuncionario     = $rs['id'];
+                $funcionario->perfilFuncionario = $rs['idNivelUsuario'];
             }
             return $funcionario;
         } else {

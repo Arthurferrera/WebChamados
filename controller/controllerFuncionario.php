@@ -16,8 +16,8 @@
             $funcionario = new Funcionario();
 
             // seta o usuario e senha
-            $funcionario->usuario = $_POST['txtUsuario'];
-            $funcionario->senha = $_POST['txtSenha'];
+            $funcionario->usuario           = $_POST['txtUsuario'];
+            $funcionario->senha             = $_POST['txtSenha'];
 
             // chama a função de login
             return $funcionario->Login($funcionario);
@@ -59,14 +59,16 @@
 
         // metodo que busca um usuario pelo id
         public static function listarFuncionarioById(){
-            $funcionario = new Funcionario();
-            $funcionario->idFuncionario = $_GET['id'];
-            $retornoFuncionario = $funcionario::SelectByIdFuncionario($funcionario->idFuncionario);
+            $funcionario                    = new Funcionario();
+            $funcionario->idFuncionario     = $_GET['id'];
+            $funcionario->perfilFuncionario = $_POST['idNivelUsuario'];
+            $retornoFuncionario             = $funcionario::SelectByIdFuncionario($funcionario->idFuncionario);
 
-            $funcionario->nome = $retornoFuncionario->nome;
-            $funcionario->usuario = $retornoFuncionario->usuario;
-            $funcionario->senha = $retornoFuncionario->senha;
-            $funcionario->idFuncionario = $retornoFuncionario->idFuncionario;
+            $funcionario->nome              = $retornoFuncionario->nome;
+            $funcionario->usuario           = $retornoFuncionario->usuario;
+            $funcionario->senha             = $retornoFuncionario->senha;
+            $funcionario->idFuncionario     = $retornoFuncionario->idFuncionario;
+            $funcionario->perfilFuncionario = $retornoFuncionario->perfilFuncionario;
             return $funcionario;
         }
 

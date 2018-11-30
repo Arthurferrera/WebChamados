@@ -41,10 +41,10 @@
             <div class="panel-body">
 				<form action="?pag=estatisticaParcial" method="post">
 					<div class="form-group">
-                        <div class="col-md-6">    
-                            <label class="col-md control-label" for="textinput">Início do período</label>                          
-                            <input name="txtDtInicio" type="date" placeholder="Data inicial" class="inputData form-control input-md" value="<?php echo $dateAtualInicio; ?>">                            
-                        </div>                        
+                        <div class="col-md-6">
+                            <label class="col-md control-label" for="textinput">Início do período</label>
+                            <input name="txtDtInicio" type="date" placeholder="Data inicial" class="inputData form-control input-md" value="<?php echo $dateAtualInicio; ?>">
+                        </div>
                         <div class="col-md-6">
                             <label class="col-md control-label" for="textinput">Final do período</label>
                             <input id="textinput" name="txtDtFim" type="date" placeholder="Data Final" class="inputData form-control input-md" value="<?php echo $dateAtualFim; ?>">
@@ -52,7 +52,7 @@
                     </div>
                     <button type="button" class="btn btn-outline-primary" type="submit" name="btnFiltrar" value="filtrar" style="margin-top: 2%; margin-left: 1%;"><i class="mdi mdi-filter-outline"></i>Filtrar</button>
                     <!-- botão de impressão da lista -->
-                    <button type="button" class="btn btn-primary" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir" style="margin-top: 2%; margin-left: 1%;"><i class="mdi mdi-printer"></i>Imprimir</button>					
+                    <!-- <button type="button" class="btn btn-primary" onclick="ImprimirLista();" name="btnImprimir" value="Imprimir" style="margin-top: 2%; margin-left: 1%;"><i class="mdi mdi-printer"></i>Imprimir</button>					 -->
 				</form>
             </div>
         </div>
@@ -60,10 +60,8 @@
 		<!-- total de chamdos -->
 		<div class="linhaEstatistica linhaParcial">
 			<div>
-				<strong>Total de Solicitações:</strong>
-			</div>
-			<div class="porcentagem">
-				<?php echo $totalChamados; ?>
+				<strong style="margin-right: 5px;">Total de Solicitações:</strong>
+                <?php echo $totalChamados; ?>
 			</div>
 		</div>
 

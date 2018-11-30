@@ -7,7 +7,23 @@
     $controller = $_GET['controller'];
 
     switch ($controller) {
-        // caso foi chamado algo chamado em relação a um funcionario
+        // caso foi chamado algo chamado em relação a um usuário
+        case 'usuario':
+            require_once($_SESSION['require']."model/usuarioClass.php");
+            require_once($_SESSION['require']."controller/controllerUsuario.php");
+            $modo = $_GET['modo'];
+            switch ($modo)
+            {
+                case 'inserir':
+                    $controllerUsuario = new controllerUsuario();
+                    return $controllerUsuario::Inserir();
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        // caso foi chamado algo chamado em relação a um funcionário
         case 'funcionario':
             require_once($_SESSION['require']."model/funcionarioClass.php");
             require_once($_SESSION['require']."controller/controllerFuncionario.php");
@@ -49,6 +65,10 @@
             switch ($modo) {
                 case 'inserir':
                     $controllerChamado = new controllerChamado();
+                    return $controllerChamado->Inserir();
+                    break;
+                case 'atualizar':
+                    $controllerChamado = new controllerChamado();
                     return $controllerChamado->atualizarChamado();
                     break;
                 case 'buscar':
@@ -72,6 +92,39 @@
                 case 'empresas':
                     $controllerChamado = new controllerChamado();
                     return $controllerChamado::empresas();
+                    break;
+                default:
+                    // code...
+                    break;
+            }
+            break;
+        // caso foi chamado algo chamado em relação a um chamado
+        case 'chamadoUsuario':
+            require_once($_SESSION['require']."controller/controllerChamadosUsuario.php");
+            require_once($_SESSION['require']."model/chamadoClass.php");
+            $modo = $_GET['modo'];
+            switch ($modo) {
+                case 'inserir':
+                    $controllerChamado = new controllerChamadoUsuario();
+                    return $controllerChamado->Inserir();
+                    break;
+                case 'buscar':
+                    $idChamado = $_GET['id'];
+                    $controllerChamado = new controllerChamadoUsuario();
+                    $chamado = $controllerChamado::buscarChamado($idChamado);
+                    if($_GET['tela'] == 'imprimir'){
+                        echo $chamado->idChamado;
+                    } else if ($_GET['tela'] == 'visualizar') {
+                        require_once("view/modalVisualizar.php");
+                    } else if($_GET['tela'] == 'impressao'){
+                        require_once("view/printDetalhes.php");
+                    }
+                    break;
+                case 'buscarObservacoes':
+                    $idChamado = $_GET['id'];
+                    $controllerChamado = new controllerChamadoUsuario();
+                    $chamado = $controllerChamado::buscarObservacoes($idChamado);
+                    require_once("view/modalVisualizar.php");
                     break;
                 default:
                     // code...

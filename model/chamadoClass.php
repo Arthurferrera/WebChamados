@@ -24,16 +24,116 @@ class Chamado {
     public $dataFechamento;
     public $empresaInicial;
     public $empresaFinal;
+    public $fotosChamados;
 
     function __construct() {
         require_once("bdClass.php");
     }
 
-    // método que recebe um objeto 'chamado', e atualiza
-     // as informações no banco (ADICIONA RESPOSTA/OBSERVAÇÃO E ATUALIZA O STATUS)
-    public static function Atualizar($chamado){
-        // session_start();
+    // método que cadastra um novo chamado no sistema
+    // recebe um objeto do tipo 'chamado' como parametro
+    public static function Inserir($chamado){
+        //gera um array dos arquivos para upload
+        $img        = array();  
+        //verifica se há arquivo para upload
+        $arquivo    = isset($_FILES['localFoto']) ? $_FILES['localFoto'] : FALSE;
+        //loop que salva o arquivo no servidor e gera o nome para salvar no banco de dados
+        for ($k = 0; $k < count($arquivo['name']); $k++)
+        {
+            switch ($k) {
+                case '0':
+                    $file               = $arquivo['name'][0];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
 
+                    move_uploaded_file($arquivo['tmp_name'][0], $destino);
+
+                    break;
+                case '1':                    
+                    $file               = $arquivo['name'][1];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
+
+                    move_uploaded_file($arquivo['tmp_name'][1], $destino);
+
+                    break;
+                case '2':                    
+                    $file               = $arquivo['name'][2];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
+
+                    move_uploaded_file($arquivo['tmp_name'][2], $destino);
+
+                    break;
+                case '3':                    
+                    $file               = $arquivo['name'][3];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
+
+                    move_uploaded_file($arquivo['tmp_name'][3], $destino);
+
+                    break;   
+                case '4':                    
+                    $file               = $arquivo['name'][4];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
+
+                    move_uploaded_file($arquivo['tmp_name'][4], $destino);
+
+                    break;   
+                case '5':                    
+                    $file               = $arquivo['name'][5];
+                    $letras_minusculas  = strtolower(substr($file, -50));
+                    $nome_criptografado = md5($letras_minusculas);
+                    $diretorio          = "APIChamados/img/";
+                    $destino            = $diretorio.$nome_criptografado.'.jpg';
+
+                    move_uploaded_file($arquivo['tmp_name'][5], $destino);
+
+                    break;                                                               
+                default:
+                    # code...
+                    break;
+            }
+            //armazena os caminhos dos arquivos num array
+            $img[] = $destino;
+        }
+       
+        //converte o conteúdo do array em string para salvar no banco de dados
+        $img    = implode(', ', $img);
+        // comando sql
+        $sql    = "INSERT INTO chamados (titulo, mensagem, local, data, status, idUsuario, localFoto) VALUES (?,?, ?,GETDATE(),?,?,?);";
+        // definindo os parâmetros a serem salvos
+        $params = array("$chamado->titulo", "$chamado->mensagem", "$chamado->local", "$chamado->status", "$chamado->idUsuario", "$img");
+        // conexão com o banco de dados
+        $con    = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        // executando o sql
+        $stm    = sqlsrv_query($pdoCon, $sql, $params);
+
+        if ($stm) {
+            // foi executado
+            echo 1;
+        } else {
+            // não executou
+            echo 0;
+        }
+    }
+
+    // método que recebe um objeto 'chamado', e atualiza
+    // as informações no banco (ADICIONA RESPOSTA/OBSERVAÇÃO E ATUALIZA O STATUS)
+    public static function Atualizar($chamado){
         $status = $chamado->status;
         $sqlInserirObservacao = "INSERT INTO observacao (observacao, idChamado, dataHora) VALUES ('".$chamado->observacao."', $chamado->idChamado, GETDATE())";
         if ($status == 'true') {
@@ -64,6 +164,48 @@ class Chamado {
                 INNER JOIN usuario AS u
                 ON c.idUsuario = u.id
                 WHERE status = $status ORDER BY idChamado DESC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if($rows_affected == -1) {
+            while ($rs = sqlsrv_fetch_array($select)){
+                $chamado[] = new Chamado();
+                $chamado[$cont]->idChamado = $rs['idChamado'];
+                $chamado[$cont]->titulo = $rs['titulo'];
+                $chamado[$cont]->mensagem = $rs['mensagem'];
+                $chamado[$cont]->status = $rs['status'];
+                $chamado[$cont]->dataAbertura = $rs['data'];
+                $chamado[$cont]->idUsuario = $rs['usuarioId'];
+                $chamado[$cont]->cnpj = $rs['cnpj'];
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $chamado[$cont]->nomeUsuario = $rs['nome'];
+                $cont++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
+    }
+
+    // seleciona todos os chamados do banco, conforme o STATUS, soicitado
+    // e o id do cliente que está chamando
+    public static function SelectAllCliente($status, $idCliente){
+        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
+                FROM chamados AS c
+                INNER JOIN usuario AS u
+                ON c.idUsuario = u.id
+                WHERE status = $status
+                AND c.idUsuario = $idCliente
+                ORDER BY idChamado DESC";
 
         $con = new Sql_db();
         $pdoCon = $con->Conectar();
@@ -136,6 +278,51 @@ class Chamado {
         $con->Desconectar();
     }
 
+    // método que seleciona todos os CHAMADOS
+    // cujo a data de fechamento é a do dia atual
+    // e o id do cliente que está chamando
+    public static function SelectDiaResolvidoCliente($idCliente){
+        $sql = "SELECT c.id AS idChamado, c.titulo, c.mensagem, c.status, c.idUsuario,
+                u.id AS usuarioId, u.cnpj, u.razaoSocial, u.nome, c.data, c.dataFechamento
+                FROM chamados AS c
+                INNER JOIN usuario AS u
+                ON c.idUsuario = u.id
+                WHERE status = 1
+                AND CONVERT(CHAR(10), dataFechamento, 103) = CONVERT(CHAR(10), GETDATE(),103)
+                AND c.idUsuario = $idCliente
+                ORDER BY idChamado DESC";
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if($rows_affected == -1) {
+            while ($rs = sqlsrv_fetch_array($select)) {
+                $chamado[] = new Chamado();
+                $chamado[$cont]->idChamado = $rs['idChamado'];
+                $chamado[$cont]->titulo = $rs['titulo'];
+                $chamado[$cont]->mensagem = $rs['mensagem'];
+                $chamado[$cont]->status = $rs['status'];
+                $chamado[$cont]->dataAbertura = $rs['data'];
+                $chamado[$cont]->dataFechamento = $rs['dataFechamento'];
+                $chamado[$cont]->idUsuario = $rs['usuarioId'];
+                $chamado[$cont]->cnpj = $rs['cnpj'];
+                $chamado[$cont]->razaoSocial = $rs['razaoSocial'];
+                $chamado[$cont]->nomeUsuario = $rs['nome'];
+                $cont++;
+            }
+            return $chamado;
+        } else {
+            return null;
+        }
+        $con->Desconectar();
+    }
+
     // método que retorno um chamado, que é buscado pelo ID
     public static function SelectById($idChamado){
 
@@ -163,6 +350,36 @@ class Chamado {
             $chamado->razaoSocial = $rs['razaoSocial'];
             $chamado->nomeUsuario = $rs['nome'];
             return $chamado;
+        }
+        $con->Desconectar();
+    }
+
+    // método que busca as fotos de um chamado
+    public static function SelectFotoByIdChamado($idChamado){
+
+        $sql = "SELECT localFoto FROM chamados WHERE id =".$idChamado;
+
+        $con = new Sql_db();
+        $pdoCon = $con->Conectar();
+
+        $select = sqlsrv_query($pdoCon, $sql);
+        $rows_affected = sqlsrv_rows_affected($select);
+        $cont = 0;
+
+        if ($rows_affected === false) {
+            echo "erro na chamada";
+        } else if ($rows_affected == -1) {
+            if ($rs = sqlsrv_fetch_array($select)) {
+                // $chamado = new Chamado();
+                $stringCaminho = $rs['localFoto'];
+                $fotoCaminho = explode(", ", $stringCaminho);
+            }
+            for ($i=0; $i < count($fotoCaminho) ; $i++) {
+                $fotosChamados[] = $fotoCaminho[$i];
+            }
+            return $fotosChamados;
+        } else {
+            return null;
         }
         $con->Desconectar();
     }
@@ -256,6 +473,7 @@ class Chamado {
                     }
 
                 }
+                // echo $sql;
                 // executando a query
                 $select = sqlsrv_query($pdoCon, $sql);
                 $rows_affected = sqlsrv_rows_affected($select);

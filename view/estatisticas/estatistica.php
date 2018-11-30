@@ -26,9 +26,7 @@
     <!-- total de chamdos -->
     <div class="linhaEstatistica">
         <div>
-            <strong>Total de Solicitações:</strong>
-        </div>
-        <div>
+            <strong style="margin-right: 5px;">Total de Solicitações: </strong>
             <?php echo $totalChamados; ?>
         </div>
     </div>

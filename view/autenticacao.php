@@ -112,10 +112,11 @@
                   <button class="btn btn-primary submit-btn btn-block"><i class="mdi mdi-login-variant"></i> Entrar</button>
                 </div>
               </form>
-            </div>        
+              <a href="./registro.php" class="btn btn-warning btn-block">Cadastre-se</a>
+            </div>
           </div>
-        </div>
-      </div>
+        </div>        
+      </div>      
       <!-- content-wrapper ends -->
     </div>
     <!-- page-body-wrapper ends -->

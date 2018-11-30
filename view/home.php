@@ -8,6 +8,13 @@
     $nome ="";
     $usuario ="";
     $senha ="";
+
+    $usuario_adm    = 1;
+    $usuario_comum  = 2;
+
+    $nome_do_usuario    = $_SESSION['nome'];
+    $nivel_do_usuario   = $_SESSION['idNivelUsuario'];
+    $id_do_usuario      = $_SESSION['id'];
  ?>
 
 <!DOCTYPE html>
@@ -92,26 +99,24 @@
     <body id="body">
         <div class="container-scroller">
             <!-- partial:partials/_navbar.html -->
-            <nav class="opa navbar default-layout col-lg-12 col-12 col-sm-12 p-0 fixed-top d-flex flex-row">
+            <nav class="navbar default-layout col-lg-12 col-12 col-sm-12 p-0 fixed-top d-flex flex-row">
                 <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
                 <a class="navbar-brand brand-logo" href="index.html">
-                    <img id="imgLogo" src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
+                    <img src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
                 </a>
                 <a class="navbar-brand brand-logo brand-logo-mini" href="index.html">
-                    <img id="imgLogoMin" src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
+                    <img src="imagens/logo.png" alt="logo" style="width: 100%; height: 100%; padding-left: 2%; padding-right: 2%;"/>
                 </a>
-                <!-- <a class="navbar-brand brand-logo-mini" href="index.html">
-                    <img src="imagens/logo.png" alt="logo" />
-                </a> -->
                 </div>
                 <div class="navbar-menu-wrapper d-flex align-items-center">
                 <ul class="navbar-nav navbar-nav-right">
+                    <!-- <a href="../index.php?out=1" id="textoSair" class="btn btn-default" style="margin-top: 5%;"> <i class="mdi mdi-logout"></i> Sair</a> -->
                     <li class="nav-item dropdown d-none d-xl-inline-block">
                     <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                        <span class="profile-text">Olá, Administrador !</span>
+                        <span class="profile-text">Olá, <?php echo $nome_do_usuario; ?>!</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                        <a class="dropdown-item" href="../index.php?out=1" id="textoSair" style="margin-top: 5%;">Sair</a>
+                        <a class="dropdown-item" href="../index.php?out=1" id="textoSair" style="margin-top: 5%; margin-bottom: 0%;"><i class="mdi mdi-logout"></i> Sair</a>
                     </div>
                     </li>
                 </ul>
@@ -125,52 +130,89 @@
                 <!-- partial:partials/_sidebar.html -->
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
-                    <!-- Início - Chamados -->
-                    <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-chamados" aria-expanded="false" aria-controls="ui-basic">
-                        <i class="menu-icon mdi mdi-ticket-account"></i>
-                        <span class="menu-title">Chamados</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-chamados">
-                        <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="?pag=chamadosPendentes">Pendentes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="?pag=chamadosResolvidos">Resolvidos</a>
-                        </li>
-                        </ul>
-                    </div>
-                    </li>
-                    <!-- Final - Chamados  -->
-                    <!-- Início - Estatísticas -->
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-estatisticas" aria-expanded="false" aria-controls="ui-basic">
-                        <i class="menu-icon mdi mdi-chart-areaspline"></i>
-                        <span class="menu-title">Estatísticas</span>
-                        <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="ui-estatisticas">
-                        <ul class="nav flex-column sub-menu">
+                    <?php
+                        /*
+                            Essa condição verifica se o usuário é administrador ou comum
+                            e gera o menu dinamicamente, de acordo com o nível do usuário.
+                        */
+                        if ($nivel_do_usuario == $usuario_adm) {
+                            echo '
+                            <!-- Início - Chamados -->
                             <li class="nav-item">
-                            <a class="nav-link" href="?pag=estatisticaParcial">Parciais</a>
+                            <a class="nav-link" data-toggle="collapse" href="#ui-chamados" aria-expanded="false" aria-controls="ui-basic">
+                                <i class="menu-icon mdi mdi-ticket-account"></i>
+                                <span class="menu-title">Chamados</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-chamados">
+                                <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?pag=chamadosPendentes">Pendentes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?pag=chamadosResolvidos">Resolvidos</a>
+                                </li>
+                                </ul>
+                            </div>
                             </li>
+                            <!-- Final - Chamados  -->
+                            <!-- Início - Estatísticas -->
                             <li class="nav-item">
-                            <a class="nav-link" href="?pag=estatistica">Gerais</a>
+                                <a class="nav-link" data-toggle="collapse" href="#ui-estatisticas" aria-expanded="false" aria-controls="ui-basic">
+                                <i class="menu-icon mdi mdi-chart-areaspline"></i>
+                                <span class="menu-title">Estatísticas</span>
+                                <i class="menu-arrow"></i>
+                                </a>
+                                <div class="collapse" id="ui-estatisticas">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                    <a class="nav-link" href="?pag=estatisticaParcial">Parciais</a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link" href="?pag=estatistica">Gerais</a>
+                                    </li>
+                                </ul>
+                                </div>
                             </li>
-                        </ul>
-                        </div>
-                    </li>
-                    <!-- Final - Estatísticas -->
-                    <!-- Início - Usuários -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="?pag=cadastroUsuario">
-                        <i class="menu-icon mdi mdi-account-multiple"></i>
-                        <span class="menu-title">Usuários do Sistema</span>
-                        </a>
-                    </li>
-                    <!-- Final - Usuários -->
+                            <!-- Final - Estatísticas -->
+                            <!-- Início - Usuários -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="?pag=cadastroUsuario">
+                                <i class="menu-icon mdi mdi-account-multiple"></i>
+                                <span class="menu-title">Usuários do Sistema</span>
+                                </a>
+                            </li>
+                            <!-- Final - Usuários -->
+                            ';
+                        } elseif ($nivel_do_usuario == $usuario_comum) {
+                            echo '
+                                <!-- Início - Usuário APP - Chamados pendentes  -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?pag=chamadosPendentes_app">
+                                        <i class="menu-icon mdi mdi-alert"></i>
+                                        <span class="menu-title">Pendentes</span>
+                                    </a>
+                                </li>
+                                <!-- Final - Usuário APP - Chamados pendentes  -->
+                                <!-- Início - Usuário APP - Chamados resolvidos  -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?pag=chamadosResolvidos_app">
+                                        <i class="menu-icon mdi mdi-check-all"></i>
+                                        <span class="menu-title">Resolvidos</span>
+                                    </a>
+                                </li>
+                                <!-- Final - Usuário APP - Chamados resolvidos  -->
+                                <!-- Início - Usuário APP - Abrir Chamado  -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?pag=abrirChamado_app">
+                                        <i class="menu-icon mdi mdi-plus-box"></i>
+                                        <span class="menu-title">Abrir chamado</span>
+                                    </a>
+                                </li>
+                                <!-- Final - Usuário APP - Abrir Chamado  -->
+                            ';
+                        }
+                    ?>
                 </ul>
                 </nav>
                 <!-- Conteúdo -->
@@ -191,7 +233,15 @@
                                                 $pag = $_GET['pag'];
                                                 switch ($pag) {
                                                     case 'home':
-                                                        require_once("chamadosPendentes/listaChamados.php");
+                                                        /*
+                                                            Essa condição verifica se o usuário é administrador ou comum
+                                                            e configura dinamicamente qual será a página HOME, de acordo com o nível do usuário.
+                                                        */
+                                                        if ($nivel_do_usuario == $usuario_adm) {
+                                                            require_once("chamadosPendentes/listaChamados.php");
+                                                        } elseif ($nivel_do_usuario == $usuario_comum) {
+                                                            require_once("app_Chamados/chamadosPendentes_app.php");
+                                                        }
                                                         // require_once("divHome.php");
                                                         break;
                                                     case 'chamadosPendentes':
@@ -208,6 +258,15 @@
                                                         break;
                                                     case 'estatisticaParcial':
                                                         require_once("estatisticas/estatisticaParcial.php");
+                                                        break;
+                                                    case 'abrirChamado_app':
+                                                        require_once("app_Chamados/abrirChamado_app.php");
+                                                        break;
+                                                    case 'chamadosResolvidos_app':
+                                                    require_once("app_Chamados/chamadosResolvidos_app.php");
+                                                        break;
+                                                    case 'chamadosPendentes_app':
+                                                    require_once("app_Chamados/chamadosPendentes_app.php");
                                                         break;
                                                     default:
                                                         require_once("chamadosPendentes/listaChamados.php");
